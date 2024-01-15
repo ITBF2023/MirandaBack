@@ -1,0 +1,60 @@
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\bin\Debug\net6.0\DataAccess.dll
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\bin\Debug\net6.0\Domain.dll
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\bin\Debug\net6.0\Domain.pdb
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CopyComplete
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.dll
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+C:\Users\Lenovo\source\repos\ManejoRRHH\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\bin\Debug\net6.0\DataAccess.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\bin\Debug\net6.0\Domain.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\bin\Debug\net6.0\Domain.pdb
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CopyComplete
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\bin\Debug\net6.0\DataAccess.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\bin\Debug\net6.0\Domain.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\bin\Debug\net6.0\Domain.pdb
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CopyComplete
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\bin\Debug\net6.0\DataAccess.dll
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\bin\Debug\net6.0\Domain.dll
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\bin\Debug\net6.0\Domain.pdb
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CopyComplete
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.dll
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+C:\MirandaBackEnd\project\ManejoRRHH\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll

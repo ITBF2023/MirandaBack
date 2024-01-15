@@ -1,0 +1,76 @@
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\bin\Debug\net6.0\Core.deps.json
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\bin\Debug\net6.0\Core.runtimeconfig.json
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\bin\Debug\net6.0\Core.dll
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\bin\Debug\net6.0\Core.pdb
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\bin\Debug\net6.0\DataAccess.dll
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\bin\Debug\net6.0\Domain.dll
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\bin\Debug\net6.0\DataAccess.pdb
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\bin\Debug\net6.0\Domain.pdb
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\obj\Debug\net6.0\Core.csproj.AssemblyReference.cache
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\obj\Debug\net6.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\obj\Debug\net6.0\Core.AssemblyInfoInputs.cache
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\obj\Debug\net6.0\Core.AssemblyInfo.cs
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\obj\Debug\net6.0\Core.csproj.CoreCompileInputs.cache
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\obj\Debug\net6.0\Core.csproj.CopyComplete
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\obj\Debug\net6.0\Core.dll
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\obj\Debug\net6.0\refint\Core.dll
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\obj\Debug\net6.0\Core.pdb
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\obj\Debug\net6.0\Core.genruntimeconfig.cache
+C:\Users\Lenovo\source\repos\ManejoRRHH\Core\obj\Debug\net6.0\ref\Core.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\bin\Debug\net6.0\Core.deps.json
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\bin\Debug\net6.0\Core.runtimeconfig.json
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\bin\Debug\net6.0\Core.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\bin\Debug\net6.0\Core.pdb
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\bin\Debug\net6.0\DataAccess.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\bin\Debug\net6.0\Domain.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\bin\Debug\net6.0\DataAccess.pdb
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\bin\Debug\net6.0\Domain.pdb
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\obj\Debug\net6.0\Core.csproj.AssemblyReference.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\obj\Debug\net6.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\obj\Debug\net6.0\Core.AssemblyInfoInputs.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\obj\Debug\net6.0\Core.AssemblyInfo.cs
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\obj\Debug\net6.0\Core.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\obj\Debug\net6.0\Core.csproj.CopyComplete
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\obj\Debug\net6.0\Core.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\obj\Debug\net6.0\refint\Core.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\obj\Debug\net6.0\Core.pdb
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\obj\Debug\net6.0\Core.genruntimeconfig.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Core\obj\Debug\net6.0\ref\Core.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\bin\Debug\net6.0\Core.deps.json
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\bin\Debug\net6.0\Core.runtimeconfig.json
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\bin\Debug\net6.0\Core.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\bin\Debug\net6.0\Core.pdb
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\bin\Debug\net6.0\DataAccess.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\bin\Debug\net6.0\Domain.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\bin\Debug\net6.0\DataAccess.pdb
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\bin\Debug\net6.0\Domain.pdb
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.csproj.AssemblyReference.cache
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.AssemblyInfoInputs.cache
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.AssemblyInfo.cs
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.csproj.CoreCompileInputs.cache
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.csproj.CopyComplete
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\obj\Debug\net6.0\refint\Core.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.pdb
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.genruntimeconfig.cache
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Core\obj\Debug\net6.0\ref\Core.dll
+C:\MirandaBackEnd\project\ManejoRRHH\Core\bin\Debug\net6.0\Core.deps.json
+C:\MirandaBackEnd\project\ManejoRRHH\Core\bin\Debug\net6.0\Core.runtimeconfig.json
+C:\MirandaBackEnd\project\ManejoRRHH\Core\bin\Debug\net6.0\Core.dll
+C:\MirandaBackEnd\project\ManejoRRHH\Core\bin\Debug\net6.0\Core.pdb
+C:\MirandaBackEnd\project\ManejoRRHH\Core\bin\Debug\net6.0\DataAccess.dll
+C:\MirandaBackEnd\project\ManejoRRHH\Core\bin\Debug\net6.0\Domain.dll
+C:\MirandaBackEnd\project\ManejoRRHH\Core\bin\Debug\net6.0\DataAccess.pdb
+C:\MirandaBackEnd\project\ManejoRRHH\Core\bin\Debug\net6.0\Domain.pdb
+C:\MirandaBackEnd\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.csproj.AssemblyReference.cache
+C:\MirandaBackEnd\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\MirandaBackEnd\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.AssemblyInfoInputs.cache
+C:\MirandaBackEnd\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.AssemblyInfo.cs
+C:\MirandaBackEnd\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.csproj.CoreCompileInputs.cache
+C:\MirandaBackEnd\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.csproj.CopyComplete
+C:\MirandaBackEnd\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.dll
+C:\MirandaBackEnd\project\ManejoRRHH\Core\obj\Debug\net6.0\refint\Core.dll
+C:\MirandaBackEnd\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.pdb
+C:\MirandaBackEnd\project\ManejoRRHH\Core\obj\Debug\net6.0\Core.genruntimeconfig.cache
+C:\MirandaBackEnd\project\ManejoRRHH\Core\obj\Debug\net6.0\ref\Core.dll

@@ -1,0 +1,15 @@
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\bin\Release\net6.0\win-x64\DataAccess.deps.json
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\bin\Release\net6.0\win-x64\DataAccess.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\bin\Release\net6.0\win-x64\DataAccess.pdb
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\bin\Release\net6.0\win-x64\Domain.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\bin\Release\net6.0\win-x64\Domain.pdb
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Release\net6.0\win-x64\DataAccess.csproj.AssemblyReference.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Release\net6.0\win-x64\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Release\net6.0\win-x64\DataAccess.AssemblyInfoInputs.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Release\net6.0\win-x64\DataAccess.AssemblyInfo.cs
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Release\net6.0\win-x64\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Release\net6.0\win-x64\DataAccess.csproj.CopyComplete
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Release\net6.0\win-x64\DataAccess.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Release\net6.0\win-x64\refint\DataAccess.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Release\net6.0\win-x64\DataAccess.pdb
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\DataAccess\obj\Release\net6.0\win-x64\ref\DataAccess.dll

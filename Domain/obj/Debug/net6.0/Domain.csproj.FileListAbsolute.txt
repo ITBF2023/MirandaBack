@@ -1,0 +1,46 @@
+C:\Users\Lenovo\source\repos\ManejoRRHH\Domain\bin\Debug\net6.0\Domain.deps.json
+C:\Users\Lenovo\source\repos\ManejoRRHH\Domain\bin\Debug\net6.0\Domain.dll
+C:\Users\Lenovo\source\repos\ManejoRRHH\Domain\bin\Debug\net6.0\Domain.pdb
+C:\Users\Lenovo\source\repos\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
+C:\Users\Lenovo\source\repos\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lenovo\source\repos\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+C:\Users\Lenovo\source\repos\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+C:\Users\Lenovo\source\repos\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\Lenovo\source\repos\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.dll
+C:\Users\Lenovo\source\repos\ManejoRRHH\Domain\obj\Debug\net6.0\refint\Domain.dll
+C:\Users\Lenovo\source\repos\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.pdb
+C:\Users\Lenovo\source\repos\ManejoRRHH\Domain\obj\Debug\net6.0\ref\Domain.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Domain\bin\Debug\net6.0\Domain.deps.json
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Domain\bin\Debug\net6.0\Domain.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Domain\bin\Debug\net6.0\Domain.pdb
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Domain\obj\Debug\net6.0\refint\Domain.dll
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.pdb
+C:\Users\Administrator\Documents\SQL\scripts\ManejoRRHH\Domain\obj\Debug\net6.0\ref\Domain.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Domain\bin\Debug\net6.0\Domain.deps.json
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Domain\bin\Debug\net6.0\Domain.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Domain\bin\Debug\net6.0\Domain.pdb
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Domain\obj\Debug\net6.0\refint\Domain.dll
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.pdb
+C:\Users\ANGIE MAECHA\Desktop\project\ManejoRRHH\Domain\obj\Debug\net6.0\ref\Domain.dll
+C:\MirandaBackEnd\project\ManejoRRHH\Domain\bin\Debug\net6.0\Domain.deps.json
+C:\MirandaBackEnd\project\ManejoRRHH\Domain\bin\Debug\net6.0\Domain.dll
+C:\MirandaBackEnd\project\ManejoRRHH\Domain\bin\Debug\net6.0\Domain.pdb
+C:\MirandaBackEnd\project\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\MirandaBackEnd\project\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
+C:\MirandaBackEnd\project\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs
+C:\MirandaBackEnd\project\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.csproj.CoreCompileInputs.cache
+C:\MirandaBackEnd\project\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.dll
+C:\MirandaBackEnd\project\ManejoRRHH\Domain\obj\Debug\net6.0\refint\Domain.dll
+C:\MirandaBackEnd\project\ManejoRRHH\Domain\obj\Debug\net6.0\Domain.pdb
+C:\MirandaBackEnd\project\ManejoRRHH\Domain\obj\Debug\net6.0\ref\Domain.dll
