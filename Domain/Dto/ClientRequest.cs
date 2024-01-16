@@ -15,8 +15,10 @@ namespace Domain.Dto
         public string Name { get; set; } = string.Empty;
         [Required]
         public string Nit { get; set; } = string.Empty;
+        
         public string? UrlEmpresa { get; set; }
-        public string Base64File { get; set; } = string.Empty;
+        
+        public string Base64File { get; set; }
        
     }
 }

@@ -1,7 +1,5 @@
 ﻿using ClosedXML.Excel;
 using Domain.Common;
- 
- 
 
 namespace Core.Common
 {
@@ -14,6 +12,7 @@ namespace Core.Common
             {
                 Directory.CreateDirectory(objectFileSave.FilePath);
             }
+
             byte[] fileBytes = Convert.FromBase64String(objectFileSave.Base64String);
             string fullPath = Path.Combine(objectFileSave.FilePath, objectFileSave.FileName);
             File.WriteAllBytes(fullPath, fileBytes);

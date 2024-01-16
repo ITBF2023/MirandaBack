@@ -89,7 +89,16 @@ namespace Core.Repository
 
             var objectFileSave = new ObjectFileSave();
             objectFileSave.FilePath = pathLogos;
-            objectFileSave.Base64String = base64File;
+
+            if (base64File.Contains(","))
+            {
+                string[] data = base64File.Split(',');
+                objectFileSave.Base64String = data[1];
+            }
+            else {
+                objectFileSave.Base64String = base64File;
+            }
+            
             objectFileSave.FileName = $"{clientName}.jpg";
             var pathFile = saveFile.SaveFileBase64(objectFileSave);
             return pathFile;
@@ -251,8 +260,11 @@ namespace Core.Repository
                 client.Nit = clientRequest.Nit;
                 client.UserIdModified = clientRequest.IdUser;
                 client.DateModified = DateTime.Now;
-                if (!string.IsNullOrEmpty(clientRequest.Base64File))
-                    client.PathLogo = await GetPathLogo(clientRequest.Base64File, clientRequest.Name);
+
+
+
+                //if (!string.IsNullOrEmpty(clientRequest.Base64File))
+                //    client.PathLogo = await GetPathLogo(clientRequest.Base64File, clientRequest.Name);
 
 
                 await clientecionRepository.Update(client);
