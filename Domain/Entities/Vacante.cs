@@ -48,7 +48,10 @@ namespace Domain.Entities
         public EstadoVacante? EstadoVacante { get; set; }
         public string Comentarios { get; set; } = string.Empty;
 
-
+        /// <summary>
+        /// Prioridad 0:Baja 1:Alta
+        /// </summary>
+        public bool Prioridad { get; set; }
 
     }
 }

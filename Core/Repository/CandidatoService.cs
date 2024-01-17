@@ -460,6 +460,29 @@ namespace Core.Repository
             }
             return listEstudiosResponse;
         }
+
+        /// <summary>
+        /// Obtener candidatos por identificacion
+        /// </summary>
+        /// <param name="document">Documento de identificacion</param>
+        /// <returns></returns>
+        public async Task<List<CandidatoResponse>> GetByDocument(string document)
+        {
+            var listResponse = new List<CandidatoResponse>();
+
+            try
+            {
+                var listCandidate = await candidatoRepository.GetListByParam(x => x.Documento == document);
+                listResponse = MappeListCandidatos(listCandidate);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return listResponse;
+        }
+
         private List<EstudioCandidatoResponse> MappeListEstudiosCandidatos(List<EstudioCandidato> estudioCandidatos)
         {
             var listEstudiosResponse = new List<EstudioCandidatoResponse>();

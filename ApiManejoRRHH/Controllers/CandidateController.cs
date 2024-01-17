@@ -572,6 +572,28 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtener candidatos por identificacion
+        /// </summary>
+        /// <param name="document">Documento de identificacion</param>
+        /// <returns></returns>
+        [HttpGet, Route("[action]/{document}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetByDocument(string document)
+        {
+            try
+            {
+                var candidates = await candidatoService.GetByDocument(document);
+                return Ok(candidates);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
+
         //[HttpGet, Route("[action]/{Documento}")]
         //[ProducesResponseType(StatusCodes.Status200OK)]
         //[ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -579,22 +601,22 @@ namespace ApiManejoRRHH.Controllers
 
         //public async Task<object> GetCandidatosDocumentos(int documento)
         //{
-            //dynamic responseHttp = new ExpandoObject();
+        //dynamic responseHttp = new ExpandoObject();
 
-            //try
-            //{
-            //    var refCandidato = await candidatoService.GetAllCandidatosFilter(documento);
-            //    responseHttp.data = refCandidato;
-            //    return responseHttp;
-            //}catch(Exception ex)
-            //{
-            //    responseHttp.status = 400;
-            //    responseHttp.message = ex;
-            //    return responseHttp;
-            //}
+        //try
+        //{
+        //    var refCandidato = await candidatoService.GetAllCandidatosFilter(documento);
+        //    responseHttp.data = refCandidato;
+        //    return responseHttp;
+        //}catch(Exception ex)
+        //{
+        //    responseHttp.status = 400;
+        //    responseHttp.message = ex;
+        //    return responseHttp;
+        //}
 
-            //return null;
-    
+        //return null;
+
         //}
 
     }
