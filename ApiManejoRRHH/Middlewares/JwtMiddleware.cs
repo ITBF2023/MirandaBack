@@ -26,7 +26,7 @@ namespace ApiManejoRRHH.Middlewares
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             if ((token is not null) && ValidateToken(token, tokenService))
             {
-                context.Items["UserId"] = "ALEXIS";
+                context.Items["UserId"] = "ITBF Colombia";
             }
             await requestDelegate(context);
         }

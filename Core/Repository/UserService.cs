@@ -1,19 +1,18 @@
-﻿using Core.Interfaces;
+﻿using AutoMapper;
+using Core.Common;
+using Core.Interfaces;
 using DataAccess.Interface;
 using Domain.Common;
 using Domain.Common.Enum;
 using Domain.Dto;
 using Domain.Entities;
-using Microsoft.Extensions.Logging;
+using Domain.Entities.StoreProcedure;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Net;
+using System.Security.Claims;
 using System.Security.Cryptography;
-using AutoMapper;
-using Domain.Entities.StoreProcedure;
-using Core.Common;
+using System.Text;
 
 namespace Core.Repository
 {
@@ -37,7 +36,8 @@ namespace Core.Repository
             var UserTokenResponse = new UserTokenResponse();
             try
             {
-                var user = await ValidateUserName(userTokenRequest.UserName);
+                var user = await ValidarUsuarioCorreo(userTokenRequest.Correo);
+
                 if (user is null)
                 {
                     UserTokenResponse.StatusCode = HttpStatusCode.Unauthorized;
@@ -45,13 +45,15 @@ namespace Core.Repository
                     return UserTokenResponse;
                 }
 
-                string pass = DecodeBase64Password(userTokenRequest.Password);
+                string pass = DecodeBase64Password(userTokenRequest.Contraseña);
+
                 if (!await ValidatePassword(pass, user.Password))
                 {
                     UserTokenResponse.StatusCode = HttpStatusCode.Unauthorized;
                     UserTokenResponse.Message = "Password no valido";
                     return UserTokenResponse;
                 }
+
                 UserTokenResponse = await MapperUserTokenResponse(user);
             }
             catch (Exception ex)
@@ -59,12 +61,13 @@ namespace Core.Repository
                 UserTokenResponse.StatusCode = HttpStatusCode.InternalServerError;
                 UserTokenResponse.Message = ex.Message;
             }
+
             return UserTokenResponse;
         }
 
-        private async Task<Usuario?> ValidateUserName(string? userName)
+        private async Task<Usuario?> ValidarUsuarioCorreo(string? correo)
         {
-            var user = await usuarioRepository.GetByParam(x => x.UserName.Equals(userName));
+            var user = await usuarioRepository.GetByParam(x => x.Correo.Equals(correo));
             return user;
         }
 
@@ -96,11 +99,11 @@ namespace Core.Repository
             UserTokenResponse = mapper.Map<UserTokenResponse>(user);
             UserTokenResponse.IdSesion = 1;
             UserTokenResponse.StatusCode = HttpStatusCode.OK;
-            UserTokenResponse.Token = await GenerateToken(user.UserName);
+            UserTokenResponse.Token = await GenerateToken(user.Correo);
             return UserTokenResponse;
         }
 
-        private async Task<string> GenerateToken(string? userName = "")
+        private async Task<string> GenerateToken(string? correo = "")
         {
             var secretKey = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.JwtSecretKey.ToString())))?.Value ?? string.Empty;
             var jwtIssuerToken = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.JwtIssuerToken.ToString())))?.Value ?? string.Empty;
@@ -109,7 +112,7 @@ namespace Core.Repository
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-            ClaimsIdentity claimsIdentity = new(new[] { new Claim(ClaimTypes.Name, userName) });
+            ClaimsIdentity claimsIdentity = new(new[] { new Claim(ClaimTypes.Name, correo) });
             var currentDate = DateTime.Now;
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtSecurityToken = tokenHandler.CreateJwtSecurityToken(
@@ -134,22 +137,22 @@ namespace Core.Repository
 
             try
             {
-                var validateUser = await ValidateUserName(userRequest.UserName);
+                var validateUser = await ValidarUsuarioCorreo(userRequest.Correo);
                 if (validateUser is null)
                 {
                     var usuario = mapper.Map<Usuario>(userRequest);
                     string pass = DecodeBase64Password(userRequest.Password);
                     usuario.Password = await EncryptedPassword(pass);
                     await InsertUser(usuario);
-                    userResponse.UserName = usuario.UserName;
+                    userResponse.Correo = usuario.Correo;
                     //userResponse.IdRol = usuario.IdRol;
                     userResponse.StatusCode = HttpStatusCode.OK;
-                    userResponse.Message = $"El usuario {usuario.UserName} a sido creado con exito";
+                    userResponse.Message = $"El usuario {usuario.Correo} a sido creado con exito";
                 }
                 else
                 {
                     userResponse.StatusCode = HttpStatusCode.Conflict;
-                    userResponse.Message = $"Ya existe un usuario con el nombre {userRequest.UserName}";
+                    userResponse.Message = $"Ya existe un usuario con el nombre {userRequest.Correo}";
                 }
             }
             catch (Exception ex)
@@ -216,7 +219,7 @@ namespace Core.Repository
 
         private async Task UpdateUser(Usuario usuario, UserCreateRequest userRequest)
         {
-            usuario.UserName = userRequest.UserName;
+            usuario.Correo = userRequest.Correo;
             if (!string.IsNullOrEmpty(userRequest.Password))
             {
                 string pass = DecodeBase64Password(userRequest.Password);
@@ -258,7 +261,7 @@ namespace Core.Repository
                 foreach (var item in usuarios)
                 {
                     var userResponse = new UsersResponse();
-                    userResponse.UserName = item.UserName;
+                    userResponse.Correo = item.Correo;
                     //userResponse.DescripcionRol = item.Rol.Description;
                     //userResponse.IdRol = item.IdRol;
                     list.Add(userResponse);

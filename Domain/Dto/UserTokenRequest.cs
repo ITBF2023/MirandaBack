@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Dto
 {
     public class UserTokenRequest
     {
         [Required]
-        public string UserName { get; set; } = string.Empty;
+        public string Correo { get; set; } = string.Empty;
+
         [Required]
-        public string Password { get; set; } = string.Empty;
+        public string Contraseña { get; set; } = string.Empty;
     }
 }

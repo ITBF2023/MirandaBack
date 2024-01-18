@@ -10,9 +10,6 @@ namespace Domain.Entities
         public int IdUser { get; set; }
 
         [Required]
-        public string UserName { get; set; } = string.Empty;
-
-        [Required]
         public string Password { get; set; } = string.Empty;
 
         public string? Nombres { get; set; }
@@ -22,5 +19,7 @@ namespace Domain.Entities
         public string? Telefono { get; set; }
 
         public string? Correo { get; set; }
+
+        public string? Foto { get; set; }
     }
 }

@@ -1,17 +1,14 @@
 ﻿using ApiManejoRRHH.Helpers;
 using Core.Interfaces;
-using Core.Repository;
 using Domain.Common;
 using Domain.Dto;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Dynamic;
 using System.Net;
 
 namespace ApiManejoRRHH.Controllers
 {
     /// <summary>
-    /// Controlador de vacante 
+    /// Controlador de vacante
     /// </summary>
 
     [Route("api/[controller]")]
@@ -19,7 +16,6 @@ namespace ApiManejoRRHH.Controllers
     [Authorize]
     public class CandidateController : ControllerBase
     {
-
         private readonly ICandidatoService candidatoService;
 
         /// <summary>
@@ -30,9 +26,8 @@ namespace ApiManejoRRHH.Controllers
             this.candidatoService = candidatoService;
         }
 
-
         /// <summary>
-        /// Metodo de creacion del candidato       
+        /// Metodo de creacion del candidato
         /// </summary>
         /// <param name="candidatoRequest">
         /// IdCandidato :  No es necesario enviarlo <br/>
@@ -70,13 +65,13 @@ namespace ApiManejoRRHH.Controllers
         ///  Parentesco:parentesco con el candidato <br/>
         ///  TiempoConocido: tiempo de conocer al candidato<br/>
         ///  Verificado: indica si la referencia fue validada  <br/>
-        ///  
-        ///  
+        ///
+        ///
         /// </param>
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        /// 
+        ///
         ///      {
         ///             "Documento": "1010180198",
         ///             "IdTipoDocumento": 1,
@@ -87,7 +82,7 @@ namespace ApiManejoRRHH.Controllers
         ///             "NumeroTelefonico": "3275675432",
         ///             "Correo": "cgiraldo0@gmail.com",
         ///             "Base64CV": "",
-        ///             "IdUser": "",     
+        ///             "IdUser": "",
         ///             "ListEstudioCandidatoRequest": [
         ///               {
         ///                 "IdTipoEstudio": 1,
@@ -128,7 +123,7 @@ namespace ApiManejoRRHH.Controllers
         ///                  "CargoDesempenado": "desarrollador de software senior",
         ///                  "Desempeno": "bien",
         ///                  "Verificado": false
-        ///                 }  
+        ///                 }
         ///           ],
         ///             "ListReferenciasPersonalesCandidatoRequest": [
         ///                 {
@@ -140,7 +135,7 @@ namespace ApiManejoRRHH.Controllers
         ///                 }
         ///             ]
         ///  }
-        ///  
+        ///
         /// </remarks>
 
         [HttpPost, Route("[action]")]
@@ -163,10 +158,8 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
-
         /// <summary>
-        /// Metodo de actualizacion del candidato     
+        /// Metodo de actualizacion del candidato
         /// </summary>
         /// <param name="candidatoRequest">
         /// <strong> IdCandidato : </strong> :  Numero Id de la tabla del candidato  <strong> * Obligatorio </strong> <br/>
@@ -204,13 +197,13 @@ namespace ApiManejoRRHH.Controllers
         ///  Parentesco:parentesco con el candidato <br/>
         ///  TiempoConocido: tiempo de conocer al candidato<br/>
         ///  Verificado: indica si la referencia fue validada  <br/>
-        ///  
-        ///  
+        ///
+        ///
         /// </param>
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        /// 
+        ///
         ///      {
         ///             "IdCandidato": 1,
         ///             "Documento": "1010180198",
@@ -222,7 +215,7 @@ namespace ApiManejoRRHH.Controllers
         ///             "NumeroTelefonico": "3275675432",
         ///             "Correo": "cgiraldo0@gmail.com",
         ///             "Base64CV": "",
-        ///             "IdUser": "",                  
+        ///             "IdUser": "",
         ///             "ListEstudioCandidatoRequest": [
         ///               {
         ///                 "IdTipoEstudio": 1,
@@ -263,7 +256,7 @@ namespace ApiManejoRRHH.Controllers
         ///                  "CargoDesempenado": "desarrollador de software senior",
         ///                  "Desempeno": "bien",
         ///                  "Verificado": false
-        ///                 }  
+        ///                 }
         ///           ],
         ///             "ListReferenciasPersonalesCandidatoRequest": [
         ///                 {
@@ -275,9 +268,8 @@ namespace ApiManejoRRHH.Controllers
         ///                 }
         ///             ]
         ///  }
-        ///  
+        ///
         /// </remarks>
-
 
         [HttpPut, Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -299,26 +291,24 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
-
         /// <summary>
         /// Metodo para actualizar si el candidato esta activo
         /// </summary>
         ///<param name="candidatoStateRequest">
         /// <strong> IdCandidato : </strong>   Numero Id de la tabla del candidato  <strong> * Obligatorio </strong> <br/>
         /// <strong> IdUser : </strong> :   Id del usuario que se logueo en el sistema <br/>
-        /// <strong> Activo : </strong>    valor del candidato debe ser true o false <strong> * Obligatorio </strong>  
+        /// <strong> Activo : </strong>    valor del candidato debe ser true o false <strong> * Obligatorio </strong>
         /// </param>
         ///
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
         ///        "IdCandidato": 1,
         ///        "IdUser": 1,
         ///        "Activo": true
-        /// 
+        ///
         ///     }
         ///
         /// </remarks>
@@ -343,26 +333,25 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Metodo para actualizar  el estado de un candidato  
+        /// Metodo para actualizar  el estado de un candidato
         /// </summary>
         ///<param name="candidatoStateRequest">
         /// <strong> IdCandidato : </strong>   Numero Id de la tabla del candidato  <strong> * Obligatorio </strong> <br/>
         /// <strong> IdUser : </strong> :   Id del usuario que se logueo en el sistema <br/>
         /// <strong> IdEstadoCandidato : </strong>   Id del estado del candidato <strong> * Obligatorio </strong> <br/>
-        ///  Comentarios:  comentarios acerca del candidato  
-        /// </param>    
+        ///  Comentarios:  comentarios acerca del candidato
+        /// </param>
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
         ///        "IdCandidato": 1,
         ///        "IdUser": 1,
         ///        "IdEstadoCandidato": 2,
         ///        "Comentarios": "string"
-        /// 
+        ///
         ///     }
         ///
         /// </remarks>
@@ -387,29 +376,24 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
-
-
-
         /// <summary>
-        /// Metodo para verificar las referencias laborales del candidato    
+        /// Metodo para verificar las referencias laborales del candidato
         /// </summary>
         /// <param name="referenciasLaboralesVerifyRequests">
         /// <strong> IdReferenciasLaboralesCandidato : </strong>   Numero Id de referencia laborales <strong> * Obligatorio </strong> <br/>
         /// Verificado: indica si la referencia fue validada  <br/>
-        /// </param>        
+        /// </param>
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
         ///         "IdReferenciasLaboralesCandidato": 0,
         ///         "Verificado": true
-        /// 
+        ///
         ///     }
         ///
         /// </remarks>
-
 
         [HttpPut, Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -431,23 +415,22 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Metodo para verificar las referencias personales del candidato    
+        /// Metodo para verificar las referencias personales del candidato
         /// </summary>
         ///<param name="referenciasPersonalesVerifyRequests">
         ///  <strong> IdReferenciasPersonalesCandidato : </strong>   Numero Id de referencia personales <strong> * Obligatorio </strong> <br/>
-        ///  Verificado: indica si la referencia fue validada  
+        ///  Verificado: indica si la referencia fue validada
         /// </param>
         ///
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
         ///         "IdReferenciasPersonalesCandidato": 0,
         ///         "Verificado": true
-        /// 
+        ///
         ///     }
         ///
         /// </remarks>
@@ -472,12 +455,10 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
-
         /// <summary>
-        /// Obtener candidatos 
-        /// </summary>         
-        /// <returns></returns> 
+        /// Obtener candidatos
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet, Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -496,14 +477,13 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Obtener estudios del candidatos 
-        /// </summary>    
+        /// Obtener estudios del candidatos
+        /// </summary>
         /// <param name="idCandidato">
         /// <strong> IdCandidato : </strong>   Numero Id de la tabla del candidato  <strong> * Obligatorio </strong> <br/>
         /// </param>
-        /// <returns></returns> 
+        /// <returns></returns>
 
         [HttpGet, Route("[action]/{idCandidato}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -522,14 +502,13 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Obtener referencias personales del candidatos 
-        /// </summary>  
+        /// Obtener referencias personales del candidatos
+        /// </summary>
         /// <param name="idCandidato">
         /// <strong> IdCandidato : </strong>   Numero Id de la tabla del candidato  <strong> * Obligatorio </strong> <br/>
         /// </param>
-        /// <returns></returns> 
+        /// <returns></returns>
         [HttpGet, Route("[action]/{idCandidato}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -547,14 +526,13 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Obtener referencias laborales  del candidatos 
-        /// </summary>  
+        /// Obtener referencias laborales  del candidatos
+        /// </summary>
         /// <param name="idCandidato">
         /// <strong> IdCandidato : </strong>   Numero Id de la tabla del candidato  <strong> * Obligatorio </strong> <br/>
         /// </param>
-        /// <returns></returns>     
+        /// <returns></returns>
         [HttpGet, Route("[action]/{idCandidato}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -618,6 +596,5 @@ namespace ApiManejoRRHH.Controllers
         //return null;
 
         //}
-
     }
 }
