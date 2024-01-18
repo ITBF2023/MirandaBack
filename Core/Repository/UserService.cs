@@ -260,13 +260,19 @@ namespace Core.Repository
             {
                 foreach (var item in usuarios)
                 {
-                    var userResponse = new UsersResponse();
-                    userResponse.Correo = item.Correo;
                     //userResponse.DescripcionRol = item.Rol.Description;
                     //userResponse.IdRol = item.IdRol;
-                    list.Add(userResponse);
+
+                    list.Add(new UsersResponse()
+                    {
+                        Nombres = item.Nombres,
+                        Apellidos = item.Apellidos,
+                        Telefono = item.Telefono,
+                        Correo = item.Correo
+                    });
                 }
             }
+
             return list;
         }
 
