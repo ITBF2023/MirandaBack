@@ -1,5 +1,4 @@
 ﻿using Core.Interfaces;
-using Core.Repository;
 
 namespace ApiManejoRRHH.Middlewares
 {
@@ -10,22 +9,20 @@ namespace ApiManejoRRHH.Middlewares
     {
         private readonly RequestDelegate requestDelegate;
 
-
         /// <summary>
         /// Constructor
         /// </summary>
-        public JwtMiddleware(RequestDelegate requestDelegat )
+        public JwtMiddleware(RequestDelegate requestDelegat)
         {
             this.requestDelegate = requestDelegat;
-           
         }
 
         /// <summary>
         /// Metodo para validar el token
         /// </summary>
 
-        public async Task InvokeAsync(HttpContext context, ITokenService tokenService) 
-        {           
+        public async Task InvokeAsync(HttpContext context, ITokenService tokenService)
+        {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             if ((token is not null) && ValidateToken(token, tokenService))
             {
@@ -36,11 +33,7 @@ namespace ApiManejoRRHH.Middlewares
 
         private bool ValidateToken(string token, ITokenService tokenService)
         {
-           
-           
             return tokenService.ValidateToken(token).Result;
         }
-
-
     }
 }

@@ -2,9 +2,9 @@
 using Domain.Dto;
 using Domain.Entities;
 
-namespace Core.Prolile
+namespace Core.Profiles
 {
-    public class CandidatoProfile: Profile
+    public class CandidatoProfile : Profile
     {
         public CandidatoProfile()
         {
@@ -31,8 +31,6 @@ namespace Core.Prolile
 
             CreateMap<ReferenciasLaboralesResponse, ReferenciasLaboralesCandidato>()
             .ReverseMap();
-
         }
-
     }
 }

@@ -2,11 +2,10 @@
 using Domain.Dto;
 using Domain.Entities;
 
-namespace Core.Prolile
+namespace Core.Profiles
 {
-    public class ComisionProfile: Profile
+    public class ComisionProfile : Profile
     {
-
         public ComisionProfile()
         {
             CreateMap<ComisionRequest, Comision>()

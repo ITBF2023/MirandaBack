@@ -1,15 +1,11 @@
 ﻿using ApiManejoRRHH.Helpers;
 using Core.Interfaces;
-using Core.Repository;
 using Domain.Dto;
-using Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace ApiManejoRRHH.Controllers
 {
-
     /// <summary>
     /// Controlador de Usuario
     /// </summary>
@@ -28,11 +24,8 @@ namespace ApiManejoRRHH.Controllers
             this.userService = userService;
         }
 
-
-
-
         /// <summary>
-        /// Metodo de creacion del usuario       
+        /// Metodo de creacion del usuario
         /// </summary>
         ///<param name="userRequest">
         /// <strong> UserName : </strong> nombre de usuario que registro <strong>* Obligatorio</strong> <br/>
@@ -43,11 +36,11 @@ namespace ApiManejoRRHH.Controllers
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
         ///        "UserName": "prueba",
         ///        "Password": "cHJ1RUJB",
-        ///        "IdRol": 1      
+        ///        "IdRol": 1
         ///     }
         ///
         /// </remarks>
@@ -70,14 +63,10 @@ namespace ApiManejoRRHH.Controllers
             {
                 return Problem();
             }
-
         }
 
-
-
-
         /// <summary>
-        /// Metodo de actualizacion del usuario   
+        /// Metodo de actualizacion del usuario
         /// </summary>
         ///<param name="userRequest">
         /// <strong> Id : </strong> numero Id del usuario que registro <strong>* Obligatorio</strong> <br/>
@@ -89,12 +78,12 @@ namespace ApiManejoRRHH.Controllers
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
-        ///        "Id": 1,  
+        ///        "Id": 1,
         ///        "UserName": "prueba",
         ///        "Password": "cHJ1RUJB",
-        ///        "IdRol": 1      
+        ///        "IdRol": 1
         ///     }
         ///
         /// </remarks>
@@ -118,13 +107,10 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
-
-
         /// <summary>
-        /// Obtener Usuarios 
-        /// </summary>         
-        /// <returns></returns> 
+        /// Obtener Usuarios
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet, Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -143,16 +129,13 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
-
-
         /// <summary>
-        /// Obtener datos por Id del Usuario  
+        /// Obtener datos por Id del Usuario
         /// </summary>
         ///<param name="idUser">
-        /// <strong> idUser : </strong> numero Id del usuario que registro <strong>* Obligatorio</strong> 
+        /// <strong> idUser : </strong> numero Id del usuario que registro <strong>* Obligatorio</strong>
         /// </param>
-        /// <returns></returns>  
+        /// <returns></returns>
 
         [HttpGet, Route("[action]/{idUser}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -174,15 +157,13 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
-
         /// <summary>
-        /// Obtener procesos por Id del Usuario  
+        /// Obtener procesos por Id del Usuario
         /// </summary>
         ///<param name="idUser">
-        /// <strong> idUser : </strong> numero Id del usuario que registro <strong>* Obligatorio</strong> 
+        /// <strong> idUser : </strong> numero Id del usuario que registro <strong>* Obligatorio</strong>
         /// </param>
-        /// <returns></returns>  
+        /// <returns></returns>
 
         [HttpGet, Route("[action]/{idUser}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -201,14 +182,13 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Obtener candidatos rechazados por Id del Usuario  
+        /// Obtener candidatos rechazados por Id del Usuario
         /// </summary>
         ///<param name="idUser">
-        /// <strong> idUser : </strong> numero Id del usuario que registro <strong>* Obligatorio</strong> 
+        /// <strong> idUser : </strong> numero Id del usuario que registro <strong>* Obligatorio</strong>
         /// </param>
-        /// <returns></returns>  
+        /// <returns></returns>
 
         [HttpGet, Route("[action]/{idUser}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -229,7 +209,5 @@ namespace ApiManejoRRHH.Controllers
                 return Problem();
             }
         }
-
-
     }
 }

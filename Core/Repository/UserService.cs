@@ -19,14 +19,12 @@ namespace Core.Repository
 {
     public class UserService : IUserService
     {
-        
         private readonly IRepository<Configuracion> configuiuracionRepository;
         private readonly IRepository<Usuario> usuarioRepository;
         private readonly IStoreProcedureRepository storeProcedureRepository;
         private readonly IMapper mapper;
 
-
-        public UserService( IRepository<Configuracion> configuiuracionRepository, IRepository<Usuario> usuarioRepository, IMapper mapper, IStoreProcedureRepository storeProcedureRepository)
+        public UserService(IRepository<Configuracion> configuiuracionRepository, IRepository<Usuario> usuarioRepository, IMapper mapper, IStoreProcedureRepository storeProcedureRepository)
         {
             this.configuiuracionRepository = configuiuracionRepository;
             this.usuarioRepository = usuarioRepository;
@@ -34,14 +32,13 @@ namespace Core.Repository
             this.storeProcedureRepository = storeProcedureRepository;
         }
 
-        public async Task<UserTokenResponse>  GetAuthentication(UserTokenRequest userTokenRequest)
+        public async Task<UserTokenResponse> GetAuthentication(UserTokenRequest userTokenRequest)
         {
             var UserTokenResponse = new UserTokenResponse();
             try
             {
-
                 var user = await ValidateUserName(userTokenRequest.UserName);
-                if (user  is null)
+                if (user is null)
                 {
                     UserTokenResponse.StatusCode = HttpStatusCode.Unauthorized;
                     UserTokenResponse.Message = "Usuario no encontrado";
@@ -55,51 +52,54 @@ namespace Core.Repository
                     UserTokenResponse.Message = "Password no valido";
                     return UserTokenResponse;
                 }
-                UserTokenResponse = await MapperUserTokenResponse(user);               
+                UserTokenResponse = await MapperUserTokenResponse(user);
             }
             catch (Exception ex)
             {
                 UserTokenResponse.StatusCode = HttpStatusCode.InternalServerError;
-                UserTokenResponse.Message =  ex.Message;
+                UserTokenResponse.Message = ex.Message;
             }
             return UserTokenResponse;
-        }       
+        }
+
         private async Task<Usuario?> ValidateUserName(string? userName)
         {
             var user = await usuarioRepository.GetByParam(x => x.UserName.Equals(userName));
-            return user;       
+            return user;
         }
-        private static string DecodeBase64Password(string password) 
+
+        private static string DecodeBase64Password(string password)
         {
             var base64EncodedBytes = System.Convert.FromBase64String(password);
-            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);             
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
+
         public async Task<bool> ValidatePassword(string? password, string encryptedPassword)
         {
-
             var keyEncrypted = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.KeyEncrypted.ToString())))?.Value ?? string.Empty;
             var iVEncrypted = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.IVEncrypted.ToString())))?.Value ?? string.Empty;
             byte[] key = Encoding.UTF8.GetBytes(keyEncrypted);
             byte[] iv = Encoding.UTF8.GetBytes(iVEncrypted);
             using (TripleDES aes = TripleDES.Create())
-            {            
-               
+            {
                 ICryptoTransform decryptor = aes.CreateDecryptor(key, iv);
                 byte[] encryptedPasswordBytes = Convert.FromBase64String(encryptedPassword);
                 byte[] decryptedPasswordBytes = decryptor.TransformFinalBlock(encryptedPasswordBytes, 0, encryptedPasswordBytes.Length);
                 string decryptedPassword = Encoding.UTF8.GetString(decryptedPasswordBytes);
-                return decryptedPassword == password;               
-            }              
+                return decryptedPassword == password;
+            }
         }
+
         private async Task<UserTokenResponse> MapperUserTokenResponse(Usuario user)
         {
-            UserTokenResponse UserTokenResponse ;
+            UserTokenResponse UserTokenResponse;
             UserTokenResponse = mapper.Map<UserTokenResponse>(user);
             UserTokenResponse.IdSesion = 1;
             UserTokenResponse.StatusCode = HttpStatusCode.OK;
             UserTokenResponse.Token = await GenerateToken(user.UserName);
-            return UserTokenResponse;   
+            return UserTokenResponse;
         }
+
         private async Task<string> GenerateToken(string? userName = "")
         {
             var secretKey = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.JwtSecretKey.ToString())))?.Value ?? string.Empty;
@@ -121,8 +121,13 @@ namespace Core.Repository
                 signingCredentials: signingCredentials);
             var jwtTokenString = tokenHandler.WriteToken(jwtSecurityToken);
             return jwtTokenString;
-        }      
+        }
 
+        /// <summary>
+        /// Creacion de usuario
+        /// </summary>
+        /// <param name="userRequest"></param>
+        /// <returns></returns>
         public async Task<UserResponse> CreateUser(UserRequest userRequest)
         {
             var userResponse = new UserResponse();
@@ -137,7 +142,7 @@ namespace Core.Repository
                     usuario.Password = await EncryptedPassword(pass);
                     await InsertUser(usuario);
                     userResponse.UserName = usuario.UserName;
-                    userResponse.IdRol = usuario.IdRol;
+                    //userResponse.IdRol = usuario.IdRol;
                     userResponse.StatusCode = HttpStatusCode.OK;
                     userResponse.Message = $"El usuario {usuario.UserName} a sido creado con exito";
                 }
@@ -145,8 +150,7 @@ namespace Core.Repository
                 {
                     userResponse.StatusCode = HttpStatusCode.Conflict;
                     userResponse.Message = $"Ya existe un usuario con el nombre {userRequest.UserName}";
-                }              
-
+                }
             }
             catch (Exception ex)
             {
@@ -154,20 +158,18 @@ namespace Core.Repository
                 userResponse.Message = ex.Message;
             }
             return userResponse;
-        }      
+        }
+
         private async Task<string> EncryptedPassword(string password)
         {
             var keyEncrypted = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.KeyEncrypted.ToString())))?.Value ?? string.Empty;
             var iVEncrypted = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.IVEncrypted.ToString())))?.Value ?? string.Empty;
-
 
             byte[] key = Encoding.UTF8.GetBytes(keyEncrypted);
             byte[] iv = Encoding.UTF8.GetBytes(iVEncrypted);
 
             using (TripleDES aes = TripleDES.Create())
             {
-                             
-
                 ICryptoTransform encryptor = aes.CreateEncryptor(key, iv);
 
                 byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
@@ -175,16 +177,17 @@ namespace Core.Repository
 
                 string encryptedPassword = Convert.ToBase64String(encryptedPasswordBytes);
                 return encryptedPassword;
-            }            
+            }
         }
+
         private async Task InsertUser(Usuario usuario)
         {
             await usuarioRepository.Insert(usuario);
         }
-         
+
         public async Task<BaseResponse> UpdateUser(UserCreateRequest userRequest)
         {
-            var  baseResponse = new BaseResponse();
+            var baseResponse = new BaseResponse();
             try
             {
                 var user = await GetUserById(userRequest.Id);
@@ -197,31 +200,32 @@ namespace Core.Repository
                 {
                     baseResponse = GetResponse("Id Usuario no encontrado", HttpStatusCode.NotFound);
                 }
-
             }
             catch (Exception ex)
             {
-                baseResponse.StatusCode = HttpStatusCode.InternalServerError; 
+                baseResponse.StatusCode = HttpStatusCode.InternalServerError;
                 baseResponse.Message = ex.Message;
             }
             return baseResponse;
         }
+
         private async Task<Usuario> GetUserById(int idUser)
         {
             return await usuarioRepository.GetById(idUser);
         }
+
         private async Task UpdateUser(Usuario usuario, UserCreateRequest userRequest)
         {
-
             usuario.UserName = userRequest.UserName;
             if (!string.IsNullOrEmpty(userRequest.Password))
             {
                 string pass = DecodeBase64Password(userRequest.Password);
                 usuario.Password = await EncryptedPassword(pass);
             }
-            usuario.IdRol = userRequest.IdRol;
+            //usuario.IdRol = userRequest.IdRol;
             await usuarioRepository.Update(usuario);
         }
+
         private BaseResponse GetResponse(string mensaje, HttpStatusCode httpStatusCode)
         {
             return new BaseResponse()
@@ -231,12 +235,12 @@ namespace Core.Repository
             };
         }
 
-        public async Task<List<UsersResponse>> GetUser() 
+        public async Task<List<UsersResponse>> GetUser()
         {
             List<UsersResponse> list;
             try
             {
-                var users = await GetUsuarios();
+                var users = await usuarioRepository.GetAll();
                 list = MapperUserResponse(users);
                 return list;
             }
@@ -245,21 +249,18 @@ namespace Core.Repository
                 throw ex;
             }
         }
-        private async Task<List<Usuario>> GetUsuarios()
-        {
-            return await usuarioRepository.GetAllByParamIncluding(null, (x => x.Rol));
-        }
+
         private List<UsersResponse> MapperUserResponse(List<Usuario> usuarios)
         {
-            var list = new List<UsersResponse>();    
-            if (usuarios is not null &&  usuarios.Count > 0)
+            var list = new List<UsersResponse>();
+            if (usuarios is not null && usuarios.Count > 0)
             {
                 foreach (var item in usuarios)
-                { 
+                {
                     var userResponse = new UsersResponse();
                     userResponse.UserName = item.UserName;
-                    userResponse.DescripcionRol = item.Rol.Description;
-                    userResponse.IdRol = item.IdRol;
+                    //userResponse.DescripcionRol = item.Rol.Description;
+                    //userResponse.IdRol = item.IdRol;
                     list.Add(userResponse);
                 }
             }
@@ -274,7 +275,7 @@ namespace Core.Repository
                 var user = await GetUserById(idUser);
                 if (user is not null)
                 {
-                    userResponse  = mapper.Map<UserResponse>(user);
+                    userResponse = mapper.Map<UserResponse>(user);
                     userResponse.StatusCode = HttpStatusCode.OK;
                 }
                 else
@@ -285,7 +286,7 @@ namespace Core.Repository
             }
             catch (Exception ex)
             {
-                userResponse.StatusCode=HttpStatusCode.InternalServerError;
+                userResponse.StatusCode = HttpStatusCode.InternalServerError;
                 userResponse.Message = ex.Message;
             }
             return userResponse;
@@ -293,7 +294,6 @@ namespace Core.Repository
 
         public async Task<List<SPProcessByUserResponse>> GetProccesByUser(int idUser)
         {
-
             List<SPProcessByUserResponse> list;
             try
             {
@@ -306,18 +306,19 @@ namespace Core.Repository
                 throw ex;
             }
         }
+
         private async Task<List<SPProcessByUser>> GetSPProcessByUser(int idUser)
         {
             return await storeProcedureRepository.GetProcessCandidateByUser(idUser);
         }
+
         private List<SPProcessByUserResponse> MapperSPProcessByUserResponse(List<SPProcessByUser> sPProcessByUsers)
         {
             var list = new List<SPProcessByUserResponse>();
-            if (sPProcessByUsers is not null && sPProcessByUsers.Count >0)
+            if (sPProcessByUsers is not null && sPProcessByUsers.Count > 0)
             {
                 foreach (var item in sPProcessByUsers)
                 {
-
                     var sPProcessByUserResponse = mapper.Map<SPProcessByUserResponse>(item);
                     list.Add(sPProcessByUserResponse);
                 }
@@ -338,20 +339,22 @@ namespace Core.Repository
             catch (Exception ex)
             {
                 reportingRejectedCandidatesResponse.Message = ex.Message;
-                reportingRejectedCandidatesResponse.StatusCode = HttpStatusCode.InternalServerError;                
+                reportingRejectedCandidatesResponse.StatusCode = HttpStatusCode.InternalServerError;
             }
-            return reportingRejectedCandidatesResponse; 
+            return reportingRejectedCandidatesResponse;
         }
+
         private async Task<List<SPRejectedCandidatesByUser>> GetSPRejectedCandidatesByUser(int idUser)
         {
             return await storeProcedureRepository.GetRejectedCandidatesByUser(idUser);
         }
-        private async Task<string> SaveExcel(List<SPRejectedCandidatesByUser> sPRejectedCandidatesByUsers, int idUser) 
+
+        private async Task<string> SaveExcel(List<SPRejectedCandidatesByUser> sPRejectedCandidatesByUsers, int idUser)
         {
             var pathExcel = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.PathExcelRejected.ToString())))?.Value ?? string.Empty;
 
             var Savefile = new SaveFiles();
-            if (sPRejectedCandidatesByUsers is not null && sPRejectedCandidatesByUsers.Count > 0 )
+            if (sPRejectedCandidatesByUsers is not null && sPRejectedCandidatesByUsers.Count > 0)
             {
                 var objectFileSaveExcel = new ObjectFileSaveExcel();
                 objectFileSaveExcel.Lista = sPRejectedCandidatesByUsers;
@@ -359,7 +362,7 @@ namespace Core.Repository
                 objectFileSaveExcel.Path = pathExcel;
                 return Savefile.SaveExcel(objectFileSaveExcel);
             }
-            return string.Empty;         
+            return string.Empty;
         }
     }
 }

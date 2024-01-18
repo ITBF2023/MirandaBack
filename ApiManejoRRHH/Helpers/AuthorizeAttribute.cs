@@ -10,8 +10,6 @@ namespace ApiManejoRRHH.Helpers
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthorizeAttribute : Attribute, IAuthorizationFilter
     {
-
-
         /// <summary>
         /// Metodo que valida el token
         /// </summary>
@@ -20,7 +18,7 @@ namespace ApiManejoRRHH.Helpers
             var userName = context.HttpContext.Items["UserId"];
             if (userName is null)
             {
-                context.Result = new JsonResult(new { message = "Unautthorized", }) { StatusCode = StatusCodes.Status401Unauthorized };                 
+                context.Result = new JsonResult(new { message = "Unautthorized", }) { StatusCode = StatusCodes.Status401Unauthorized };
             }
         }
     }

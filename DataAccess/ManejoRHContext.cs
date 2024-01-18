@@ -2,19 +2,14 @@
 using Domain.Entities.StoreProcedure;
 using Domain.Entities.View;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess
 {
     public class ManejoRHContext : DbContext
     {
-
-
-        public ManejoRHContext(DbContextOptions<ManejoRHContext> options): base(options){}
+        public ManejoRHContext(DbContextOptions<ManejoRHContext> options) : base(options)
+        {
+        }
 
         public virtual DbSet<Configuracion> Configuraciones { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
@@ -41,22 +36,19 @@ namespace DataAccess
         public virtual DbSet<TipoCertificado> TipoCertificados { get; set; }
         public virtual DbSet<CertificadosEmpleado> CertificadosEmpleados { get; set; }
         public virtual DbSet<CertificadoEstudiantilEmpleado> CertificadoEstudiantilEmpleados { get; set; }
+        public virtual DbSet<TipoNovedad> TipoNovedades { get; set; }
+        public virtual DbSet<Novedad> Novedades { get; set; }
+        public virtual DbSet<Comision> Comisiones { get; set; }
+        public virtual DbSet<TiempoContrato> TiempoContratos { get; set; }
+
+        public virtual DbSet<VWEmployeesByComision> VWEmployeesByComisiones { get; set; }
+
+        public virtual DbSet<SPInfoEmployee> SPInfoEmployees { get; set; }
+        public virtual DbSet<SPHistoricalNoverltyEmployee> SPHistoricalNoverltyEmployees { get; set; }
         public virtual DbSet<SPEmployeesByClient> SPEmployeesByClients { get; set; }
         public virtual DbSet<SPProcessCandidateByClient> SPProcessCandidateByClients { get; set; }
         public virtual DbSet<SPProcessByUser> SPProcessByUsers { get; set; }
         public virtual DbSet<SPRejectedCandidatesByUser> SPRejectedCandidatesByUsers { get; set; }
-        public virtual DbSet<TipoNovedad> TipoNovedades { get; set; }
-        public virtual DbSet<Novedad> Novedades { get; set; }
-        public virtual DbSet<Comision> Comisiones { get; set; }
-        public virtual DbSet<VWEmployeesByComision> VWEmployeesByComisiones { get; set; }
-        public virtual DbSet<SPInfoEmployee> SPInfoEmployees { get; set; }
-        public virtual DbSet<SPHistoricalNoverltyEmployee> SPHistoricalNoverltyEmployees { get; set; }
-
-
-
-
-
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

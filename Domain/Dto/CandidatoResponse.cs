@@ -28,6 +28,7 @@ namespace Domain.Dto
         public string Correo { get; set; } = string.Empty;
         public string? UrlCV { get; set; }
         public bool Activo { get; set; } = true;
+        public string Nombre { get; set; }
     }
 
     public class EstudioCandidatoResponse

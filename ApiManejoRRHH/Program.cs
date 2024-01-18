@@ -4,19 +4,12 @@ using Core.Repository;
 using DataAccess;
 using DataAccess.Interface;
 using DataAccess.Repository;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
-
-
 
 builder.Services.AddControllers()
         .AddJsonOptions(JsonOptions =>
@@ -24,7 +17,6 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Manejo de RRHH", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -49,7 +41,6 @@ builder.Services.AddSwaggerGen(c =>
                 },
                 Array.Empty<string>()
             }
-
     });
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
@@ -62,9 +53,7 @@ builder.Services.AddDbContext<ManejoRHContext>(options =>
     {
         builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
     });
-
 });
-
 
 builder.Services.AddCors(options =>
 {
@@ -75,7 +64,6 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
     });
 });
-
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(RepositoryIRepository<>));
 builder.Services.AddScoped<IStoreProcedureRepository, StoreProcedureRepository>();
@@ -90,12 +78,7 @@ builder.Services.AddScoped<IContratoService, ContratoService>();
 builder.Services.AddScoped<IEmpleadoService, EmpleadoService>();
 builder.Services.AddScoped<INovedadService, NovedadService>();
 builder.Services.AddScoped<IComisionService, ComisionService>();
-
-
-
-
-
-
+builder.Services.AddScoped<ITiempoContratoService, TiempoContratoService>();
 
 var app = builder.Build();
 

@@ -1,13 +1,11 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Dto;
 using Domain.Entities;
 
-namespace Core.Prolile
+namespace Core.Profiles
 {
-    public class VacanteProfile: Profile
+    public class VacanteProfile : Profile
     {
-
         public VacanteProfile()
         {
             CreateMap<VacanteRequest, Vacante>()
@@ -21,9 +19,6 @@ namespace Core.Prolile
 
             CreateMap<VacanteDetailResponse, Vacante>()
              .ReverseMap();
-
         }
-
-
     }
 }
