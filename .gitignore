@@ -475,3 +475,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+ApiManejoRRHH/bin
+
+ApiManejoRRHH/obj
+
+Core/bin

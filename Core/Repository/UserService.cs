@@ -141,7 +141,7 @@ namespace Core.Repository
                 if (validateUser is null)
                 {
                     var usuario = mapper.Map<Usuario>(userRequest);
-                    string pass = DecodeBase64Password(userRequest.Password);
+                    string pass = DecodeBase64Password(userRequest.Contraseña);
                     usuario.Password = await EncryptedPassword(pass);
                     await InsertUser(usuario);
                     userResponse.Correo = usuario.Correo;
@@ -188,7 +188,7 @@ namespace Core.Repository
             await usuarioRepository.Insert(usuario);
         }
 
-        public async Task<BaseResponse> UpdateUser(UserCreateRequest userRequest)
+        public async Task<BaseResponse> UpdateUser(UserRequest userRequest)
         {
             var baseResponse = new BaseResponse();
             try
@@ -217,12 +217,12 @@ namespace Core.Repository
             return await usuarioRepository.GetById(idUser);
         }
 
-        private async Task UpdateUser(Usuario usuario, UserCreateRequest userRequest)
+        private async Task UpdateUser(Usuario usuario, UserRequest userRequest)
         {
             usuario.Correo = userRequest.Correo;
-            if (!string.IsNullOrEmpty(userRequest.Password))
+            if (!string.IsNullOrEmpty(userRequest.Contraseña))
             {
-                string pass = DecodeBase64Password(userRequest.Password);
+                string pass = DecodeBase64Password(userRequest.Contraseña);
                 usuario.Password = await EncryptedPassword(pass);
             }
             //usuario.IdRol = userRequest.IdRol;
@@ -238,9 +238,9 @@ namespace Core.Repository
             };
         }
 
-        public async Task<List<UsersResponse>> GetUser()
+        public async Task<List<UserResponse>> GetUser()
         {
-            List<UsersResponse> list;
+            List<UserResponse> list;
             try
             {
                 var users = await usuarioRepository.GetAll();
@@ -253,9 +253,9 @@ namespace Core.Repository
             }
         }
 
-        private List<UsersResponse> MapperUserResponse(List<Usuario> usuarios)
+        private List<UserResponse> MapperUserResponse(List<Usuario> usuarios)
         {
-            var list = new List<UsersResponse>();
+            var list = new List<UserResponse>();
             if (usuarios is not null && usuarios.Count > 0)
             {
                 foreach (var item in usuarios)
@@ -263,7 +263,7 @@ namespace Core.Repository
                     //userResponse.DescripcionRol = item.Rol.Description;
                     //userResponse.IdRol = item.IdRol;
 
-                    list.Add(new UsersResponse()
+                    list.Add(new UserResponse()
                     {
                         Nombres = item.Nombres,
                         Apellidos = item.Apellidos,

@@ -45,6 +45,7 @@ builder.Services.AddSwaggerGen(c =>
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
+
 builder.Logging.ClearProviders();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<ManejoRHContext>(options =>
@@ -79,6 +80,7 @@ builder.Services.AddScoped<IEmpleadoService, EmpleadoService>();
 builder.Services.AddScoped<INovedadService, NovedadService>();
 builder.Services.AddScoped<IComisionService, ComisionService>();
 builder.Services.AddScoped<ITiempoContratoService, TiempoContratoService>();
+builder.Services.AddScoped<IRolService, RolService>();
 
 var app = builder.Build();
 

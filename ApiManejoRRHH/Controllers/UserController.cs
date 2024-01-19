@@ -44,7 +44,6 @@ namespace ApiManejoRRHH.Controllers
         ///     }
         ///
         /// </remarks>
-
         [HttpPost, Route("[action]")]
         [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -91,7 +90,7 @@ namespace ApiManejoRRHH.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update([FromBody] UserCreateRequest userRequest)
+        public async Task<IActionResult> Update([FromBody] UserRequest userRequest)
         {
             try
             {
@@ -111,7 +110,6 @@ namespace ApiManejoRRHH.Controllers
         /// Obtener Usuarios
         /// </summary>
         /// <returns></returns>
-
         [HttpGet, Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -136,7 +134,6 @@ namespace ApiManejoRRHH.Controllers
         /// <strong> idUser : </strong> numero Id del usuario que registro <strong>* Obligatorio</strong>
         /// </param>
         /// <returns></returns>
-
         [HttpGet, Route("[action]/{idUser}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -164,7 +161,6 @@ namespace ApiManejoRRHH.Controllers
         /// <strong> idUser : </strong> numero Id del usuario que registro <strong>* Obligatorio</strong>
         /// </param>
         /// <returns></returns>
-
         [HttpGet, Route("[action]/{idUser}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -189,7 +185,6 @@ namespace ApiManejoRRHH.Controllers
         /// <strong> idUser : </strong> numero Id del usuario que registro <strong>* Obligatorio</strong>
         /// </param>
         /// <returns></returns>
-
         [HttpGet, Route("[action]/{idUser}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
