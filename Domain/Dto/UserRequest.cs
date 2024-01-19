@@ -20,6 +20,6 @@ namespace Domain.Dto
 
         public string Telefono { get; set; }
 
-        public string Foto { get; set; }
+        public string FotoBase64 { get; set; }
     }
 }

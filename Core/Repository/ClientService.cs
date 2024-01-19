@@ -14,13 +14,10 @@ using System.Net;
 using System.Reflection.Metadata;
 using System.Xml.Linq;
 
-
 namespace Core.Repository
 {
     public class ClientService : IClientService
     {
-
-        
         private readonly IRepository<Configuracion> configuiuracionRepository;
         private readonly IRepository<Cliente> clientecionRepository;
         private readonly IRepository<Proceso> procesoRepository;
@@ -29,7 +26,7 @@ namespace Core.Repository
 
         private readonly IMapper mapper;
 
-        public ClientService( IRepository<Configuracion> configuiuracionRepository, IRepository<Cliente> clientecionRepository, IMapper mapper,
+        public ClientService(IRepository<Configuracion> configuiuracionRepository, IRepository<Cliente> clientecionRepository, IMapper mapper,
             IStoreProcedureRepository storeProcedureRepository, IRepository<Proceso> procesoRepository, IRepository<Vacante> vacanteRepository)
         {
             this.storeProcedureRepository = storeProcedureRepository;
@@ -40,10 +37,8 @@ namespace Core.Repository
             this.vacanteRepository = vacanteRepository;
         }
 
-
         public async Task<BaseResponse> CreateClient(ClientRequest clientRequest)
         {
-
             var baseRe = new BaseResponse();
 
             try
@@ -54,7 +49,6 @@ namespace Core.Repository
                         baseRe = GetResponse("Cliente Creado con exito");
                     else
                         baseRe = GetResponseFailed();
-
                 }
             }
             catch (Exception ex)
@@ -64,9 +58,9 @@ namespace Core.Repository
             }
             return baseRe;
         }
+
         private async Task<bool> InsertClient(ClientRequest clientRequest)
         {
-
             var cliente = await clientecionRepository.GetByParam(x => x.Nit.Equals(clientRequest.Nit));
             if (cliente is null)
             {
@@ -82,6 +76,7 @@ namespace Core.Repository
             }
             return false;
         }
+
         private async Task<string> GetPathLogo(string base64File, string clientName)
         {
             var saveFile = new SaveFiles();
@@ -95,14 +90,16 @@ namespace Core.Repository
                 string[] data = base64File.Split(',');
                 objectFileSave.Base64String = data[1];
             }
-            else {
+            else
+            {
                 objectFileSave.Base64String = base64File;
             }
-            
+
             objectFileSave.FileName = $"{clientName}.jpg";
             var pathFile = saveFile.SaveFileBase64(objectFileSave);
             return pathFile;
         }
+
         private BaseResponse GetResponse(string mensaje)
         {
             return new BaseResponse()
@@ -111,6 +108,7 @@ namespace Core.Repository
                 Message = mensaje,
             };
         }
+
         private BaseResponse GetResponseFailed()
         {
             return new BaseResponse()
@@ -128,14 +126,12 @@ namespace Core.Repository
                 var cliente = await clientecionRepository.GetByParam(x => x.Nit.Equals(document));
                 clientResponse = mapper.Map<ClientResponse>(cliente);
                 clientResponse.StatusCode = HttpStatusCode.OK;
-
             }
             catch (Exception ex)
             {
                 clientResponse.Message = ex.Message;
                 clientResponse.StatusCode = HttpStatusCode.InternalServerError;
             }
-
 
             return clientResponse;
         }
@@ -154,6 +150,7 @@ namespace Core.Repository
                 throw ex;
             }
         }
+
         private List<ClientResponse> GetListClientResponse(List<Cliente> listCliente)
         {
             List<ClientResponse> listResponse = new List<ClientResponse>();
@@ -173,7 +170,6 @@ namespace Core.Repository
 
         public async Task<List<SPEmployeesByClientResponse>> GetEmployeesByClient(int idClient)
         {
-
             try
             {
                 List<SPEmployeesByClientResponse> sPEmployeesByClientResponses;
@@ -186,6 +182,7 @@ namespace Core.Repository
                 throw ex;
             }
         }
+
         private List<SPEmployeesByClientResponse> MapperSPEmployeesByClientResponse(List<SPEmployeesByClient> sPEmployeesByClients)
         {
             var sPEmployeesByClientResponses = new List<SPEmployeesByClientResponse>();
@@ -196,30 +193,29 @@ namespace Core.Repository
                     var sPEmployeesByClientResponse = mapper.Map<SPEmployeesByClientResponse>(s);
                     sPEmployeesByClientResponses.Add(sPEmployeesByClientResponse);
                 });
-
             }
             return sPEmployeesByClientResponses;
         }
 
         public async Task<List<VacantesEmpresaResponse>> GetVacantsByClient(int idClient)
         {
-
             try
             {
                 List<VacantesEmpresaResponse> sPEmployeesByClientResponses;
-                var vacantes = await vacanteRepository.GetAllByParamIncluding((x => x.IdCliente==idClient), (x => x.EstadoVacante));
+                var vacantes = await vacanteRepository.GetAllByParamIncluding((x => x.IdCliente == idClient), (x => x.EstadoVacante));
                 sPEmployeesByClientResponses = MapperVacantesEmpresaResponse(vacantes);
                 return sPEmployeesByClientResponses;
-            }    
+            }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        private List<VacantesEmpresaResponse> MapperVacantesEmpresaResponse(List<Vacante> vacantes )
+
+        private List<VacantesEmpresaResponse> MapperVacantesEmpresaResponse(List<Vacante> vacantes)
         {
             var vacantesResponse = new List<VacantesEmpresaResponse>();
-            if (vacantes is not null && vacantes.Count > 0 )
+            if (vacantes is not null && vacantes.Count > 0)
             {
                 foreach (var item in vacantes)
                 {
@@ -239,8 +235,8 @@ namespace Core.Repository
             var clientUpdate = new BaseResponse();
             try
             {
-                await UpdateCliente(clientRequest);                
-                clientUpdate  = GetResponse("Cliente actualizado con exito"); 
+                await UpdateCliente(clientRequest);
+                clientUpdate = GetResponse("Cliente actualizado con exito");
             }
             catch (Exception ex)
             {
@@ -250,9 +246,9 @@ namespace Core.Repository
 
             return clientUpdate;
         }
+
         private async Task UpdateCliente(ClientRequest clientRequest)
         {
-
             var client = await clientecionRepository.GetById(clientRequest.IdCliente);
             if (client is not null)
             {
@@ -261,14 +257,10 @@ namespace Core.Repository
                 client.UserIdModified = clientRequest.IdUser;
                 client.DateModified = DateTime.Now;
 
-
-
                 //if (!string.IsNullOrEmpty(clientRequest.Base64File))
                 //    client.PathLogo = await GetPathLogo(clientRequest.Base64File, clientRequest.Name);
 
-
                 await clientecionRepository.Update(client);
-
             }
         }
 
@@ -278,7 +270,7 @@ namespace Core.Repository
             try
             {
                 var sPProcessCandidateByClients = await GetProccessCandidateByClient(cancelProcessClientRequest.IdClient, cancelProcessClientRequest.IdCandidato);
-                var  processId = sPProcessCandidateByClients.Select(x => x.IdProceso).ToList();
+                var processId = sPProcessCandidateByClients.Select(x => x.IdProceso).ToList();
                 var process = await GetProccessIdClient(processId);
                 await CancelProcessCandidate(process);
                 clientUpdate = GetResponse("Candidato ha sido rechazado de todos los procesos de la empresa");
@@ -290,14 +282,17 @@ namespace Core.Repository
             }
             return clientUpdate;
         }
+
         private async Task<List<SPProcessCandidateByClient>> GetProccessCandidateByClient(int idClient, int idCandidato)
         {
             return await storeProcedureRepository.GetProcessCandidateByClient(idClient, idCandidato);
         }
+
         private async Task<List<Proceso>> GetProccessIdClient(List<long> sPProcessCandidateByClients)
         {
             return await procesoRepository.GetListByParam(x => sPProcessCandidateByClients.Contains(x.IdProceso));
         }
+
         private async Task CancelProcessCandidate(List<Proceso> procesos)
         {
             foreach (var item in procesos)

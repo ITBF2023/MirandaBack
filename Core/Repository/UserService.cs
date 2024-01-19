@@ -142,9 +142,14 @@ namespace Core.Repository
                 {
                     var usuario = mapper.Map<Usuario>(userRequest);
                     string pass = DecodeBase64Password(userRequest.Contraseña);
+
+                    usuario.Nombres = userRequest.Nombres;
+                    usuario.Apellidos = userRequest.Apellidos;
+                    usuario.Correo = userRequest.Correo;
                     usuario.Password = await EncryptedPassword(pass);
+                    usuario.Foto = string.IsNullOrEmpty(userRequest.FotoBase64) ? string.Empty : await GetPathFoto(userRequest.FotoBase64, userRequest.Correo);
+
                     await InsertUser(usuario);
-                    userResponse.Correo = usuario.Correo;
                     //userResponse.IdRol = usuario.IdRol;
                     userResponse.StatusCode = HttpStatusCode.OK;
                     userResponse.Message = $"El usuario {usuario.Correo} a sido creado con exito";
@@ -161,6 +166,29 @@ namespace Core.Repository
                 userResponse.Message = ex.Message;
             }
             return userResponse;
+        }
+
+        private async Task<string> GetPathFoto(string base64File, string name)
+        {
+            var saveFile = new SaveFiles();
+            var pathLogos = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.PathFotoUsuario.ToString())))?.Value ?? string.Empty;
+
+            var objectFileSave = new ObjectFileSave();
+            objectFileSave.FilePath = pathLogos;
+
+            if (base64File.Contains(","))
+            {
+                string[] data = base64File.Split(',');
+                objectFileSave.Base64String = data[1];
+            }
+            else
+            {
+                objectFileSave.Base64String = base64File;
+            }
+
+            objectFileSave.FileName = $"{name}.jpg";
+            var pathFile = saveFile.SaveFileBase64(objectFileSave);
+            return pathFile;
         }
 
         private async Task<string> EncryptedPassword(string password)
