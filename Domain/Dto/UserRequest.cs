@@ -12,7 +12,7 @@ namespace Domain.Dto
 
         public string Contraseña { get; set; } = string.Empty;
 
-        public List<Rol> Roles { get; set; }
+        public List<RolRequest> Roles { get; set; }
 
         public string Nombres { get; set; }
 
