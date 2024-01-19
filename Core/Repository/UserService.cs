@@ -293,6 +293,7 @@ namespace Core.Repository
 
                     list.Add(new UserResponse()
                     {
+                        IdUser = item.IdUser,
                         Nombres = item.Nombres,
                         Apellidos = item.Apellidos,
                         Telefono = item.Telefono,

@@ -97,7 +97,7 @@ namespace Core.Repository
 
             objectFileSave.FileName = $"{clientName}.jpg";
             var pathFile = saveFile.SaveFileBase64(objectFileSave);
-            return pathFile;
+            return objectFileSave.FileName;
         }
 
         private BaseResponse GetResponse(string mensaje)
