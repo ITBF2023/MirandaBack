@@ -21,5 +21,7 @@ namespace Domain.Entities
         public string? Correo { get; set; }
 
         public string? Foto { get; set; }
+
+        public bool Estado { get; set; }
     }
 }

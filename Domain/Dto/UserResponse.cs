@@ -9,5 +9,8 @@ namespace Domain.Dto
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         public string Telefono { get; set; }
+        public string Foto { get; set; }
+        public List<RolResponse> Roles { get; set; }
+        public bool Estado { get; set; }
     }
 }

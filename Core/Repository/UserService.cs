@@ -315,6 +315,15 @@ namespace Core.Repository
                 {
                     userResponse = mapper.Map<UserResponse>(user);
                     userResponse.StatusCode = HttpStatusCode.OK;
+
+                    userResponse.Roles = new List<RolResponse>()
+                    {
+                        new RolResponse{
+                            Id = 1,
+                            Descripcion = "Administrador"
+                        }
+                    };
+
                 }
                 else
                 {
