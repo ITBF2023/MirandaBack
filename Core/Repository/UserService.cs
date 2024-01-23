@@ -2,6 +2,7 @@
 using Core.Common;
 using Core.Interfaces;
 using DataAccess.Interface;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Domain.Common;
 using Domain.Common.Enum;
 using Domain.Dto;
@@ -188,7 +189,7 @@ namespace Core.Repository
 
             objectFileSave.FileName = $"{name}.jpg";
             var pathFile = saveFile.SaveFileBase64(objectFileSave);
-            return pathFile;
+            return objectFileSave.FileName;
         }
 
         private async Task<string> EncryptedPassword(string password)
@@ -268,41 +269,15 @@ namespace Core.Repository
 
         public async Task<List<UserResponse>> GetUser()
         {
-            List<UserResponse> list;
             try
             {
                 var users = await usuarioRepository.GetAll();
-                list = MapperUserResponse(users);
-                return list;
+                return mapper.Map<List<UserResponse>>(users);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-        }
-
-        private List<UserResponse> MapperUserResponse(List<Usuario> usuarios)
-        {
-            var list = new List<UserResponse>();
-            if (usuarios is not null && usuarios.Count > 0)
-            {
-                foreach (var item in usuarios)
-                {
-                    //userResponse.DescripcionRol = item.Rol.Description;
-                    //userResponse.IdRol = item.IdRol;
-
-                    list.Add(new UserResponse()
-                    {
-                        IdUser = item.IdUser,
-                        Nombres = item.Nombres,
-                        Apellidos = item.Apellidos,
-                        Telefono = item.Telefono,
-                        Correo = item.Correo
-                    });
-                }
-            }
-
-            return list;
         }
 
         public async Task<UserResponse> GetUserId(int idUser)

@@ -124,7 +124,15 @@ namespace Core.Repository
             try
             {
                 var cliente = await clientecionRepository.GetByParam(x => x.Nit.Equals(document));
-                clientResponse = mapper.Map<ClientResponse>(cliente);
+
+                if (cliente == null)
+                {
+                    clientResponse.Message = "No existe cliente asociado al nit ingresado.";
+                }
+                else {
+                    clientResponse = mapper.Map<ClientResponse>(cliente);
+                }
+                
                 clientResponse.StatusCode = HttpStatusCode.OK;
             }
             catch (Exception ex)
