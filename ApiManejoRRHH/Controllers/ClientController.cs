@@ -19,8 +19,6 @@ namespace ApiManejoRRHH.Controllers
     [Authorize]
     public class ClientController : ControllerBase
     {
-
-
         private readonly IClientService clientService;
 
         /// <summary>
@@ -31,10 +29,8 @@ namespace ApiManejoRRHH.Controllers
             this.clientService = clientService;
         }
 
-
-
         /// <summary>
-        /// Metodo de creacion del cliente       
+        /// Metodo de creacion del cliente
         /// </summary>
         ///<param name="clientRequest">
         /// <strong> IdUser : </strong>    Id del usuario que se logueo en el sistema <br/>
@@ -42,23 +38,22 @@ namespace ApiManejoRRHH.Controllers
         /// <strong> Name : </strong> :   nombre del cliente o empresa <br/>
         /// <strong> Nit : </strong>   nit del cliente o de la empresa  <strong> * Obligatorio </strong> <br/>
         ///  Base64File:  base 64 del logo del cliente o de la empresa
-        ///  
-        /// </param>    
+        ///
+        /// </param>
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
         ///        "IdUser": 1,
         ///        "IdCliente": 1,
         ///        "Name": "`mpresa prueba S.A",
         ///        "Nit": "9067668848-2",
         ///        "Base64File": "",
-        /// 
+        ///
         ///     }
         ///
         /// </remarks>
-
 
         [HttpPost, Route("[action]")]
         [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status200OK)]
@@ -80,34 +75,31 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Metodo de actualizacion de la informnacion cliente       
+        /// Metodo de actualizacion de la informnacion cliente
         /// </summary>
-        ///<param name="clientRequest">  
+        ///<param name="clientRequest">
         /// <strong> IdUser : </strong>    Id del usuario que se logueo en el sistema <br/>
         /// <strong> IdCliente : </strong> Numero Id del cliente <strong> * Obligatorio </strong> <br/>
         /// <strong> Name : </strong> :   nombre del cliente o empresa <br/>
         /// <strong> Nit : </strong>   nit del cliente o de la empresa  <strong> * Obligatorio </strong> <br/>
         ///  Base64File:  base 64 del logo del cliente o de la empresa
-        ///  
-        /// </param>    
+        ///
+        /// </param>
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
         ///        "IdUser": 1,
         ///        "IdCliente": 1,
         ///        "Name": "`mpresa prueba S.A",
         ///        "Nit": "9067668848-2",
         ///        "Base64File": "",
-        /// 
+        ///
         ///     }
         ///
         /// </remarks>
-
-
 
         [HttpPut, Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -129,24 +121,21 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
-
-
         /// <summary>
-        /// Metodo de cancelar procesos de un candidato por cliente  cliente       
+        /// Metodo de cancelar procesos de un candidato por cliente  cliente
         /// </summary>
         ///<param name="cancelProcessClientRequest">
         /// <strong> IdCliente : </strong> Numero Id del cliente <strong> * Obligatorio </strong> <br/>
-        /// <strong> IdCandidato : </strong> :  Numero Id de la tabla del candidato  <strong> * Obligatorio </strong>   
-        /// </param>    
+        /// <strong> IdCandidato : </strong> :  Numero Id de la tabla del candidato  <strong> * Obligatorio </strong>
+        /// </param>
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
         ///        "IdCandidato": 1,
-        ///        "IdCliente": 1         
-        /// 
+        ///        "IdCliente": 1
+        ///
         ///     }
         ///
         /// </remarks>
@@ -171,15 +160,13 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
-
         /// <summary>
-        /// Obtener cliente por documento    
+        /// Obtener cliente por documento
         /// </summary>
         ///<param name="nit">
-        /// <strong> Nit : </strong>   nit del cliente o de la empresa  <strong> * Obligatorio </strong> 
+        /// <strong> Nit : </strong>   nit del cliente o de la empresa  <strong> * Obligatorio </strong>
         ///</param>
-        /// <returns></returns>      
+        /// <returns></returns>
 
         [HttpGet, Route("[action]/{nit}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -201,10 +188,9 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Obtener clientes 
-        /// </summary>         
+        /// Obtener clientes
+        /// </summary>
         /// <returns></returns>
         [HttpGet, Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -215,33 +201,6 @@ namespace ApiManejoRRHH.Controllers
             try
             {
                 var client = await clientService.GetListClients();
-                return Ok(client);                
-            }
-            catch (Exception ex)
-            {
-                return Problem(ex.Message);
-            }
-        }
-
-
-
-
-        /// <summary>
-        /// Obtener empleados  por cliente    
-        /// </summary>
-        ///<param name="idClient">
-        /// <strong> IdCliente : </strong> Numero Id del cliente <strong> * Obligatorio </strong>  
-        /// </param>
-        /// <returns></returns>     
-        [HttpGet, Route("[action]/{idClient}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetEmployeesByClient(int idClient)
-        {
-            try
-            {
-                var client = await clientService.GetEmployeesByClient(idClient);               
                 return Ok(client);
             }
             catch (Exception ex)
@@ -250,14 +209,37 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtener empleados  por cliente
+        /// </summary>
+        ///<param name="idClient">
+        /// <strong> IdCliente : </strong> Numero Id del cliente <strong> * Obligatorio </strong>
+        /// </param>
+        /// <returns></returns>
+        [HttpGet, Route("[action]/{idClient}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetEmployeesByClient(int idClient)
+        {
+            try
+            {
+                var client = await clientService.GetEmployeesByClient(idClient);
+                return Ok(client);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
 
         /// <summary>
-        /// Obtener vacantes por cliente    
-        /// </summary>       
+        /// Obtener vacantes por cliente
+        /// </summary>
         ///<param name="idClient">
-        /// <strong> IdCliente : </strong> Numero Id del cliente <strong> * Obligatorio </strong>  
+        /// <strong> IdCliente : </strong> Numero Id del cliente <strong> * Obligatorio </strong>
         /// </param>
-        /// <returns></returns>      
+        /// <returns></returns>
         [HttpGet, Route("[action]/{idClient}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -274,6 +256,5 @@ namespace ApiManejoRRHH.Controllers
                 return Problem(ex.Message);
             }
         }
-
     }
 }
