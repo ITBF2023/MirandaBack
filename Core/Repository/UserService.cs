@@ -19,15 +19,17 @@ namespace Core.Repository
 {
     public class UserService : IUserService
     {
-        private readonly IRepository<Configuracion> configuiuracionRepository;
+        private readonly IRepository<Configuracion> configuracionRepository;
         private readonly IRepository<Usuario> usuarioRepository;
         private readonly IStoreProcedureRepository storeProcedureRepository;
+        private readonly IRepository<RolUsuario> rolUsuarioRepository;
         private readonly IMapper mapper;
 
-        public UserService(IRepository<Configuracion> configuiuracionRepository, IRepository<Usuario> usuarioRepository, IMapper mapper, IStoreProcedureRepository storeProcedureRepository)
+        public UserService(IRepository<Configuracion> configuracionRepository, IRepository<Usuario> usuarioRepository, IMapper mapper, IStoreProcedureRepository storeProcedureRepository, IRepository<RolUsuario> rolUsuarioRepository)
         {
-            this.configuiuracionRepository = configuiuracionRepository;
+            this.configuracionRepository = configuracionRepository;
             this.usuarioRepository = usuarioRepository;
+            this.rolUsuarioRepository = rolUsuarioRepository;
             this.mapper = mapper;
             this.storeProcedureRepository = storeProcedureRepository;
         }
@@ -80,8 +82,8 @@ namespace Core.Repository
 
         public async Task<bool> ValidatePassword(string? password, string encryptedPassword)
         {
-            var keyEncrypted = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.KeyEncrypted.ToString())))?.Value ?? string.Empty;
-            var iVEncrypted = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.IVEncrypted.ToString())))?.Value ?? string.Empty;
+            var keyEncrypted = (await configuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.KeyEncrypted.ToString())))?.Value ?? string.Empty;
+            var iVEncrypted = (await configuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.IVEncrypted.ToString())))?.Value ?? string.Empty;
             byte[] key = Encoding.UTF8.GetBytes(keyEncrypted);
             byte[] iv = Encoding.UTF8.GetBytes(iVEncrypted);
             using (TripleDES aes = TripleDES.Create())
@@ -106,10 +108,10 @@ namespace Core.Repository
 
         private async Task<string> GenerateToken(string? correo = "")
         {
-            var secretKey = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.JwtSecretKey.ToString())))?.Value ?? string.Empty;
-            var jwtIssuerToken = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.JwtIssuerToken.ToString())))?.Value ?? string.Empty;
-            var jwtAudienceToken = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.JwtIssuerToken.ToString())))?.Value ?? string.Empty;
-            var jwtExpireTime = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.JwtExpireTime.ToString())))?.Value ?? string.Empty;
+            var secretKey = (await configuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.JwtSecretKey.ToString())))?.Value ?? string.Empty;
+            var jwtIssuerToken = (await configuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.JwtIssuerToken.ToString())))?.Value ?? string.Empty;
+            var jwtAudienceToken = (await configuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.JwtIssuerToken.ToString())))?.Value ?? string.Empty;
+            var jwtExpireTime = (await configuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.JwtExpireTime.ToString())))?.Value ?? string.Empty;
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
@@ -149,11 +151,26 @@ namespace Core.Repository
                     usuario.Correo = userRequest.Correo;
                     usuario.Password = await EncryptedPassword(pass);
                     usuario.Foto = string.IsNullOrEmpty(userRequest.FotoBase64) ? string.Empty : await GetPathFoto(userRequest.FotoBase64, userRequest.Correo);
+                    usuario.Estado = userRequest.Estado;
 
                     await InsertUser(usuario);
                     //userResponse.IdRol = usuario.IdRol;
                     userResponse.StatusCode = HttpStatusCode.OK;
                     userResponse.Message = $"El usuario {usuario.Correo} a sido creado con exito";
+
+                    foreach (var item in userRequest.Roles)
+                    {
+                        RolUsuario rolUsuario = new RolUsuario
+                        {
+                            IdUsuario = usuario.IdUser,
+                            IdRol = item.Id,
+                            IdUsuarioCreacion = 1,
+                            FechaCreacion = DateTime.Now,
+                            Activo = true
+                        };
+
+                        await rolUsuarioRepository.Insert(rolUsuario);
+                    }
                 }
                 else
                 {
@@ -172,7 +189,7 @@ namespace Core.Repository
         private async Task<string> GetPathFoto(string base64File, string name)
         {
             var saveFile = new SaveFiles();
-            var pathLogos = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.PathFotoUsuario.ToString())))?.Value ?? string.Empty;
+            var pathLogos = (await configuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.PathFotoUsuario.ToString())))?.Value ?? string.Empty;
 
             var objectFileSave = new ObjectFileSave();
             objectFileSave.FilePath = pathLogos;
@@ -194,8 +211,8 @@ namespace Core.Repository
 
         private async Task<string> EncryptedPassword(string password)
         {
-            var keyEncrypted = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.KeyEncrypted.ToString())))?.Value ?? string.Empty;
-            var iVEncrypted = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.IVEncrypted.ToString())))?.Value ?? string.Empty;
+            var keyEncrypted = (await configuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.KeyEncrypted.ToString())))?.Value ?? string.Empty;
+            var iVEncrypted = (await configuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.IVEncrypted.ToString())))?.Value ?? string.Empty;
 
             byte[] key = Encoding.UTF8.GetBytes(keyEncrypted);
             byte[] iv = Encoding.UTF8.GetBytes(iVEncrypted);
@@ -373,7 +390,7 @@ namespace Core.Repository
 
         private async Task<string> SaveExcel(List<SPRejectedCandidatesByUser> sPRejectedCandidatesByUsers, int idUser)
         {
-            var pathExcel = (await configuiuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.PathExcelRejected.ToString())))?.Value ?? string.Empty;
+            var pathExcel = (await configuracionRepository.GetByParam(x => x.Id.Equals(ParamConfig.PathExcelRejected.ToString())))?.Value ?? string.Empty;
 
             var Savefile = new SaveFiles();
             if (sPRejectedCandidatesByUsers is not null && sPRejectedCandidatesByUsers.Count > 0)

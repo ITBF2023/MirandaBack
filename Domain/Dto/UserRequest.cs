@@ -21,5 +21,7 @@ namespace Domain.Dto
         public string Telefono { get; set; }
 
         public string FotoBase64 { get; set; }
+
+        public bool Estado { get; set; }
     }
 }
