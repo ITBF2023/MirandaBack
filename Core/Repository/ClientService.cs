@@ -150,30 +150,15 @@ namespace Core.Repository
             {
                 List<ClientResponse> clientResponse;
                 var cliente = await clientecionRepository.GetAll();
-                clientResponse = GetListClientResponse(cliente);
+
+                clientResponse = mapper.Map<List<ClientResponse>>(cliente);
+
                 return clientResponse;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-        }
-
-        private List<ClientResponse> GetListClientResponse(List<Cliente> listCliente)
-        {
-            List<ClientResponse> listResponse = new List<ClientResponse>();
-            listCliente.ForEach(cliente =>
-            {
-                var clientResponse = new ClientResponse()
-                {
-                    IdCliente = cliente.IdCliente,
-                    Name = cliente.Name,
-                    Nit = cliente.Nit,
-                    PathLogo = cliente.PathLogo
-                };
-                listResponse.Add(clientResponse);
-            });
-            return listResponse;
         }
 
         public async Task<List<SPEmployeesByClientResponse>> GetEmployeesByClient(int idClient)
