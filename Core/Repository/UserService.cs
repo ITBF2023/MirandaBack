@@ -300,6 +300,8 @@ namespace Core.Repository
         public async Task<UserResponse> GetUserId(int idUser)
         {
             var userResponse = new UserResponse();
+            var rolResponse = new List<RolResponse>();
+
             try
             {
                 var user = await GetUserById(idUser);
@@ -308,14 +310,10 @@ namespace Core.Repository
                     userResponse = mapper.Map<UserResponse>(user);
                     userResponse.StatusCode = HttpStatusCode.OK;
 
-                    userResponse.Roles = new List<RolResponse>()
-                    {
-                        new RolResponse{
-                            Id = 1,
-                            Descripcion = "Administrador"
-                        }
-                    };
+                    var roles = await rolUsuarioRepository.GetListByParam(w => w.IdUsuario == user.IdUser);
+                    rolResponse = mapper.Map<List<RolResponse>>(roles);
 
+                    userResponse.Roles = rolResponse;
                 }
                 else
                 {

@@ -9,6 +9,6 @@ namespace Domain.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdRol { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }
