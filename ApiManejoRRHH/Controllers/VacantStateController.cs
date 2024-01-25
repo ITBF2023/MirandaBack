@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApiManejoRRHH.Controllers
 {
     /// <summary>
-    /// Controlador de Categoria 
+    /// Controlador de Categoria
     /// </summary>
 
     [Route("api/[controller]")]
@@ -23,17 +23,14 @@ namespace ApiManejoRRHH.Controllers
         /// </summary>
         public VacantStateController(ITipoTableService<object> estadoVacanteService)
         {
-            this.estadoVacanteService= estadoVacanteService;
+            this.estadoVacanteService = estadoVacanteService;
         }
 
-
-
-
         /// <summary>
-        /// Obtener Estados de la vacante 
-        /// </summary>         
+        /// Obtener Estados de la vacante
+        /// </summary>
         /// <returns></returns>
-      
+
         [HttpGet, Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -50,6 +47,5 @@ namespace ApiManejoRRHH.Controllers
                 return Problem();
             }
         }
-
     }
 }

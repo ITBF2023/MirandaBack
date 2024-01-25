@@ -13,18 +13,25 @@ namespace Domain.Entities
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdSkillVacante { get; set; }
+
         [Required]
         [ForeignKey("Vacante")]
         public int IdVacante { get; set; }
+
         [ForeignKey("IdVacante")]
         public Vacante? Vacante { get; set; }
+
         [Required]
         [ForeignKey("Categoria")]
         public int IdCategoria { get; set; }
+
         [ForeignKey("IdCategoria")]
         public Categoria? Categoria { get; set; }
-        public string DescripcionSkill { get; set; } = string.Empty;
-        public bool Activo { get; set; }
 
+        public string DescripcionSkill { get; set; } = string.Empty;
+
+        public bool RequiereConocimiento { get; set; }
+
+        public bool Activo { get; set; }
     }
 }

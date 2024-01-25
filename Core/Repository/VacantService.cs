@@ -10,24 +10,21 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Net;
 
-
 namespace Core.Repository
 {
     public class VacantService : IVacantService
     {
-
-
         private readonly IRepository<Vacante> vacanteRepository;
-        private readonly IRepository<SkillVacante> skillVacanteRepository;      
+        private readonly IRepository<SkillVacante> skillVacanteRepository;
         private readonly IMapper mapper;
         private readonly ManejoRHContext manejoRHContext;
 
-        public VacantService(IRepository<Vacante> vacanteRepository, IRepository<SkillVacante> skillVacanteRepository, IMapper mapper, ManejoRHContext manejoRHContext )
+        public VacantService(IRepository<Vacante> vacanteRepository, IRepository<SkillVacante> skillVacanteRepository, IMapper mapper, ManejoRHContext manejoRHContext)
         {
             this.vacanteRepository = vacanteRepository;
             this.skillVacanteRepository = skillVacanteRepository;
             this.mapper = mapper;
-            this.manejoRHContext = manejoRHContext;            
+            this.manejoRHContext = manejoRHContext;
         }
 
         public async Task<BaseResponse> Create(VacanteRequest vacanteRequest)
@@ -45,20 +42,19 @@ namespace Core.Repository
                         await InsertSkillVacantes(vacanteRequest, idVacante);
                         await transaction.CommitAsync();
                         outPut = MapperResponse();
-
                     }
                     catch (Exception ex)
                     {
                         await transaction.RollbackAsync();
                         outPut.StatusCode = HttpStatusCode.InternalServerError;
                         outPut.Message = ex.Message;
-
                     }
                 }
             });
 
             return outPut;
         }
+
         private async Task<int> InsertVacante(VacanteRequest vacanteRequest)
         {
             var Vacante = mapper.Map<Vacante>(vacanteRequest);
@@ -68,6 +64,7 @@ namespace Core.Repository
             await vacanteRepository.Insert(Vacante);
             return Vacante.IdVacante;
         }
+
         private async Task InsertSkillVacantes(VacanteRequest vacanteRequest, int idVacante)
         {
             foreach (var vacante in vacanteRequest.ListSkillsVacante)
@@ -77,6 +74,7 @@ namespace Core.Repository
                 await skillVacanteRepository.Insert(skillVacante);
             }
         }
+
         private static BaseResponse MapperResponse()
         {
             return new BaseResponse()
@@ -101,19 +99,18 @@ namespace Core.Repository
                         await InsertSkillVacantes(vacanteRequest, vacanteRequest.IdVacante);
                         await transaction.CommitAsync();
                         outPut = MapperUpdateResponse();
-
                     }
                     catch (Exception ex)
                     {
                         await transaction.RollbackAsync();
                         outPut.StatusCode = HttpStatusCode.InternalServerError;
                         outPut.Message = ex.Message;
-
                     }
                 }
             });
             return outPut;
         }
+
         private async Task UpdateVacante(VacanteRequest vacanteRequest)
         {
             var vacante = await vacanteRepository.GetById(vacanteRequest.IdVacante);
@@ -131,7 +128,7 @@ namespace Core.Repository
                 vacante.PorcentajeIdioma = vacanteRequest.PorcentajeIdioma;
                 vacante.PruebaTecnica = vacanteRequest.PruebaTecnica;
                 vacante.DescripcionFunciones = vacanteRequest.DescripcionFunciones;
-                vacante.IdEstadoVacante = TipoEstadoVacante.Activo.GetIdTipoEstado(); 
+                vacante.IdEstadoVacante = TipoEstadoVacante.Activo.GetIdTipoEstado();
                 vacante.Comentarios = vacanteRequest.Comentarios;
                 vacante.Comentarios = vacanteRequest.Comentarios;
                 vacante.UserIdModified = vacanteRequest.IdUser;
@@ -139,9 +136,9 @@ namespace Core.Repository
                 await vacanteRepository.Update(vacante);
             }
         }
+
         private async Task DeleteSkillVacante(VacanteRequest vacanteRequest)
         {
-
             var listSkillVacantes = await skillVacanteRepository.GetListByParam(x => x.IdVacante == vacanteRequest.IdVacante && x.Activo);
             if (listSkillVacantes is not null || listSkillVacantes?.Count > 0)
             {
@@ -152,6 +149,7 @@ namespace Core.Repository
                 }
             }
         }
+
         private static BaseResponse MapperUpdateResponse()
         {
             return new BaseResponse()
@@ -161,28 +159,26 @@ namespace Core.Repository
             };
         }
 
-
-        public async Task<BaseResponse> UpdateState(VacanteStateRequest vacanteStateRequest) 
+        public async Task<BaseResponse> UpdateState(VacanteStateRequest vacanteStateRequest)
         {
             var outPut = new BaseResponse();
             try
             {
                 var vacante = await vacanteRepository.GetById(vacanteStateRequest.IdVacante);
-                if (vacante is not null) 
+                if (vacante is not null)
                 {
                     vacante.IdEstadoVacante = vacanteStateRequest.IdEstadoVacante;
                     vacante.UserIdModified = vacanteStateRequest.IdUser;
                     vacante.DateModified = DateTime.Now;
                     await vacanteRepository.Update(vacante);
                 }
-
             }
             catch (Exception ex)
             {
                 outPut.StatusCode = HttpStatusCode.InternalServerError;
                 outPut.Message = ex.Message;
             }
-        
+
             return outPut;
         }
 
@@ -191,7 +187,7 @@ namespace Core.Repository
             List<VacanteDetailResponse> listVacantes;
             try
             {
-                var list = await vacanteRepository.GetAllByParamIncluding(null, (x => x.ModalidadTrabajo),(x => x.EstadoVacante), (x => x.Salario), (x => x.Contrato));
+                var list = await vacanteRepository.GetAllByParamIncluding(null, (x => x.ModalidadTrabajo), (x => x.EstadoVacante), (x => x.Salario), (x => x.Contrato));
                 listVacantes = MapperListVacanteResponse(list);
             }
             catch (Exception ex)
@@ -200,6 +196,7 @@ namespace Core.Repository
             }
             return listVacantes;
         }
+
         private List<VacanteDetailResponse> MapperListVacanteResponse(List<Vacante> vacantes)
         {
             var listVacantes = new List<VacanteDetailResponse>();
@@ -212,10 +209,10 @@ namespace Core.Repository
                 vacante.DescripcionEstadoVacante = item.EstadoVacante?.Description;
                 listVacantes.Add(vacante);
             }
-            return listVacantes;    
+            return listVacantes;
         }
 
-        public async Task<VacanteResponse> GetById(int idVacante) 
+        public async Task<VacanteResponse> GetById(int idVacante)
         {
             VacanteResponse vacanteResponse;
             try
@@ -226,9 +223,8 @@ namespace Core.Repository
             }
             catch (Exception)
             {
-
                 throw;
-            }        
+            }
             return vacanteResponse;
         }
 
@@ -238,9 +234,8 @@ namespace Core.Repository
 
             try
             {
-                var skills = await skillVacanteRepository.GetListByParam(x => x.IdVacante== idVacante && x.Activo);
+                var skills = await skillVacanteRepository.GetListByParam(x => x.IdVacante == idVacante && x.Activo);
                 listSkillVacante = MapperSkillVacanteResponse(skills);
-
             }
             catch (Exception)
             {
@@ -249,10 +244,10 @@ namespace Core.Repository
 
             return listSkillVacante;
         }
+
         private List<SkillVacanteResponse> MapperSkillVacanteResponse(List<SkillVacante> skillVacantes)
         {
-
-           var listSkillVacante = new List<SkillVacanteResponse>();
+            var listSkillVacante = new List<SkillVacanteResponse>();
             foreach (var item in skillVacantes)
             {
                 var skillVacante = new SkillVacanteResponse();
@@ -263,9 +258,5 @@ namespace Core.Repository
             }
             return listSkillVacante;
         }
-
-
-
-
     }
 }

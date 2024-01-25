@@ -11,13 +11,14 @@ namespace Domain.Dto
 {
     public class NovedadRequest
     {
-
         public int IdNovedad { get; set; }
+
         [Required]
         public int IdCandidato { get; set; }
- 
-        [Required]    
-        public int IdTipoNovedad { get; set; }  
+
+        [Required]
+        public int IdTipoNovedad { get; set; }
+
         public string Observacion { get; set; }
         public bool Activo { get; set; }
         public int Anio { get; set; }
@@ -27,7 +28,6 @@ namespace Domain.Dto
         public int? DiasVacaciones { get; set; }
         public int? DiasNoRemunerados { get; set; }
         public int IdUser { get; set; }
-
     }
 
     public class NovedadStateRequest
@@ -35,8 +35,5 @@ namespace Domain.Dto
         public int IdNovedad { get; set; }
         public bool Activo { get; set; }
         public int IdUser { get; set; }
-
     }
-
-
 }
