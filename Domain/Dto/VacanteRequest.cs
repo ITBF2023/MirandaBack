@@ -39,6 +39,17 @@ namespace Domain.Dto
         public int IdUser { get; set; }
 
         public List<SkillVacanteRequest>? ListSkillsVacante { get; set; }
+
+        public bool Prioridad { get; set; }
+
+        public decimal Salario100Prestacion { get; set; }
+
+        public decimal SalarioPorcentual { get; set; }
+
+        public decimal SalarioPrestacionServicios { get; set; }
+
+        [Required]
+        public int IdTiempoContrato { get; set; }
     }
 
     public class SkillVacanteRequest

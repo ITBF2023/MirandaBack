@@ -49,5 +49,11 @@ namespace Domain.Entities
 
         public int? UserIdModified { get; set; }
         public DateTime? DateModified { get; set; }
+
+        [ForeignKey("TipoSalario")]
+        public int IdTipoSalario { get; set; }
+
+        [ForeignKey("IdTipoSalario")]
+        public TipoSalario TipoSalario { get; set; }
     }
 }

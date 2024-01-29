@@ -53,5 +53,17 @@ namespace Domain.Entities
         /// </summary>
         public bool Prioridad { get; set; }
 
+        public decimal Salario100Prestacion { get; set; }
+
+        public decimal SalarioPorcentual { get; set; }
+
+        public decimal SalarioPrestacionServicios { get; set; }
+
+        [Required]
+        [ForeignKey("TiempoContrato")]
+        public int IdTiempoContrato { get; set; }
+
+        [ForeignKey("IdTiempoContrato")]
+        public TiempoContrato? TiempoContrato { get; set; }
     }
 }
