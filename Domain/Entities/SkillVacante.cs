@@ -32,6 +32,8 @@ namespace Domain.Entities
 
         public bool RequiereConocimiento { get; set; }
 
+        public int Experiencia { get; set; }
+
         public bool Activo { get; set; }
     }
 }

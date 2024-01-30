@@ -63,5 +63,7 @@ namespace Domain.Dto
         public string DescripcionSkill { get; set; } = string.Empty;
 
         public bool RequiereConocimiento { get; set; }
+
+        public int Experiencia { get; set; }
     }
 }
