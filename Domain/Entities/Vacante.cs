@@ -39,8 +39,6 @@ namespace Domain.Entities
         [ForeignKey("IdModalidadTrabajo")]
         public ModalidadTrabajo? ModalidadTrabajo { get; set; }
 
-        public string Idioma { get; set; } = string.Empty;
-        public string PorcentajeIdioma { get; set; } = string.Empty;
         public bool PruebaTecnica { get; set; }
         public string DescripcionFunciones { get; set; } = string.Empty;
 

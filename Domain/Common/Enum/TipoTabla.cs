@@ -19,6 +19,7 @@ namespace Domain.Common.Enum
         TipoEstudio,
         EstadoCandidato,
         TipoNovedad,
+        Idioma
 
     }
 }

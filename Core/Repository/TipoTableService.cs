@@ -19,13 +19,14 @@ namespace Core.Repository
         private readonly IRepository<TipoDocumento> tipoDocumentoRepository;
         private readonly IRepository<TipoEstudio> tipoEstudioRepository;
         private readonly IRepository<TipoNovedad> tipoNovedadoRepository;
+        private readonly IRepository<Idioma> idiomaRepository;
         private readonly IRepository<Domain.Entities.EstadoCandidato> estadoCandidatoRepository;
         private readonly IMapper mapper;
 
         public TipoTableService(IRepository<Categoria> categoriaRepository, IMapper mapper, IRepository<TipoContrato> tipoContratoRepository,
             IRepository<TipoSalario> tipoSalarioRepository, IRepository<EstadoVacante> estadoVacanteRepository, IRepository<ModalidadTrabajo> modalidadTrabajoRepository,
             IRepository<TipoDocumento> tipoDocumentoRepository, IRepository<TipoEstudio> tipoEstudioRepository, IRepository<Domain.Entities.EstadoCandidato> estadoCandidatoRepository,
-            IRepository<TipoNovedad> tipoNovedadoRepository)
+            IRepository<TipoNovedad> tipoNovedadoRepository, IRepository<Idioma> idiomaRepository)
         {
             this.categoriaRepository = categoriaRepository;
             this.mapper = mapper;
@@ -37,6 +38,7 @@ namespace Core.Repository
             this.tipoEstudioRepository = tipoEstudioRepository;
             this.estadoCandidatoRepository = estadoCandidatoRepository;
             this.tipoNovedadoRepository = tipoNovedadoRepository;
+            this.idiomaRepository = idiomaRepository;
         }
 
         public async Task<BaseResponse> Create(object objRequest)
@@ -147,6 +149,11 @@ namespace Core.Repository
                     case TipoTabla.TipoNovedad:
                         var listTipoNovedado = await tipoNovedadoRepository.GetAll();
                         list = MapperListesponse(listTipoNovedado);
+                        break;
+
+                    case TipoTabla.Idioma:
+                        var listaIdioma = await idiomaRepository.GetAll();
+                        list = MapperListesponse(listaIdioma);
                         break;
                 }
             }
@@ -280,6 +287,20 @@ namespace Core.Repository
                 contrato.Id = c.IdTipoNovedad;
                 contrato.Description = c.Description;
                 listResponse.Add(contrato);
+            });
+            return listResponse;
+        }
+
+        private List<TipoTableResponse> MapperListesponse(List<Idioma> listIdioma)
+        {
+            List<TipoTableResponse> listResponse = new List<TipoTableResponse>();
+
+            listIdioma.ForEach(c =>
+            {
+                listResponse.Add(new TipoTableResponse {
+                    Id = c.Id,
+                    Description = c.Descripcion
+                });
             });
             return listResponse;
         }

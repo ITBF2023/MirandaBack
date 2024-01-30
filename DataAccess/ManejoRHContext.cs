@@ -41,6 +41,8 @@ namespace DataAccess
         public virtual DbSet<Comision> Comisiones { get; set; }
         public virtual DbSet<TiempoContrato> TiempoContratos { get; set; }
         public virtual DbSet<RolUsuario> RolUsuario { get; set; }
+        public virtual DbSet<Idioma> Idioma { get; set; }
+        public virtual DbSet<IdiomaVacante> IdiomaVacante { get; set; }
 
         public virtual DbSet<VWEmployeesByComision> VWEmployeesByComisiones { get; set; }
 
@@ -54,7 +56,7 @@ namespace DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RolUsuario>().HasKey(m => new { m.IdRol, m.IdUsuario });
-
+            modelBuilder.Entity<IdiomaVacante>().HasKey(m => new { m.IdVacante, m.IdIdioma });
 
             // Method intentionally left empty.
             modelBuilder.Entity<VWEmployeesByComision>().HasNoKey().ToView("VWEmployeesByComision");

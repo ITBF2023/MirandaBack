@@ -26,8 +26,6 @@ namespace Domain.Dto
         [Required]
         public int IdModalidadTrabajo { get; set; }
 
-        public string Idioma { get; set; } = string.Empty;
-        public string PorcentajeIdioma { get; set; } = string.Empty;
         public bool PruebaTecnica { get; set; }
         public string DescripcionFunciones { get; set; } = string.Empty;
         public string Comentarios { get; set; } = string.Empty;
