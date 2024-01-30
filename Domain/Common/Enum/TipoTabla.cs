@@ -1,15 +1,7 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Common.Enum
+﻿namespace Domain.Common.Enum
 {
     public enum TipoTabla
     {
-
         Categoria,
         Contrato,
         Salario,
@@ -19,7 +11,7 @@ namespace Domain.Common.Enum
         TipoEstudio,
         EstadoCandidato,
         TipoNovedad,
-        Idioma
-
+        Idioma,
+        RangoEdad
     }
 }

@@ -43,6 +43,7 @@ namespace DataAccess
         public virtual DbSet<RolUsuario> RolUsuario { get; set; }
         public virtual DbSet<Idioma> Idioma { get; set; }
         public virtual DbSet<IdiomaVacante> IdiomaVacante { get; set; }
+        public virtual DbSet<RangoEdad> RangoEdad { get; set; }
 
         public virtual DbSet<VWEmployeesByComision> VWEmployeesByComisiones { get; set; }
 

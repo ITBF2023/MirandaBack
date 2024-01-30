@@ -6,25 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApiManejoRRHH.Controllers
 {
     /// <summary>
-    /// Controlador de idiomas
+    /// Controlador de rangos de edad
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class IdiomaController : ControllerBase
+    public class RangoEdadController : ControllerBase
     {
         private readonly ITipoTableService<object> tipoTableService;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public IdiomaController(ITipoTableService<object> tipoTableService)
+        public RangoEdadController(ITipoTableService<object> tipoTableService)
         {
             this.tipoTableService = tipoTableService;
         }
 
         /// <summary>
-        /// Obtener idiomas
+        /// Obtener rango edad
         /// </summary>
         /// <returns></returns>
         [HttpGet, Route("[action]")]
@@ -35,8 +35,8 @@ namespace ApiManejoRRHH.Controllers
         {
             try
             {
-                var tipòDocumento = await tipoTableService.GetList(TipoTabla.Idioma);
-                return Ok(tipòDocumento);
+                var rangoEdad = await tipoTableService.GetList(TipoTabla.RangoEdad);
+                return Ok(rangoEdad);
             }
             catch (Exception)
             {

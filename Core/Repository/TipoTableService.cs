@@ -20,13 +20,14 @@ namespace Core.Repository
         private readonly IRepository<TipoEstudio> tipoEstudioRepository;
         private readonly IRepository<TipoNovedad> tipoNovedadoRepository;
         private readonly IRepository<Idioma> idiomaRepository;
-        private readonly IRepository<Domain.Entities.EstadoCandidato> estadoCandidatoRepository;
+        private readonly IRepository<RangoEdad> rangoEdadRepository;
+        private readonly IRepository<EstadoCandidato> estadoCandidatoRepository;
         private readonly IMapper mapper;
 
         public TipoTableService(IRepository<Categoria> categoriaRepository, IMapper mapper, IRepository<TipoContrato> tipoContratoRepository,
             IRepository<TipoSalario> tipoSalarioRepository, IRepository<EstadoVacante> estadoVacanteRepository, IRepository<ModalidadTrabajo> modalidadTrabajoRepository,
             IRepository<TipoDocumento> tipoDocumentoRepository, IRepository<TipoEstudio> tipoEstudioRepository, IRepository<Domain.Entities.EstadoCandidato> estadoCandidatoRepository,
-            IRepository<TipoNovedad> tipoNovedadoRepository, IRepository<Idioma> idiomaRepository)
+            IRepository<TipoNovedad> tipoNovedadoRepository, IRepository<Idioma> idiomaRepository, IRepository<RangoEdad> rangoEdadRepository)
         {
             this.categoriaRepository = categoriaRepository;
             this.mapper = mapper;
@@ -39,6 +40,7 @@ namespace Core.Repository
             this.estadoCandidatoRepository = estadoCandidatoRepository;
             this.tipoNovedadoRepository = tipoNovedadoRepository;
             this.idiomaRepository = idiomaRepository;
+            this.rangoEdadRepository = rangoEdadRepository;
         }
 
         public async Task<BaseResponse> Create(object objRequest)
@@ -154,6 +156,10 @@ namespace Core.Repository
                     case TipoTabla.Idioma:
                         var listaIdioma = await idiomaRepository.GetAll();
                         list = MapperListesponse(listaIdioma);
+                        break;
+                    case TipoTabla.RangoEdad:
+                        var listaRangoEdad = await rangoEdadRepository.GetAll();
+                        list = MapperListesponse(listaRangoEdad);
                         break;
                 }
             }
@@ -298,6 +304,21 @@ namespace Core.Repository
             listIdioma.ForEach(c =>
             {
                 listResponse.Add(new TipoTableResponse {
+                    Id = c.Id,
+                    Description = c.Descripcion
+                });
+            });
+            return listResponse;
+        }
+
+        private List<TipoTableResponse> MapperListesponse(List<RangoEdad> listRangoEdad)
+        {
+            List<TipoTableResponse> listResponse = new List<TipoTableResponse>();
+
+            listRangoEdad.ForEach(c =>
+            {
+                listResponse.Add(new TipoTableResponse
+                {
                     Id = c.Id,
                     Description = c.Descripcion
                 });

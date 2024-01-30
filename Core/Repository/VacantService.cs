@@ -135,8 +135,6 @@ namespace Core.Repository
                 vacante.IdContrato = vacanteRequest.IdContrato;
                 vacante.Horario = vacanteRequest.Horario;
                 vacante.IdModalidadTrabajo = vacanteRequest.IdModalidadTrabajo;
-                vacante.Idioma = vacanteRequest.Idioma;
-                vacante.PorcentajeIdioma = vacanteRequest.PorcentajeIdioma;
                 vacante.PruebaTecnica = vacanteRequest.PruebaTecnica;
                 vacante.DescripcionFunciones = vacanteRequest.DescripcionFunciones;
                 vacante.IdEstadoVacante = TipoEstadoVacante.Activo.GetIdTipoEstado();
