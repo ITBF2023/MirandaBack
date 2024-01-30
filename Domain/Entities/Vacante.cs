@@ -68,5 +68,12 @@ namespace Domain.Entities
 
         [ForeignKey("IdTiempoContrato")]
         public TiempoContrato? TiempoContrato { get; set; }
+
+        [Required]
+        [ForeignKey("RangoEdad")]
+        public int IdRangoEdad { get; set; }
+
+        [ForeignKey("IdRangoEdad")]
+        public RangoEdad? RangoEdad { get; set; }
     }
 }

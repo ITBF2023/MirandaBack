@@ -46,6 +46,9 @@ namespace Domain.Dto
         [Required]
         public int IdTiempoContrato { get; set; }
 
+        [Required]
+        public int IdRangoEdad { get; set; }
+
         public List<IdiomaVacanteRequest> ListaIdiomas { get; set; }
     }
 
