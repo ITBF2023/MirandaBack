@@ -1,15 +1,14 @@
 ﻿using ApiManejoRRHH.Helpers;
-using Core.Interfaces; 
-using Domain.Common; 
-using Domain.Dto; 
+using Core.Interfaces;
+using Domain.Common;
+using Domain.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace ApiManejoRRHH.Controllers
 {
-
     /// <summary>
-    /// Controlador de vacante 
+    /// Controlador de vacante
     /// </summary>
 
     [Route("api/[controller]")]
@@ -17,10 +16,7 @@ namespace ApiManejoRRHH.Controllers
     [Authorize]
     public class VacantController : ControllerBase
     {
-
-
         private readonly IVacantService vacantService;
-
 
         /// <summary>
         /// Constructor
@@ -30,10 +26,8 @@ namespace ApiManejoRRHH.Controllers
             this.vacantService = vacantService;
         }
 
-
-
         /// <summary>
-        /// Metodo de creacion del Vacante       
+        /// Metodo de creacion del Vacante
         /// </summary>
         ///<param name="vacanteRequest">
         /// <strong> IdUser : </strong>    Id del usuario que se logueo en el sistema <br/>
@@ -50,16 +44,16 @@ namespace ApiManejoRRHH.Controllers
         ///  PruebaTecnica: campo que indica si la vacante requiere prueba tecnica<br/>
         ///  DescripcionFunciones: funciones que tiene la vacante<br/>
         ///  Comentarios: comentarios adicionales de la vacante<br/>
-        ///  <strong> IdUser : </strong>    Id del usuario que se logueo en el sistema <br/>   
+        ///  <strong> IdUser : </strong>    Id del usuario que se logueo en el sistema <br/>
         ///  ListSkillsVacante: lista con las skill que requiere la vacante <br/>
-        ///  <strong> IdCategoria : </strong>    Id de la categoria <br/>   
+        ///  <strong> IdCategoria : </strong>    Id de la categoria <br/>
         ///  DescripcionSkill: descripcion de la categoria o de la habilidad <br/>
         ///  Activo: Valor true o falso para activar la habilidad de la vacante
-        /// </param>    
+        /// </param>
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
         ///        "IdUser": 1,
         ///        "IdCliente": 1,
@@ -70,7 +64,7 @@ namespace ApiManejoRRHH.Controllers
         ///        "IdSalario": 1,
         ///        "Horario": "lunes a viernes",
         ///        "IdModalidadTrabajo": 1,
-        ///        "Horario": "lunes a viernes",        
+        ///        "Horario": "lunes a viernes",
         ///        "Idioma": "Ingles",
         ///        "PorcentajeIdioma": "80%",
         ///        "PruebaTecnica": true,
@@ -107,11 +101,8 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
-
-
         /// <summary>
-        /// Metodo de actualizacion de la Vacante     
+        /// Metodo de actualizacion de la Vacante
         /// </summary>
         ///<param name="vacanteRequest">
         /// <strong> IdVacante : </strong>  Numero  Id de la vacante <br/>
@@ -129,16 +120,16 @@ namespace ApiManejoRRHH.Controllers
         ///  PruebaTecnica: campo que indica si la vacante requiere prueba tecnica<br/>
         ///  DescripcionFunciones: funciones que tiene la vacante<br/>
         ///  Comentarios: comentarios adicionales de la vacante<br/>
-        ///  <strong> IdUser : </strong>    Id del usuario que se logueo en el sistema <br/>   
+        ///  <strong> IdUser : </strong>    Id del usuario que se logueo en el sistema <br/>
         ///  ListSkillsVacante: lista con las skill que requiere la vacante <br/>
-        ///  <strong> IdCategoria : </strong>    Id de la categoria <br/>   
+        ///  <strong> IdCategoria : </strong>    Id de la categoria <br/>
         ///  DescripcionSkill: descripcion de la categoria o de la habilidad <br/>
         ///  Activo: Valor true o falso para activar la habilidad de la vacante
-        /// </param>    
+        /// </param>
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
         ///        "IdVacante": 1,
         ///        "IdUser": 1,
@@ -150,7 +141,7 @@ namespace ApiManejoRRHH.Controllers
         ///        "IdSalario": 1,
         ///        "Horario": "lunes a viernes",
         ///        "IdModalidadTrabajo": 1,
-        ///        "Horario": "lunes a viernes",        
+        ///        "Horario": "lunes a viernes",
         ///        "Idioma": "Ingles",
         ///        "PorcentajeIdioma": "80%",
         ///        "PruebaTecnica": true,
@@ -189,22 +180,22 @@ namespace ApiManejoRRHH.Controllers
         }
 
         /// <summary>
-        /// Metodo para cambiar el estado de la vacante  
+        /// Metodo para cambiar el estado de la vacante
         /// </summary>
         ///<param name="vacanteStateRequest">
         /// <strong> IdVacante : </strong>  Numero  Id de la vacante <strong> * Obligatorio </strong> <br/>
-        /// <strong> IdEstadoVacante : </strong> :  Numero Id del estado de la vacante <strong> * Obligatorio </strong> <br/>  
-        /// <strong> IdUser : </strong>    Id del usuario que se logueo en el sistema <strong> * Obligatorio </strong> 
-        /// </param>    
+        /// <strong> IdEstadoVacante : </strong> :  Numero Id del estado de la vacante <strong> * Obligatorio </strong> <br/>
+        /// <strong> IdUser : </strong>    Id del usuario que se logueo en el sistema <strong> * Obligatorio </strong>
+        /// </param>
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
         ///        "IdVacante": 1,
         ///        "IdEstadoVacante": 1,
         ///        "IdUser": 1
-        /// 
+        ///
         ///     }
         ///
         /// </remarks>
@@ -229,11 +220,10 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Obtener Vacantes 
-        /// </summary>         
-        /// <returns></returns> 
+        /// Obtener Vacantes
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet, Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -252,14 +242,13 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Obtener datos por Id de la vacante  
+        /// Obtener datos por Id de la vacante
         /// </summary>
         ///<param name="idVacante">
-        /// <strong> IdCliente : </strong> Numero Id de la vacante <strong> * Obligatorio </strong>  
+        /// <strong> IdCliente : </strong> Numero Id de la vacante <strong> * Obligatorio </strong>
         /// </param>
-        /// <returns></returns> 
+        /// <returns></returns>
 
         [HttpGet, Route("[action]/{idVacante}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -281,14 +270,13 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Obtener skill por Id de la vacante  
+        /// Obtener skill por Id de la vacante
         /// </summary>
         ///<param name="idVacante">
-        /// <strong> IdCliente : </strong> Numero Id de la vacante <strong> * Obligatorio </strong>  
+        /// <strong> IdCliente : </strong> Numero Id de la vacante <strong> * Obligatorio </strong>
         /// </param>
-        /// <returns></returns> 
+        /// <returns></returns>
         [HttpGet, Route("[action]/{idVacante}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -305,8 +293,5 @@ namespace ApiManejoRRHH.Controllers
                 return Problem();
             }
         }
-
-
-
     }
 }

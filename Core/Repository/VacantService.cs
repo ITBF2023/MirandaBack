@@ -7,7 +7,6 @@ using Domain.Common.Enum;
 using Domain.Dto;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Net;
 
 namespace Core.Repository
@@ -16,13 +15,15 @@ namespace Core.Repository
     {
         private readonly IRepository<Vacante> vacanteRepository;
         private readonly IRepository<SkillVacante> skillVacanteRepository;
+        private readonly IRepository<IdiomaVacante> idiomaVacanteRepository;
         private readonly IMapper mapper;
         private readonly ManejoRHContext manejoRHContext;
 
-        public VacantService(IRepository<Vacante> vacanteRepository, IRepository<SkillVacante> skillVacanteRepository, IMapper mapper, ManejoRHContext manejoRHContext)
+        public VacantService(IRepository<Vacante> vacanteRepository, IRepository<SkillVacante> skillVacanteRepository, IRepository<IdiomaVacante> idiomaVacanteRepository, IMapper mapper, ManejoRHContext manejoRHContext)
         {
             this.vacanteRepository = vacanteRepository;
             this.skillVacanteRepository = skillVacanteRepository;
+            this.idiomaVacanteRepository = idiomaVacanteRepository;
             this.mapper = mapper;
             this.manejoRHContext = manejoRHContext;
         }
@@ -39,7 +40,8 @@ namespace Core.Repository
                     try
                     {
                         var idVacante = await InsertVacante(vacanteRequest);
-                        await InsertSkillVacantes(vacanteRequest, idVacante);
+                        await InsertSkillsVacante(vacanteRequest, idVacante);
+                        await InsertIdiomasVacante(vacanteRequest, idVacante);
                         await transaction.CommitAsync();
                         outPut = MapperResponse();
                     }
@@ -65,13 +67,23 @@ namespace Core.Repository
             return Vacante.IdVacante;
         }
 
-        private async Task InsertSkillVacantes(VacanteRequest vacanteRequest, int idVacante)
+        private async Task InsertSkillsVacante(VacanteRequest vacanteRequest, int idVacante)
         {
             foreach (var vacante in vacanteRequest.ListSkillsVacante)
             {
                 var skillVacante = mapper.Map<SkillVacante>(vacante);
                 skillVacante.IdVacante = idVacante;
                 await skillVacanteRepository.Insert(skillVacante);
+            }
+        }
+
+        private async Task InsertIdiomasVacante(VacanteRequest vacanteRequest, int idVacante)
+        {
+            foreach (var item in vacanteRequest.ListaIdiomas)
+            {
+                var idiomaVacante = mapper.Map<IdiomaVacante>(item);
+                idiomaVacante.IdVacante = idVacante;
+                await idiomaVacanteRepository.Insert(idiomaVacante);
             }
         }
 
@@ -96,7 +108,7 @@ namespace Core.Repository
                     {
                         await UpdateVacante(vacanteRequest);
                         await DeleteSkillVacante(vacanteRequest);
-                        await InsertSkillVacantes(vacanteRequest, vacanteRequest.IdVacante);
+                        await InsertSkillsVacante(vacanteRequest, vacanteRequest.IdVacante);
                         await transaction.CommitAsync();
                         outPut = MapperUpdateResponse();
                     }
@@ -121,7 +133,6 @@ namespace Core.Repository
                 vacante.Profesion = vacanteRequest.Profesion;
                 vacante.TiempoExperiencia = vacanteRequest.TiempoExperiencia;
                 vacante.IdContrato = vacanteRequest.IdContrato;
-                vacante.IdSalario = vacanteRequest.IdSalario;
                 vacante.Horario = vacanteRequest.Horario;
                 vacante.IdModalidadTrabajo = vacanteRequest.IdModalidadTrabajo;
                 vacante.Idioma = vacanteRequest.Idioma;

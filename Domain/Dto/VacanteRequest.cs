@@ -21,9 +21,6 @@ namespace Domain.Dto
         [Required]
         public int IdContrato { get; set; }
 
-        [Required]
-        public int IdSalario { get; set; }
-
         public string Horario { get; set; } = string.Empty;
 
         [Required]
@@ -50,6 +47,8 @@ namespace Domain.Dto
 
         [Required]
         public int IdTiempoContrato { get; set; }
+
+        public List<IdiomaVacanteRequest> ListaIdiomas { get; set; }
     }
 
     public class SkillVacanteRequest
