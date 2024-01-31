@@ -27,9 +27,6 @@ namespace Domain.Entities
         [ForeignKey("IdContrato")]
         public TipoContrato? Contrato { get; set; }
 
-        [ForeignKey("IdSalario")]
-        public TipoSalario? Salario { get; set; }
-
         public string Horario { get; set; } = string.Empty;
 
         [Required]
@@ -40,6 +37,7 @@ namespace Domain.Entities
         public ModalidadTrabajo? ModalidadTrabajo { get; set; }
 
         public bool PruebaTecnica { get; set; }
+
         public string DescripcionFunciones { get; set; } = string.Empty;
 
         [Required]

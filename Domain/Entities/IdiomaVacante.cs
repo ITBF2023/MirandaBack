@@ -12,7 +12,7 @@ namespace Domain.Entities
 
         [Required]
         [ForeignKey("IdIdioma")]
-        public int Idioma { get; set; }
+        public Idioma Idioma { get; set; }
 
         [Required]
         [ForeignKey("Vacante")]
@@ -20,7 +20,7 @@ namespace Domain.Entities
 
         [Required]
         [ForeignKey("IdVacante")]
-        public int Vacante { get; set; }
+        public Vacante Vacante { get; set; }
 
         public int Porcentaje { get; set; }
     }
