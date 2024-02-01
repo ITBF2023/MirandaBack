@@ -30,6 +30,8 @@ namespace Domain.Dto
         public List<ReferenciasPersonalesCandidatoRequest>? ListReferenciasPersonalesCandidatoRequest { get; set; }
 
         public int IdTipoSalario { get; set; }
+
+        public int IdVacante { get; set; }
     }
 
     public class EstudioCandidatoRequest

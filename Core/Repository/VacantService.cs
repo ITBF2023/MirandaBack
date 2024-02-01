@@ -2,6 +2,7 @@
 using Core.Interfaces;
 using DataAccess;
 using DataAccess.Interface;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Domain.Common;
 using Domain.Common.Enum;
 using Domain.Dto;
@@ -196,7 +197,7 @@ namespace Core.Repository
             List<VacanteDetailResponse> listVacantes;
             try
             {
-                var list = await vacanteRepository.GetAllByParamIncluding(null, (x => x.ModalidadTrabajo), (x => x.EstadoVacante), (x => x.Contrato));
+                var list = await vacanteRepository.GetAllByParamIncluding(null, (x => x.ModalidadTrabajo), (x => x.EstadoVacante), (x => x.Contrato), (x => x.TiempoContrato));
                 listVacantes = MapperListVacanteResponse(list);
             }
             catch (Exception ex)
@@ -212,9 +213,9 @@ namespace Core.Repository
             foreach (var item in vacantes)
             {
                 var vacante = mapper.Map<VacanteDetailResponse>(item);
-                vacante.DescripcionContrato = item.Contrato?.Description;
-                vacante.DescripcionModalidadTrabajo = item.ModalidadTrabajo?.Description;
-                vacante.DescripcionEstadoVacante = item.EstadoVacante?.Description;
+                //vacante.DescripcionContrato = item.Contrato?.Description;
+                //vacante.DescripcionModalidadTrabajo = item.ModalidadTrabajo?.Description;
+                //vacante.DescripcionEstadoVacante = item.EstadoVacante?.Description;
                 listVacantes.Add(vacante);
             }
             return listVacantes;
@@ -225,8 +226,17 @@ namespace Core.Repository
             VacanteResponse vacanteResponse;
             try
             {
-                var vacante = await vacanteRepository.GetById(idVacante);
-                vacanteResponse = mapper.Map<VacanteResponse>(vacante);
+                var vacante = await vacanteRepository.GetAllByParamIncluding(f => f.IdVacante == idVacante, (x => x.TiempoContrato));
+
+                if (vacante is null)
+                {
+                    vacanteResponse = new VacanteResponse();
+                    vacanteResponse.StatusCode = HttpStatusCode.Unauthorized;
+                    vacanteResponse.Message = "Vacante no encontrada";
+                    return vacanteResponse;
+                }
+
+                vacanteResponse = mapper.Map<VacanteResponse>(vacante.First());
                 vacanteResponse.StatusCode = HttpStatusCode.OK;
             }
             catch (Exception)

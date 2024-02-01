@@ -14,11 +14,14 @@ namespace Core.Profiles
             CreateMap<SkillVacanteRequest, SkillVacante>()
               .ReverseMap();
 
-            CreateMap<VacanteResponse, Vacante>()
-             .ReverseMap();
+            CreateMap<Vacante, VacanteResponse>()
+                .ForMember(destino => destino.TiempoContrato, actual => actual.MapFrom(src => src.TiempoContrato.Descripcion));
 
-            CreateMap<VacanteDetailResponse, Vacante>()
-             .ReverseMap();
+            CreateMap<Vacante, VacanteDetailResponse>()
+                .ForMember(destino => destino.DescripcionContrato, actual => actual.MapFrom(src => src.Contrato.Description))
+                .ForMember(destino => destino.DescripcionModalidadTrabajo, actual => actual.MapFrom(src => src.ModalidadTrabajo.Description))
+                .ForMember(destino => destino.DescripcionEstadoVacante, actual => actual.MapFrom(src => src.EstadoVacante.Description))
+                .ForMember(destino => destino.TiempoContrato, actual => actual.MapFrom(src => src.TiempoContrato));
         }
     }
 }

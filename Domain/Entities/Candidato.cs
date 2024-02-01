@@ -55,5 +55,12 @@ namespace Domain.Entities
 
         [ForeignKey("IdTipoSalario")]
         public TipoSalario TipoSalario { get; set; }
+
+        [Required]
+        [ForeignKey("Vacante")]
+        public int IdVacante { get; set; }
+
+        [ForeignKey("IdVacante")]
+        public Vacante Vacante { get; set; }
     }
 }
