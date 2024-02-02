@@ -197,7 +197,13 @@ namespace Core.Repository
             List<VacanteDetailResponse> listVacantes;
             try
             {
-                var list = await vacanteRepository.GetAllByParamIncluding(null, (x => x.ModalidadTrabajo), (x => x.EstadoVacante), (x => x.Contrato), (x => x.TiempoContrato));
+                var list = await vacanteRepository.GetAllByParamIncluding(null, 
+                    (x => x.ModalidadTrabajo), 
+                    (x => x.EstadoVacante), 
+                    (x => x.Contrato), 
+                    (x => x.TiempoContrato),
+                    (x => x.Cliente),
+                    (x => x.UserCreated));
                 listVacantes = MapperListVacanteResponse(list);
             }
             catch (Exception ex)

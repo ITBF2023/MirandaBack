@@ -61,6 +61,8 @@ namespace Domain.Dto
         [Required]
         public int IdCliente { get; set; }
 
+        public string NombreCliente { get; set; }
+
         [Required]
         public string DescripcionCargo { get; set; } = string.Empty;
 
@@ -111,6 +113,8 @@ namespace Domain.Dto
         public decimal SalarioPrestacionServicios { get; set; }
 
         public TiempoContrato TiempoContrato { get; set; }
+
+        public string NombreComercial { get; set; }
     }
 
     public class SkillVacanteResponse
