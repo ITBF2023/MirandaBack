@@ -144,6 +144,33 @@ namespace Core.Repository
             return clientResponse;
         }
 
+        public async Task<ClientResponse> GetClientByID(int id)
+        {
+            var clientResponse = new ClientResponse();
+            try
+            {
+                var cliente = await clientecionRepository.GetById(id);
+
+                if (cliente == null)
+                {
+                    clientResponse.Message = "No existe cliente asociado al id ingresado.";
+                }
+                else
+                {
+                    clientResponse = mapper.Map<ClientResponse>(cliente);
+                }
+
+                clientResponse.StatusCode = HttpStatusCode.OK;
+            }
+            catch (Exception ex)
+            {
+                clientResponse.Message = ex.Message;
+                clientResponse.StatusCode = HttpStatusCode.InternalServerError;
+            }
+
+            return clientResponse;
+        }
+
         public async Task<List<ClientResponse>> GetListClients()
         {
             try

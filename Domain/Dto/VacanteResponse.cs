@@ -50,6 +50,8 @@ namespace Domain.Dto
         public decimal SalarioPrestacionServicios { get; set; }
 
         public string TiempoContrato { get; set; }
+
+        public List<IdiomaVacanteResponse> ListaIdiomas { get; set; }
     }
 
     public class VacanteDetailResponse

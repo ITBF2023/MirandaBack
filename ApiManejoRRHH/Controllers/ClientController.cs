@@ -167,7 +167,6 @@ namespace ApiManejoRRHH.Controllers
         /// <strong> Nit : </strong>   nit del cliente o de la empresa  <strong> * Obligatorio </strong>
         ///</param>
         /// <returns></returns>
-
         [HttpGet, Route("[action]/{nit}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -177,6 +176,33 @@ namespace ApiManejoRRHH.Controllers
             try
             {
                 var client = await clientService.GetClientByDocument(nit);
+                if (client.StatusCode == HttpStatusCode.OK)
+                    return Ok(client);
+                else
+                    return Problem(client.Message, statusCode: (int)client.StatusCode);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
+
+        /// <summary>
+        /// Obtener cliente por documento
+        /// </summary>
+        ///<param name="id">
+        /// <strong> Id : </strong>Id del cliente o de la empresa<strong> * Obligatorio </strong>
+        ///</param>
+        /// <returns></returns>
+        [HttpGet, Route("[action]/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var client = await clientService.GetClientByID(id);
                 if (client.StatusCode == HttpStatusCode.OK)
                     return Ok(client);
                 else

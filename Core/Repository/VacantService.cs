@@ -227,6 +227,7 @@ namespace Core.Repository
             try
             {
                 var vacante = await vacanteRepository.GetAllByParamIncluding(f => f.IdVacante == idVacante, (x => x.TiempoContrato));
+                var idiomas = await idiomaVacanteRepository.GetAllByParamIncluding(x => x.IdVacante == idVacante, (x => x.Idioma));
 
                 if (vacante is null)
                 {
@@ -237,6 +238,10 @@ namespace Core.Repository
                 }
 
                 vacanteResponse = mapper.Map<VacanteResponse>(vacante.First());
+                
+                if(vacante is not null)
+                    vacanteResponse.ListaIdiomas = mapper.Map<List<IdiomaVacanteResponse>>(idiomas);
+
                 vacanteResponse.StatusCode = HttpStatusCode.OK;
             }
             catch (Exception)
