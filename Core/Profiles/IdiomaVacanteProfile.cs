@@ -15,7 +15,7 @@ namespace Core.Profiles
                 .ReverseMap();
 
             CreateMap<IdiomaVacante, IdiomaVacanteResponse>()
-                .ForMember(dest => dest.IdIdioma, act => act.MapFrom(src => src.IdIdioma))
+                .ForMember(dest => dest.Id, act => act.MapFrom(src => src.IdIdioma))
                 .ForMember(dest => dest.DescripcionIdioma, act => act.MapFrom(src => src.Idioma.Descripcion))
                 .ForMember(dest => dest.Porcentaje, act => act.MapFrom(src => src.Porcentaje))
                 .ReverseMap();

@@ -53,6 +53,8 @@ namespace Domain.Dto
 
         public decimal SalarioPrestacionServicios { get; set; }
 
+        public int IdTiempoContrato { get; set; }
+
         public string TiempoContrato { get; set; }
 
         public int IdRangoEdad { get; set; }
