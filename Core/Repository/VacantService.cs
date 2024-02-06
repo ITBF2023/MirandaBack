@@ -256,28 +256,14 @@ namespace Core.Repository
 
             try
             {
-                var skills = await skillVacanteRepository.GetListByParam(x => x.IdVacante == idVacante);
-                listSkillVacante = MapperSkillVacanteResponse(skills);
+                var skills = await skillVacanteRepository.GetAllByParamIncluding(x => x.IdVacante == idVacante, (i => i.Categoria));
+                listSkillVacante = mapper.Map<List<SkillVacanteResponse>>(skills);
             }
             catch (Exception)
             {
                 throw;
             }
 
-            return listSkillVacante;
-        }
-
-        private List<SkillVacanteResponse> MapperSkillVacanteResponse(List<SkillVacante> skillVacantes)
-        {
-            var listSkillVacante = new List<SkillVacanteResponse>();
-            foreach (var item in skillVacantes)
-            {
-                var skillVacante = new SkillVacanteResponse();
-
-                skillVacante.IdCategoria = item.IdCategoria;
-                skillVacante.DescripcionCategoria = item.DescripcionSkill;
-                listSkillVacante.Add(skillVacante);
-            }
             return listSkillVacante;
         }
     }
