@@ -14,8 +14,16 @@ namespace Core.Profiles
             CreateMap<SkillVacanteRequest, SkillVacante>()
               .ReverseMap();
 
+            CreateMap<SkillVacante, SkillVacanteResponse>()
+                .ForMember(destino => destino.Id, actual => actual.MapFrom(src => src.IdSkillVacante))
+                .ForMember(destino => destino.DescripcionCategoria, actual => actual.MapFrom(src => src.Categoria.Description))
+                ;
+
             CreateMap<Vacante, VacanteResponse>()
-                .ForMember(destino => destino.TiempoContrato, actual => actual.MapFrom(src => src.TiempoContrato.Descripcion));
+                .ForMember(destino => destino.TiempoContrato, actual => actual.MapFrom(src => src.TiempoContrato.Descripcion))
+                .ForMember(destino => destino.DescripcionContrato, actual => actual.MapFrom(src => src.Contrato.Description))
+                .ForMember(destino => destino.DescripcionModalidadTrabajo, actual => actual.MapFrom(src => src.ModalidadTrabajo.Description))
+                .ForMember(destino => destino.DescripcionRangoEdad, actual => actual.MapFrom(src => src.RangoEdad.Descripcion));
 
             CreateMap<Vacante, VacanteDetailResponse>()
                 .ForMember(destino => destino.DescripcionContrato, actual => actual.MapFrom(src => src.Contrato.Description))

@@ -3,12 +3,13 @@ using Core.Common;
 using Core.Interfaces;
 using DataAccess;
 using DataAccess.Interface;
+using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using Domain.Common;
 using Domain.Common.Enum;
 using Domain.Dto;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
- 
+
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -65,37 +66,38 @@ namespace Core.Repository
                         {
                             outPut = MapperResponseFail();
                         }
-
                     }
                     catch (Exception ex)
                     {
                         await transaction.RollbackAsync();
                         outPut.StatusCode = HttpStatusCode.InternalServerError;
                         outPut.Message = ex.Message;
-
                     }
                 }
             });
 
             return outPut;
         }
+
         private async Task<bool> ValidateCreationCandidato(string documento)
         {
             var candidato = await candidatoRepository.GetByParam(x => x.Documento.Trim() == documento.Trim());
             return candidato == null;
         }
+
         private async Task<int> InsertCandidato(CandidatoRequest candidatoRequest)
         {
             var candidato = mapper.Map<Candidato>(candidatoRequest);
-            candidato.IdEstadoCandidato =  TipoEstadoCandidato.EnviadoComercial.GetIdEstadoCandidato();
+            candidato.IdEstadoCandidato = TipoEstadoCandidato.EnviadoComercial.GetIdEstadoCandidato();
             candidato.IdUserCreated = candidatoRequest.IdUser;
             candidato.DateCreated = DateTime.Now;
-            string nameFile = string.Concat("CV", candidatoRequest.Documento , candidatoRequest.PrimerApellido);
+            string nameFile = string.Concat("CV", candidatoRequest.Documento, candidatoRequest.PrimerApellido);
             candidato.UrlCV = string.IsNullOrEmpty(candidatoRequest.Base64CV) ? null : await GetPathDocsPdf(candidatoRequest.Base64CV, nameFile);
             candidato.Activo = true;
             await candidatoRepository.Insert(candidato);
             return candidato.IdCandidato;
         }
+
         private async Task<string> GetPathDocsPdf(string base64File, string clientName)
         {
             var saveFile = new SaveFiles();
@@ -106,8 +108,9 @@ namespace Core.Repository
             objectFileSave.Base64String = base64File;
             objectFileSave.FileName = $"{clientName}.pdf";
             var pathFile = saveFile.SaveFileBase64(objectFileSave);
-            return pathFile;
+            return objectFileSave.FileName;
         }
+
         private async Task InsertEstudios(List<EstudioCandidatoRequest>? ListEstudioCandidatoRequest, int idCandidato)
         {
             if (ListEstudioCandidatoRequest is not null)
@@ -122,8 +125,6 @@ namespace Core.Repository
             }
         }
 
-  
-
         private async Task InserReferenciasLaborales(List<ReferenciasLaboralesCandidatoRequest>? ListReferenciasLaboralesCandidatoRequest, int idCandidato)
         {
             if (ListReferenciasLaboralesCandidatoRequest is not null)
@@ -137,6 +138,7 @@ namespace Core.Repository
                 }
             }
         }
+
         private async Task InsertReferenciasPersonales(List<ReferenciasPersonalesCandidatoRequest>? ListReferenciasLaboralesCandidatoRequest, int idCandidato)
         {
             if (ListReferenciasLaboralesCandidatoRequest is not null)
@@ -150,6 +152,7 @@ namespace Core.Repository
                 }
             }
         }
+
         private static BaseResponse MapperResponse()
         {
             return new BaseResponse()
@@ -158,6 +161,7 @@ namespace Core.Repository
                 Message = "Candidato creado con exito"
             };
         }
+
         private static BaseResponse MapperResponseFail()
         {
             return new BaseResponse()
@@ -166,7 +170,6 @@ namespace Core.Repository
                 Message = "El Candidato ya fue creado con el documento digitado"
             };
         }
-
 
         public async Task<BaseResponse> Update(CandidatoRequest candidatoRequest)
         {
@@ -190,20 +193,18 @@ namespace Core.Repository
                             await transaction.CommitAsync();
                             outPut = MapperResponseUpdate();
                         }
-
-
                     }
                     catch (Exception ex)
                     {
                         await transaction.RollbackAsync();
                         outPut.StatusCode = HttpStatusCode.InternalServerError;
                         outPut.Message = ex.Message;
-
                     }
                 }
             });
             return outPut;
         }
+
         private async Task<bool> UpdateCandidato(CandidatoRequest candidatoRequest)
         {
             var candidato = await candidatoRepository.GetById(candidatoRequest.IdCandidato);
@@ -227,6 +228,7 @@ namespace Core.Repository
             }
             return false;
         }
+
         private async Task DeleteEstudios(int idVacante)
         {
             var listEstudiosCandidato = await estudioCandidatoRepository.GetListByParam(x => x.IdCandidato == idVacante);
@@ -239,6 +241,7 @@ namespace Core.Repository
                 }
             }
         }
+
         private async Task DeleteReferenciaLaborales(int idVacante)
         {
             var listReferencais = await referenciasLaboralesCandidatoRepository.GetListByParam(x => x.IdCandidato == idVacante);
@@ -251,6 +254,7 @@ namespace Core.Repository
                 }
             }
         }
+
         private async Task DeleteReferenciasPersonales(int idVacante)
         {
             var listReferencais = await referenciasPersonalesCandidatoRepository.GetListByParam(x => x.IdCandidato == idVacante);
@@ -263,6 +267,7 @@ namespace Core.Repository
                 }
             }
         }
+
         private static BaseResponse MapperResponseUpdate()
         {
             return new BaseResponse()
@@ -272,8 +277,7 @@ namespace Core.Repository
             };
         }
 
-
-        public async Task<BaseResponse> UpdateActiveCandidato(CandidatoActiveRequest candidatoActiveRequest) 
+        public async Task<BaseResponse> UpdateActiveCandidato(CandidatoActiveRequest candidatoActiveRequest)
         {
             var outPut = new BaseResponse();
             try
@@ -291,16 +295,15 @@ namespace Core.Repository
                 {
                     outPut = MapperResponseUpdateFailed();
                 }
-
             }
             catch (Exception ex)
-            {                
+            {
                 outPut.StatusCode = HttpStatusCode.InternalServerError;
                 outPut.Message = ex.Message;
-
             }
             return outPut;
         }
+
         private static BaseResponse MapperResponseUpdateFailed()
         {
             return new BaseResponse()
@@ -309,7 +312,6 @@ namespace Core.Repository
                 Message = "El id del candidato no existe"
             };
         }
-
 
         public async Task<BaseResponse> UpdateStateCandidato(CandidatoStateRequest candidatoStateRequest)
         {
@@ -330,19 +332,14 @@ namespace Core.Repository
                 {
                     outPut = MapperResponseUpdateFailed();
                 }
-
             }
             catch (Exception ex)
             {
                 outPut.StatusCode = HttpStatusCode.InternalServerError;
                 outPut.Message = ex.Message;
-
             }
             return outPut;
-
-
         }
-
 
         public async Task<BaseResponse> UpdateVerifyRefLaborales(List<ReferenciasLaboralesVerifyRequest> referenciasLaboralesVerifyRequests)
         {
@@ -359,13 +356,12 @@ namespace Core.Repository
             {
                 outPut.StatusCode = HttpStatusCode.InternalServerError;
                 outPut.Message = ex.Message;
-
             }
             return outPut;
         }
+
         private async Task UpdateVerifyRefLaboral(List<ReferenciasLaboralesVerifyRequest> referenciasLaboralesVerifyRequests)
         {
-
             foreach (var item in referenciasLaboralesVerifyRequests)
             {
                 var refLaboral = await referenciasLaboralesCandidatoRepository.GetById(item.IdReferenciasLaboralesCandidato);
@@ -376,6 +372,7 @@ namespace Core.Repository
                 }
             }
         }
+
         private static BaseResponse MapperResponseUpdateRef(string tipoRef)
         {
             return new BaseResponse()
@@ -385,10 +382,8 @@ namespace Core.Repository
             };
         }
 
-
         public async Task<BaseResponse> UpdateVerifyRefPersonales(List<ReferenciasPersonalesVerifyRequest> referenciasPersonalesVerifyRequests)
         {
-
             var outPut = new BaseResponse();
             try
             {
@@ -402,10 +397,10 @@ namespace Core.Repository
             {
                 outPut.StatusCode = HttpStatusCode.InternalServerError;
                 outPut.Message = ex.Message;
-
             }
             return outPut;
         }
+
         private async Task UpdateVerifyRefPersonal(List<ReferenciasPersonalesVerifyRequest> referenciasPersonalesVerifyRequests)
         {
             foreach (var item in referenciasPersonalesVerifyRequests)
@@ -419,32 +414,21 @@ namespace Core.Repository
             }
         }
 
-
         public async Task<List<CandidatoResponse>> GetAllCandidatos()
         {
             List<CandidatoResponse> listCantidatos;
             try
             {
                 var list = await candidatoRepository.GetAll();
-                listCantidatos = MappeListCandidatos(list);
+
+                listCantidatos = mapper.Map<List<CandidatoResponse>>(list);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return listCantidatos;  
+            return listCantidatos;
         }
-        private List<CandidatoResponse> MappeListCandidatos(List<Candidato> candidatos)
-        {
-            var listCantidatosResponse = new List<CandidatoResponse>();
-            foreach (var item in candidatos)
-            {
-                var cantidato = mapper.Map<CandidatoResponse>(item);
-                listCantidatosResponse.Add(cantidato);
-            }
-            return listCantidatosResponse;
-        }
-
 
         public async Task<List<EstudioCandidatoResponse>> GetAllEstudiosCandidato(int idCandidato)
         {
@@ -472,8 +456,9 @@ namespace Core.Repository
 
             try
             {
-                var listCandidate = await candidatoRepository.GetListByParam(x => x.Documento == document);
-                listResponse = MappeListCandidatos(listCandidate);
+                var listCandidate = await candidatoRepository.GetAllByParamIncluding(x => x.Documento == document, (i => i.Vacante), (i => i.UserCreated), (i => i.Vacante.Cliente));
+
+                listResponse = mapper.Map<List<CandidatoResponse>>(listCandidate);
             }
             catch (Exception ex)
             {
@@ -481,6 +466,26 @@ namespace Core.Repository
             }
 
             return listResponse;
+        }
+
+        /// <summary>
+        /// Obtener candidato por el id
+        /// </summary>
+        /// <param name="id">Id del cantidato</param>
+        /// <returns></returns>
+        public async Task<CandidatoResponse> GetById(int id)
+        {
+            try
+            {
+                var candidate = await candidatoRepository.GetAllByParamIncluding(f => f.IdCandidato == id, (i => i.Vacante), (i => i.UserCreated), (i => i.Vacante.Cliente));
+                var candidateResponse = mapper.Map<CandidatoResponse>(candidate.First());
+
+                return candidateResponse;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private List<EstudioCandidatoResponse> MappeListEstudiosCandidatos(List<EstudioCandidato> estudioCandidatos)
@@ -500,7 +505,7 @@ namespace Core.Repository
             var listRefPersonalesResponse = new List<ReferenciasPersonalesResponse>();
             try
             {
-                var listRefPersonales= await referenciasPersonalesCandidatoRepository.GetListByParam(x => x.IdCandidato == idCandidato && x.Activo);
+                var listRefPersonales = await referenciasPersonalesCandidatoRepository.GetListByParam(x => x.IdCandidato == idCandidato && x.Activo);
                 listRefPersonalesResponse = MappeListRefPersonalesCandidatos(listRefPersonales);
             }
             catch (Exception ex)
@@ -536,7 +541,6 @@ namespace Core.Repository
             return listRefLaboralesResponse;
         }
 
-
         private List<ReferenciasLaboralesResponse> MappeListRefLaboralesCandidatos(List<ReferenciasLaboralesCandidato> listRefLaborales)
         {
             var listRefLaboralesResponse = new List<ReferenciasLaboralesResponse>();
@@ -548,15 +552,12 @@ namespace Core.Repository
             return listRefLaboralesResponse;
         }
 
-
         //public async Task<object> GetAllCandidatosFilter(int cedula)
         //{
-
         //    var taskCandidate = await candidatoRepository.GetListByParam(x => x.Documento == cedula.ToString() && x.Activo);
         //    dynamic response = new ExpandoObject();
         //    try
         //    {
-
         //        response.candidato = taskCandidate != null ? taskCandidate : null;
         //        response.itemsPersonal = await GetAllRefPersonalesCandidato(taskCandidate.First().IdCandidato);
         //        response.itemsLaboral = await GetAllRefLaboralesCandidato(taskCandidate.First().IdCandidato);
@@ -569,8 +570,7 @@ namespace Core.Repository
         //        response.status = 400;
         //        return response;
         //    }
-           
-        //}
 
+        //}
     }
 }

@@ -20,8 +20,9 @@ namespace Core.Profiles
             CreateMap<ReferenciasPersonalesCandidatoRequest, ReferenciasPersonalesCandidato>()
             .ReverseMap();
 
-            CreateMap<CandidatoResponse, Candidato>()
-              .ReverseMap();
+            CreateMap<Candidato, CandidatoResponse>()
+                .ForMember(dest => dest.Nombre, act => act.MapFrom(src => string.Format("{0} {1}", src.UserCreated.Nombres, src.UserCreated.Apellidos)))
+                .ForMember(dest => dest.Cliente, act => act.MapFrom(src => src.Vacante.Cliente.Name));
 
             CreateMap<EstudioCandidatoResponse, EstudioCandidato>()
               .ReverseMap();

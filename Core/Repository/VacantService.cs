@@ -149,13 +149,12 @@ namespace Core.Repository
 
         private async Task DeleteSkillVacante(VacanteRequest vacanteRequest)
         {
-            var listSkillVacantes = await skillVacanteRepository.GetListByParam(x => x.IdVacante == vacanteRequest.IdVacante && x.Activo);
+            var listSkillVacantes = await skillVacanteRepository.GetListByParam(x => x.IdVacante == vacanteRequest.IdVacante);
             if (listSkillVacantes is not null || listSkillVacantes?.Count > 0)
             {
                 foreach (var item in listSkillVacantes)
                 {
-                    item.Activo = false;
-                    await skillVacanteRepository.Update(item);
+                    await skillVacanteRepository.Delete(item);
                 }
             }
         }
@@ -204,25 +203,19 @@ namespace Core.Repository
                     (x => x.TiempoContrato),
                     (x => x.Cliente),
                     (x => x.UserCreated));
-                listVacantes = MapperListVacanteResponse(list);
+
+                listVacantes = mapper.Map<List<VacanteDetailResponse>>(list);
+
+                foreach (var item in listVacantes)
+                {
+                    var listSkill = await skillVacanteRepository.GetAllByParamIncluding(p => p.IdVacante == item.IdVacante, (i => i.Categoria));
+
+                    item.ListaSkill = mapper.Map<List<SkillVacanteResponse>>(listSkill);
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
-            }
-            return listVacantes;
-        }
-
-        private List<VacanteDetailResponse> MapperListVacanteResponse(List<Vacante> vacantes)
-        {
-            var listVacantes = new List<VacanteDetailResponse>();
-            foreach (var item in vacantes)
-            {
-                var vacante = mapper.Map<VacanteDetailResponse>(item);
-                //vacante.DescripcionContrato = item.Contrato?.Description;
-                //vacante.DescripcionModalidadTrabajo = item.ModalidadTrabajo?.Description;
-                //vacante.DescripcionEstadoVacante = item.EstadoVacante?.Description;
-                listVacantes.Add(vacante);
             }
             return listVacantes;
         }
@@ -232,7 +225,7 @@ namespace Core.Repository
             VacanteResponse vacanteResponse;
             try
             {
-                var vacante = await vacanteRepository.GetAllByParamIncluding(f => f.IdVacante == idVacante, (x => x.TiempoContrato));
+                var vacante = await vacanteRepository.GetAllByParamIncluding(f => f.IdVacante == idVacante, (x => x.TiempoContrato), (x => x.Contrato), (x => x.ModalidadTrabajo), (x => x.RangoEdad));
                 var idiomas = await idiomaVacanteRepository.GetAllByParamIncluding(x => x.IdVacante == idVacante, (x => x.Idioma));
 
                 if (vacante is null)
@@ -263,7 +256,7 @@ namespace Core.Repository
 
             try
             {
-                var skills = await skillVacanteRepository.GetListByParam(x => x.IdVacante == idVacante && x.Activo);
+                var skills = await skillVacanteRepository.GetListByParam(x => x.IdVacante == idVacante);
                 listSkillVacante = MapperSkillVacanteResponse(skills);
             }
             catch (Exception)
@@ -282,7 +275,7 @@ namespace Core.Repository
                 var skillVacante = new SkillVacanteResponse();
 
                 skillVacante.IdCategoria = item.IdCategoria;
-                skillVacante.Descripcion = item.DescripcionSkill;
+                skillVacante.DescripcionCategoria = item.DescripcionSkill;
                 listSkillVacante.Add(skillVacante);
             }
             return listSkillVacante;

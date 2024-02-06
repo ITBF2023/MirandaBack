@@ -23,6 +23,13 @@ namespace Core.Interfaces
 
         Task<List<CandidatoResponse>> GetByDocument(string document);
 
+        /// <summary>
+        /// Obtener candidato por el id
+        /// </summary>
+        /// <param name="id">Id del cantidato</param>
+        /// <returns></returns>
+        Task<CandidatoResponse> GetById(int id);
+
         Task<List<ReferenciasPersonalesResponse>> GetAllRefPersonalesCandidato(int idCandidato);
 
         Task<List<ReferenciasLaboralesResponse>> GetAllRefLaboralesCandidato(int idCandidato);

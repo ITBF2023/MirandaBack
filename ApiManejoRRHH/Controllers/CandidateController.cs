@@ -572,6 +572,28 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtener candidatos por id
+        /// </summary>
+        /// <param name="id">Id de candidato</param>
+        /// <returns></returns>
+        [HttpGet, Route("[action]/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var candidate = await candidatoService.GetById(id);
+                return Ok(candidate);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
+
         //[HttpGet, Route("[action]/{Documento}")]
         //[ProducesResponseType(StatusCodes.Status200OK)]
         //[ProducesResponseType(StatusCodes.Status400BadRequest)]

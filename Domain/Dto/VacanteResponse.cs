@@ -23,10 +23,14 @@ namespace Domain.Dto
         [Required]
         public int IdContrato { get; set; }
 
+        public string DescripcionContrato { get; set; }
+
         public string Horario { get; set; } = string.Empty;
 
         [Required]
         public int IdModalidadTrabajo { get; set; }
+
+        public string DescripcionModalidadTrabajo { get; set; }
 
         public bool PruebaTecnica { get; set; }
         public string DescripcionFunciones { get; set; } = string.Empty;
@@ -50,6 +54,10 @@ namespace Domain.Dto
         public decimal SalarioPrestacionServicios { get; set; }
 
         public string TiempoContrato { get; set; }
+
+        public int IdRangoEdad { get; set; }
+
+        public string DescripcionRangoEdad { get; set; }
 
         public List<IdiomaVacanteResponse> ListaIdiomas { get; set; }
     }
@@ -115,14 +123,8 @@ namespace Domain.Dto
         public TiempoContrato TiempoContrato { get; set; }
 
         public string NombreComercial { get; set; }
-    }
 
-    public class SkillVacanteResponse
-    {
-        [Required]
-        public int IdCategoria { get; set; }
-
-        public string Descripcion { get; set; } = string.Empty;
+        public List<SkillVacanteResponse> ListaSkill { get; set; }
     }
 
     public class VacantesEmpresaResponse
