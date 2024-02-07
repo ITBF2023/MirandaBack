@@ -30,6 +30,13 @@ namespace Core.Interfaces
         /// <returns></returns>
         Task<CandidatoResponse> GetById(int id);
 
+        /// <summary>
+        /// Obtener candidatos por id de vacante
+        /// </summary>
+        /// <param name="id">Id de vacante</param>
+        /// <returns></returns>
+        Task<List<CandidatoResponse>> GetByIdVacante(int id);
+
         Task<List<ReferenciasPersonalesResponse>> GetAllRefPersonalesCandidato(int idCandidato);
 
         Task<List<ReferenciasLaboralesResponse>> GetAllRefLaboralesCandidato(int idCandidato);

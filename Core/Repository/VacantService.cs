@@ -225,7 +225,13 @@ namespace Core.Repository
             VacanteResponse vacanteResponse;
             try
             {
-                var vacante = await vacanteRepository.GetAllByParamIncluding(f => f.IdVacante == idVacante, (x => x.TiempoContrato), (x => x.Contrato), (x => x.ModalidadTrabajo), (x => x.RangoEdad));
+                var vacante = await vacanteRepository.GetAllByParamIncluding(f => f.IdVacante == idVacante, 
+                    (x => x.TiempoContrato), 
+                    (x => x.Contrato), 
+                    (x => x.ModalidadTrabajo), 
+                    (x => x.RangoEdad),
+                    (x => x.Cliente));
+
                 var idiomas = await idiomaVacanteRepository.GetAllByParamIncluding(x => x.IdVacante == idVacante, (x => x.Idioma));
 
                 if (vacante is null)

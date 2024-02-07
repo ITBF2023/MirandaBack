@@ -1,16 +1,14 @@
 ﻿using ApiManejoRRHH.Helpers;
 using Core.Interfaces;
-using Core.Repository;
 using Domain.Common;
 using Domain.Dto;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace ApiManejoRRHH.Controllers
 {
     /// <summary>
-    /// Controlador de Tipo documento 
+    /// Controlador de Tipo documento
     /// </summary>
 
     [Route("api/[controller]")]
@@ -18,8 +16,6 @@ namespace ApiManejoRRHH.Controllers
     [Authorize]
     public class EmployeeController : ControllerBase
     {
-
-
         private readonly IEmpleadoService empleadoService;
 
         public EmployeeController(IEmpleadoService empleadoService)
@@ -28,28 +24,27 @@ namespace ApiManejoRRHH.Controllers
         }
 
         /// <summary>
-        /// Metodo para crear los certificados estudiantiles, personales y laborales del empleado   
-        /// </summary>         
-        ///<param name="contratoRequest">   
-        /// <strong> IdCandidato : </strong> :  Numero Id de la tabla del candidato  <strong> * Obligatorio </strong>   
+        /// Metodo para crear los certificados estudiantiles, personales y laborales del empleado
+        /// </summary>
+        ///<param name="contratoRequest">
+        /// <strong> IdCandidato : </strong> :  Numero Id de la tabla del candidato  <strong> * Obligatorio </strong>
         /// CertificadosLaborales:  lista de los certificados laborales en base 64  <br/>
         /// CertificadosPersonales:  lista de los certificados personales en base 64  <br/>
         ///  CertificadosEstudiantiles:  lista de los certificados estudiantiles
-        ///  
-        /// </param>    
+        ///
+        /// </param>
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
-        ///         
+        ///
         ///        "IdCandidato": 1,
-        ///      
-        /// 
+        ///
+        ///
         ///     }
         ///
         /// </remarks>
-
 
         [HttpPost, Route("[action]")]
         [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status200OK)]
@@ -71,30 +66,28 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Metodo para actualizar los certificados estudiantiles, personales y laborales del empleado   
-        /// </summary>         
-        ///<param name="contratoRequest">   
-        /// <strong> IdCandidato : </strong> :  Numero Id de la tabla del candidato  <strong> * Obligatorio </strong>   
+        /// Metodo para actualizar los certificados estudiantiles, personales y laborales del empleado
+        /// </summary>
+        ///<param name="contratoRequest">
+        /// <strong> IdCandidato : </strong> :  Numero Id de la tabla del candidato  <strong> * Obligatorio </strong>
         /// CertificadosLaborales:  lista de los certificados laborales en base 64  <br/>
         /// CertificadosPersonales:  lista de los certificados personales en base 64  <br/>
         ///  CertificadosEstudiantiles:  lista de los certificados estudiantiles
-        ///  
-        /// </param>    
+        ///
+        /// </param>
         /// <returns></returns>
         /// /// <remarks>
         /// Request de ejemplo:
-        ///  
+        ///
         ///     {
-        ///         
+        ///
         ///        "IdCandidato": 1,
-        ///      
-        /// 
+        ///
+        ///
         ///     }
         ///
         /// </remarks>
-
 
         [HttpPut, Route("[action]")]
         [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status200OK)]
@@ -116,15 +109,13 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
-
         /// <summary>
-        /// Obtener informacion del empleado por id    
+        /// Obtener informacion del empleado por id
         /// </summary>
         ///<param name="idEmpleado">
-        /// <strong> idEmpleado : </strong> numero Id delempleado <strong>* Obligatorio</strong> 
+        /// <strong> idEmpleado : </strong> numero Id delempleado <strong>* Obligatorio</strong>
         /// </param>
-        /// <returns></returns>  
+        /// <returns></returns>
 
         [HttpGet, Route("[action]/{idEmpleado}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -147,9 +138,9 @@ namespace ApiManejoRRHH.Controllers
         }
 
         /// <summary>
-        /// Obtener las novedades del empleado 
-        /// </summary>         
-        /// <returns></returns> 
+        /// Obtener las novedades del empleado
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet, Route("[action]/{idEmpleado}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -168,11 +159,10 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
-        /// Obtener los certificados del empleado 
-        /// </summary>         
-        /// <returns></returns> 
+        /// Obtener los certificados del empleado
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet, Route("[action]/{idEmpleado}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -191,8 +181,38 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
+        [HttpGet, Route("[action]/{idEmpleado}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetCompetenciaLaboral(long idEmpleado)
+        {
+            try
+            {
+                var employee = await empleadoService.GetCertificadosByEmployee(idEmpleado);
+                return Ok(employee);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
 
-
-
+        [HttpGet, Route("[action]/{idEmpleado}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetCompetenciaPersonal(long idEmpleado)
+        {
+            try
+            {
+                var employee = await empleadoService.GetCertificadosByEmployee(idEmpleado);
+                return Ok(employee);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
     }
 }

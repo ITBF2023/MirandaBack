@@ -62,5 +62,7 @@ namespace Domain.Entities
 
         [ForeignKey("IdVacante")]
         public Vacante Vacante { get; set; }
+
+        public DateTime? FechaNacimiento { get; set; }
     }
 }

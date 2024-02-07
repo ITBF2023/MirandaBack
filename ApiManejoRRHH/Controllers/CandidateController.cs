@@ -594,29 +594,26 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-        //[HttpGet, Route("[action]/{Documento}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
-        //public async Task<object> GetCandidatosDocumentos(int documento)
-        //{
-        //dynamic responseHttp = new ExpandoObject();
-
-        //try
-        //{
-        //    var refCandidato = await candidatoService.GetAllCandidatosFilter(documento);
-        //    responseHttp.data = refCandidato;
-        //    return responseHttp;
-        //}catch(Exception ex)
-        //{
-        //    responseHttp.status = 400;
-        //    responseHttp.message = ex;
-        //    return responseHttp;
-        //}
-
-        //return null;
-
-        //}
+        /// <summary>
+        /// Obtener candidatos por id de vacante
+        /// </summary>
+        /// <param name="id">Id de vacante</param>
+        /// <returns></returns>
+        [HttpGet, Route("[action]/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetByIdVacante(int id)
+        {
+            try
+            {
+                var candidate = await candidatoService.GetByIdVacante(id);
+                return Ok(candidate);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
     }
 }

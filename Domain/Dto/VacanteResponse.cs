@@ -11,6 +11,8 @@ namespace Domain.Dto
         [Required]
         public int IdCliente { get; set; }
 
+        public string LogoCliente { get; set; }
+
         [Required]
         public string DescripcionCargo { get; set; } = string.Empty;
 

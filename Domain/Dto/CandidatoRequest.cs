@@ -25,13 +25,17 @@ namespace Domain.Dto
         public string Correo { get; set; } = string.Empty;
         public string Base64CV { get; set; } = string.Empty;
         public int IdUser { get; set; }
-        public List<EstudioCandidatoRequest>? ListEstudioCandidatoRequest { get; set; }
-        public List<ReferenciasLaboralesCandidatoRequest>? ListReferenciasLaboralesCandidatoRequest { get; set; }
-        public List<ReferenciasPersonalesCandidatoRequest>? ListReferenciasPersonalesCandidatoRequest { get; set; }
 
         public int IdTipoSalario { get; set; }
 
         public int IdVacante { get; set; }
+
+        public DateTime FechaNacimiento { get; set; }
+
+        public string Comentarios { get; set; }
+        public List<EstudioCandidatoRequest>? ListEstudioCandidatoRequest { get; set; }
+        public List<ReferenciasLaboralesCandidatoRequest>? ListReferenciasLaboralesCandidatoRequest { get; set; }
+        public List<ReferenciasPersonalesCandidatoRequest>? ListReferenciasPersonalesCandidatoRequest { get; set; }
     }
 
     public class EstudioCandidatoRequest
@@ -61,6 +65,10 @@ namespace Domain.Dto
 
         public string Desempeno { get; set; } = string.Empty;
         public bool Verificado { get; set; }
+
+        public DateTime FechaInicio { get; set; }
+
+        public DateTime FechaFinalizacion { get; set; }
     }
 
     public class ReferenciasPersonalesCandidatoRequest

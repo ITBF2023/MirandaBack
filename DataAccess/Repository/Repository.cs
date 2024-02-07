@@ -15,9 +15,10 @@ namespace DataAccess.Repository
             table = _manejoRHContext.Set<T>();
         }
 
-        public Task Delete(object id)
+        public async Task Delete(T obj)
         {
-            throw new NotImplementedException();
+            table.Remove(obj);
+            await Save();
         }
 
         public async Task<List<T>> GetAll()

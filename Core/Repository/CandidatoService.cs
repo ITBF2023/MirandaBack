@@ -3,19 +3,12 @@ using Core.Common;
 using Core.Interfaces;
 using DataAccess;
 using DataAccess.Interface;
-using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using Domain.Common;
 using Domain.Common.Enum;
 using Domain.Dto;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Repository
 {
@@ -419,7 +412,7 @@ namespace Core.Repository
             List<CandidatoResponse> listCantidatos;
             try
             {
-                var list = await candidatoRepository.GetAll();
+                var list = await candidatoRepository.GetAllByParamIncluding(null, (i => i.Vacante), (i => i.Vacante.Cliente));
 
                 listCantidatos = mapper.Map<List<CandidatoResponse>>(list);
             }
@@ -481,6 +474,26 @@ namespace Core.Repository
                 var candidateResponse = mapper.Map<CandidatoResponse>(candidate.First());
 
                 return candidateResponse;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Obtener candidatos por id de vacante
+        /// </summary>
+        /// <param name="id">Id de vacante</param>
+        /// <returns></returns>
+        public async Task<List<CandidatoResponse>> GetByIdVacante(int id)
+        {
+            try
+            {
+                var candidates = await candidatoRepository.GetAllByParamIncluding(f => f.IdVacante == id, (i => i.Vacante), (i => i.UserCreated), (i => i.Vacante.Cliente));
+                var candidatesResponse = mapper.Map<List<CandidatoResponse>>(candidates);
+
+                return candidatesResponse;
             }
             catch (Exception ex)
             {

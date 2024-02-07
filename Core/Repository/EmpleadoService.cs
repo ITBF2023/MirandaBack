@@ -2,25 +2,21 @@
 using Core.Common;
 using Core.Interfaces;
 using DataAccess.Interface;
-using DataAccess.Repository;
 using Domain.Common;
 using Domain.Common.Enum;
 using Domain.Dto;
 using Domain.Entities;
 using Domain.Entities.StoreProcedure;
-using System.Collections.Generic;
 using System.Net;
 
 namespace Core.Repository
 {
     public class EmpleadoService : IEmpleadoService
     {
-
         private readonly IRepository<CertificadoEstudiantilEmpleado> certificadoEstudiantilEmpleadoRepository;
         private readonly IRepository<CertificadosEmpleado> certificadosEmpleadoRepository;
         private readonly IRepository<Candidato> candidatoRepository;
         private readonly IRepository<Empleado> empleadoRepository;
-
         private readonly IRepository<Configuracion> configuiuracionRepository;
         private readonly IStoreProcedureRepository storeProcedureRepository;
         private readonly IMapper mapper;
@@ -38,14 +34,12 @@ namespace Core.Repository
             this.mapper = mapper;
         }
 
-
         public async Task<BaseResponse> CreateCertificados(ContratoCreateRequest contratoRequest)
         {
             var outPut = new BaseResponse();
 
             try
             {
-
                 var nameFile = "Estudios" + await Name(contratoRequest.IdCandidato);
                 await InsertCertificadosEstudiantiles(contratoRequest, nameFile);
                 var nameFilePersonales = "CertPersonales" + await Name(contratoRequest.IdCandidato);
@@ -56,14 +50,13 @@ namespace Core.Repository
             }
             catch (Exception ex)
             {
-
                 outPut = MapperResponse(ex.Message, HttpStatusCode.InternalServerError);
             }
             return outPut;
         }
+
         private async Task InsertCertificadosEstudiantiles(ContratoCreateRequest contratoRequest, string nameFile)
         {
-
             if (contratoRequest.CertificadosEstudiantiles is not null && contratoRequest.CertificadosEstudiantiles.Count > 0)
             {
                 foreach (var item in contratoRequest.CertificadosEstudiantiles)
@@ -77,8 +70,8 @@ namespace Core.Repository
                     await certificadoEstudiantilEmpleadoRepository.Insert(certificacionEstudiantil);
                 }
             }
-
         }
+
         private async Task InsertCertificadosPersonales(ContratoCreateRequest contratoRequest, string nameFile)
         {
             if (contratoRequest.CertificadosPersonales is not null && contratoRequest.CertificadosPersonales.Count > 0)
@@ -96,6 +89,7 @@ namespace Core.Repository
                 }
             }
         }
+
         private async Task InsertCertificadosLaborales(ContratoCreateRequest contratoRequest, string nameFile)
         {
             if (contratoRequest.CertificadosLaborales is not null && contratoRequest.CertificadosLaborales.Count > 0)
@@ -113,6 +107,7 @@ namespace Core.Repository
                 }
             }
         }
+
         private static BaseResponse MapperResponse(string mensaje, HttpStatusCode httpStatusCode)
         {
             return new BaseResponse()
@@ -121,7 +116,6 @@ namespace Core.Repository
                 Message = mensaje
             };
         }
-
 
         public async Task<BaseResponse> UpdateCertificados(ContratoEditRequest contratoRequest)
         {
@@ -136,11 +130,11 @@ namespace Core.Repository
             }
             catch (Exception ex)
             {
-
                 outPut = MapperResponse(ex.Message, HttpStatusCode.InternalServerError);
             }
             return outPut;
         }
+
         private async Task UpdateListCerticacionEstudiantil(ContratoEditRequest contratoRequest)
         {
             var nameFile = "Estudios" + await Name(contratoRequest.IdCandidato);
@@ -154,9 +148,9 @@ namespace Core.Repository
                     if (item.Activo && !string.IsNullOrEmpty(item.Base64CertificadoEstudiantil))
                         await InsertEditCerticacionEstudiantil(item, nameFile, contratoRequest.IdCandidato);
                 }
-
             }
         }
+
         private async Task DeleteCerticacionEstudiantil(int IdCertificadoEstudiantil)
         {
             var certificadoEstudiantil = await certificadoEstudiantilEmpleadoRepository.GetById(IdCertificadoEstudiantil);
@@ -166,6 +160,7 @@ namespace Core.Repository
                 await certificadoEstudiantilEmpleadoRepository.Update(certificadoEstudiantil);
             }
         }
+
         private async Task InsertEditCerticacionEstudiantil(CertificadosEstudiantilesEditRequest certificado, string nameFile, int idCandidato)
         {
             var certificacionPersonal = new CertificadosEmpleado();
@@ -176,9 +171,8 @@ namespace Core.Repository
             nameFile = string.Concat(nameFile, num.Next().ToString());
             certificacionPersonal.UrlCertificado = string.IsNullOrEmpty(certificado.Base64CertificadoEstudiantil) ? null : await GetPathDocsPdf(certificado.Base64CertificadoEstudiantil, nameFile);
             await certificadosEmpleadoRepository.Insert(certificacionPersonal);
-
-
         }
+
         private async Task UpdateListCerticacionPersonal(ContratoEditRequest contratoRequest)
         {
             var nameFilePersonales = "CertPersonales" + await Name(contratoRequest.IdCandidato);
@@ -192,9 +186,9 @@ namespace Core.Repository
                     if (item.Activo && !string.IsNullOrEmpty(item.Base64CertificadoPersonal))
                         await InsertEditCerticacion(item, nameFilePersonales, contratoRequest.IdCandidato);
                 }
-
             }
         }
+
         private async Task UpdateListCerticacionLaboral(ContratoEditRequest contratoRequest)
         {
             var nameFilePersonales = "CertPersonales" + await Name(contratoRequest.IdCandidato);
@@ -208,9 +202,9 @@ namespace Core.Repository
                     if (item.Activo && !string.IsNullOrEmpty(item.Base64CertificadoLaboral))
                         await InsertEditCerticacion(item, nameFilePersonales, contratoRequest.IdCandidato);
                 }
-
             }
         }
+
         private async Task DeleteCerticacion(int IdCertificadoEstudiantil)
         {
             var certificado = await certificadosEmpleadoRepository.GetById(IdCertificadoEstudiantil);
@@ -220,6 +214,7 @@ namespace Core.Repository
                 await certificadosEmpleadoRepository.Update(certificado);
             }
         }
+
         private async Task InsertEditCerticacion(CertificadoPersonalEditRequest certificado, string nameFile, int idCandidato)
         {
             var certificacionPersonal = new CertificadosEmpleado();
@@ -230,9 +225,8 @@ namespace Core.Repository
             nameFile = string.Concat(nameFile, num.Next().ToString());
             certificacionPersonal.UrlCertificado = string.IsNullOrEmpty(certificado.Base64CertificadoPersonal) ? null : await GetPathDocsPdf(certificado.Base64CertificadoPersonal, nameFile);
             await certificadosEmpleadoRepository.Insert(certificacionPersonal);
-
-
         }
+
         private async Task InsertEditCerticacion(CertificadoLaboralEditRequest certificado, string nameFile, int idCandidato)
         {
             var certificacionPersonal = new CertificadosEmpleado();
@@ -253,6 +247,7 @@ namespace Core.Repository
 
             return string.Empty;
         }
+
         private async Task<string> GetPathDocsPdf(string base64File, string clientName)
         {
             var saveFile = new SaveFiles();
@@ -271,20 +266,17 @@ namespace Core.Repository
             var sPInfoEmployeeResponse = new SPInfoEmployeeResponse();
             try
             {
-
                 var employee = await GetInfoEmployee(idEmpleado);
                 if (employee is not null)
                 {
                     sPInfoEmployeeResponse = mapper.Map<SPInfoEmployeeResponse>(employee);
                     sPInfoEmployeeResponse.StatusCode = HttpStatusCode.OK;
-
                 }
                 else
                 {
                     sPInfoEmployeeResponse.StatusCode = HttpStatusCode.NotFound;
                     sPInfoEmployeeResponse.Message = "Id de empleado no se encuentra";
                 }
-
             }
             catch (Exception ex)
             {
@@ -293,6 +285,7 @@ namespace Core.Repository
             }
             return sPInfoEmployeeResponse;
         }
+
         private async Task<SPInfoEmployee> GetInfoEmployee(long idEmpleado)
         {
             return await storeProcedureRepository.GetSPInfoEmployeeById(idEmpleado);
@@ -312,10 +305,12 @@ namespace Core.Repository
                 throw ex;
             }
         }
+
         private async Task<List<SPHistoricalNoverltyEmployee>> GetSPHistoricalNoverltyEmployee(long idEmpleado)
         {
             return await storeProcedureRepository.GetHistoricalNoverltyByEmployee(idEmpleado);
         }
+
         private List<SPHistoricalNoverltyEmployeeResponse> MapperSPHistoricalNoverltyEmployeeResponse(List<SPHistoricalNoverltyEmployee> sPHistoricalNoverltyEmployees)
         {
             var sPHistoricalNoverltyEmployeeResponses = new List<SPHistoricalNoverltyEmployeeResponse>();
@@ -325,7 +320,6 @@ namespace Core.Repository
                 {
                     var SPHistoricalNoverltyEmployeeResponse = mapper.Map<SPHistoricalNoverltyEmployeeResponse>(emp);
                     sPHistoricalNoverltyEmployeeResponses.Add(SPHistoricalNoverltyEmployeeResponse);
-
                 });
             }
             return sPHistoricalNoverltyEmployeeResponses;
@@ -336,7 +330,6 @@ namespace Core.Repository
             var certificadosResponse = new CertificadosResponse();
             try
             {
-
                 var empleado = await GetEmployeeById(idEmpleado);
                 if (empleado is not null)
                 {
@@ -347,7 +340,6 @@ namespace Core.Repository
                     var certLaborales = await GetCertificadoEmpleado(empleado.IdCandidato, TipoReferencia.personales.GetIdTipoReferencia());
                     certificadosResponse.CertificadoLaboralResponses = MapperCertificadoLaboralesResponse(certLaborales);
                 }
-
             }
             catch (Exception)
             {
@@ -355,35 +347,38 @@ namespace Core.Repository
             }
             return certificadosResponse;
         }
+
         private async Task<Empleado> GetEmployeeById(long idEmpleado)
         {
             return await empleadoRepository.GetById(idEmpleado);
         }
+
         private async Task<List<CertificadoEstudiantilEmpleado>> GetCertificadoEstudiantils(int idCandidato)
         {
             return await certificadoEstudiantilEmpleadoRepository.GetListByParam(x => x.IdCandidato == idCandidato && x.Activo);
         }
-        private  List<CertificadoEstudiantilResponse> MapperCertificadoEstudiantilResponses(List<CertificadoEstudiantilEmpleado> certificadoEstudiantilEmpleados)
+
+        private List<CertificadoEstudiantilResponse> MapperCertificadoEstudiantilResponses(List<CertificadoEstudiantilEmpleado> certificadoEstudiantilEmpleados)
         {
             var listCertEstudiantiles = new List<CertificadoEstudiantilResponse>();
 
-
-            if (certificadoEstudiantilEmpleados is not null && certificadoEstudiantilEmpleados.Count >0 )
+            if (certificadoEstudiantilEmpleados is not null && certificadoEstudiantilEmpleados.Count > 0)
             {
                 certificadoEstudiantilEmpleados.ForEach(x =>
                 {
                     var CertificadoEstudiantilResponse = mapper.Map<CertificadoEstudiantilResponse>(x);
                     listCertEstudiantiles.Add(CertificadoEstudiantilResponse);
-
                 });
             }
-             return listCertEstudiantiles;
+            return listCertEstudiantiles;
         }
+
         private async Task<List<CertificadosEmpleado>> GetCertificadoEmpleado(int idCandidato, int idTipoCertificado)
         {
-            return await certificadosEmpleadoRepository.GetListByParam(x => x.IdCandidato== idCandidato && x.IdTipoCertificado== idTipoCertificado && x.Activo);
+            return await certificadosEmpleadoRepository.GetListByParam(x => x.IdCandidato == idCandidato && x.IdTipoCertificado == idTipoCertificado && x.Activo);
         }
-        private  List<CertificadoPersonalResponse> MapperCertificadoPersonalResponse(List<CertificadosEmpleado> certificadosEmpleados)
+
+        private List<CertificadoPersonalResponse> MapperCertificadoPersonalResponse(List<CertificadosEmpleado> certificadosEmpleados)
         {
             var listCertEmpleado = new List<CertificadoPersonalResponse>();
             if (certificadosEmpleados is not null && certificadosEmpleados.Count > 0)
@@ -392,13 +387,12 @@ namespace Core.Repository
                 {
                     var CertificadoResponse = mapper.Map<CertificadoPersonalResponse>(x);
                     listCertEmpleado.Add(CertificadoResponse);
-
                 });
-
             }
             return listCertEmpleado;
         }
-        private  List<CertificadoLaboralResponse> MapperCertificadoLaboralesResponse(List<CertificadosEmpleado> certificadosEmpleados)
+
+        private List<CertificadoLaboralResponse> MapperCertificadoLaboralesResponse(List<CertificadosEmpleado> certificadosEmpleados)
         {
             var listCertEmpleado = new List<CertificadoLaboralResponse>();
             if (certificadosEmpleados is not null && certificadosEmpleados.Count > 0)
@@ -407,12 +401,12 @@ namespace Core.Repository
                 {
                     var CertificadoResponse = mapper.Map<CertificadoLaboralResponse>(x);
                     listCertEmpleado.Add(CertificadoResponse);
-
                 });
-
             }
             return listCertEmpleado;
         }
-
+    
+        
+    
     }
 }
