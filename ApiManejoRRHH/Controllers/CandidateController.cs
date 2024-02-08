@@ -541,8 +541,8 @@ namespace ApiManejoRRHH.Controllers
         {
             try
             {
-                var refPersonalesCandidato = await candidatoService.GetAllRefPersonalesCandidato(idCandidato);
-                return Ok(refPersonalesCandidato);
+                var refLaboralesCandidato = await candidatoService.GetAllRefLaboralesCandidato(idCandidato);
+                return Ok(refLaboralesCandidato);
             }
             catch (Exception)
             {

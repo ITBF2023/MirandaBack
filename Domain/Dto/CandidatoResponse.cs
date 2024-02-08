@@ -29,6 +29,14 @@ namespace Domain.Dto
         public string? Nombre { get; set; }
 
         public string? Cliente { get; set; }
+
+        public string Comentarios { get; set; }
+
+        public int IdTipoSalario { get; set; }
+
+        public int IdVacante { get; set; }
+
+        public DateTime FechaNacimiento { get; set; }
     }
 
     public class EstudioCandidatoResponse

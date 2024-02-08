@@ -13,6 +13,8 @@ namespace Domain.Dto
 
         public string LogoCliente { get; set; }
 
+        public string NombreCliente { get; set; }
+
         [Required]
         public string DescripcionCargo { get; set; } = string.Empty;
 

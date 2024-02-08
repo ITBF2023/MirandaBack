@@ -2,7 +2,6 @@
 using Core.Interfaces;
 using DataAccess;
 using DataAccess.Interface;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Domain.Common;
 using Domain.Common.Enum;
 using Domain.Dto;
@@ -110,6 +109,9 @@ namespace Core.Repository
                         await UpdateVacante(vacanteRequest);
                         await DeleteSkillVacante(vacanteRequest);
                         await InsertSkillsVacante(vacanteRequest, vacanteRequest.IdVacante);
+                        await DeleteIdiomaVacante(vacanteRequest);
+                        await InsertIdiomasVacante(vacanteRequest, vacanteRequest.IdVacante);
+
                         await transaction.CommitAsync();
                         outPut = MapperUpdateResponse();
                     }
@@ -141,6 +143,12 @@ namespace Core.Repository
                 vacante.IdEstadoVacante = TipoEstadoVacante.Activo.GetIdTipoEstado();
                 vacante.Comentarios = vacanteRequest.Comentarios;
                 vacante.Comentarios = vacanteRequest.Comentarios;
+                vacante.Prioridad = vacanteRequest.Prioridad;
+                vacante.Salario100Prestacion = vacanteRequest.Salario100Prestacion;
+                vacante.SalarioPorcentual = vacanteRequest.SalarioPorcentual;
+                vacante.SalarioPrestacionServicios = vacanteRequest.SalarioPrestacionServicios;
+                vacante.IdRangoEdad = vacanteRequest.IdRangoEdad;
+
                 vacante.UserIdModified = vacanteRequest.IdUser;
                 vacante.DateModified = DateTime.Now;
                 await vacanteRepository.Update(vacante);
@@ -155,6 +163,18 @@ namespace Core.Repository
                 foreach (var item in listSkillVacantes)
                 {
                     await skillVacanteRepository.Delete(item);
+                }
+            }
+        }
+
+        private async Task DeleteIdiomaVacante(VacanteRequest vacanteRequest)
+        {
+            var listIdiomaVacantes = await idiomaVacanteRepository.GetListByParam(x => x.IdVacante == vacanteRequest.IdVacante);
+            if (listIdiomaVacantes is not null || listIdiomaVacantes?.Count > 0)
+            {
+                foreach (var item in listIdiomaVacantes)
+                {
+                    await idiomaVacanteRepository.Delete(item);
                 }
             }
         }
@@ -196,10 +216,10 @@ namespace Core.Repository
             List<VacanteDetailResponse> listVacantes;
             try
             {
-                var list = await vacanteRepository.GetAllByParamIncluding(null, 
-                    (x => x.ModalidadTrabajo), 
-                    (x => x.EstadoVacante), 
-                    (x => x.Contrato), 
+                var list = await vacanteRepository.GetAllByParamIncluding(null,
+                    (x => x.ModalidadTrabajo),
+                    (x => x.EstadoVacante),
+                    (x => x.Contrato),
                     (x => x.TiempoContrato),
                     (x => x.Cliente),
                     (x => x.UserCreated));
@@ -225,10 +245,10 @@ namespace Core.Repository
             VacanteResponse vacanteResponse;
             try
             {
-                var vacante = await vacanteRepository.GetAllByParamIncluding(f => f.IdVacante == idVacante, 
-                    (x => x.TiempoContrato), 
-                    (x => x.Contrato), 
-                    (x => x.ModalidadTrabajo), 
+                var vacante = await vacanteRepository.GetAllByParamIncluding(f => f.IdVacante == idVacante,
+                    (x => x.TiempoContrato),
+                    (x => x.Contrato),
+                    (x => x.ModalidadTrabajo),
                     (x => x.RangoEdad),
                     (x => x.Cliente));
 
@@ -243,8 +263,8 @@ namespace Core.Repository
                 }
 
                 vacanteResponse = mapper.Map<VacanteResponse>(vacante.First());
-                
-                if(vacante is not null)
+
+                if (vacante is not null)
                     vacanteResponse.ListaIdiomas = mapper.Map<List<IdiomaVacanteResponse>>(idiomas);
 
                 vacanteResponse.StatusCode = HttpStatusCode.OK;
