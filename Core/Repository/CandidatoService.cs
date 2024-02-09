@@ -459,7 +459,11 @@ namespace Core.Repository
 
             try
             {
-                var listCandidate = await candidatoRepository.GetAllByParamIncluding(x => x.Documento == document, (i => i.Vacante), (i => i.UserCreated), (i => i.Vacante.Cliente));
+                var listCandidate = await candidatoRepository.GetAllByParamIncluding(x => x.Documento == document, 
+                    (i => i.Vacante), 
+                    (i => i.UserCreated), 
+                    (i => i.Vacante.Cliente),
+                    (i => i.TipoDocumento));
 
                 listResponse = mapper.Map<List<CandidatoResponse>>(listCandidate);
             }
