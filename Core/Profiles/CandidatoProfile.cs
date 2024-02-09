@@ -14,23 +14,24 @@ namespace Core.Profiles
             CreateMap<EstudioCandidatoRequest, EstudioCandidato>()
              .ReverseMap();
 
-            CreateMap<ReferenciasLaboralesCandidatoRequest, ReferenciasLaboralesCandidato>()
+            CreateMap<ReferenciaLaboralCandidatoRequest, ReferenciaLaboralCandidato>()
             .ReverseMap();
 
-            CreateMap<ReferenciasPersonalesCandidatoRequest, ReferenciasPersonalesCandidato>()
+            CreateMap<ReferenciaPersonalCandidatoRequest, ReferenciaPersonalCandidato>()
             .ReverseMap();
 
             CreateMap<Candidato, CandidatoResponse>()
                 .ForMember(dest => dest.Nombre, act => act.MapFrom(src => string.Format("{0} {1}", src.UserCreated.Nombres, src.UserCreated.Apellidos)))
-                .ForMember(dest => dest.Cliente, act => act.MapFrom(src => src.Vacante.Cliente.Name));
+                .ForMember(dest => dest.Cliente, act => act.MapFrom(src => src.Vacante.Cliente.Name))
+                .ForMember(dest => dest.DescripcionTipoDocumento, act => act.MapFrom(src => src.TipoDocumento.Description));
 
             CreateMap<EstudioCandidatoResponse, EstudioCandidato>()
               .ReverseMap();
 
-            CreateMap<ReferenciasPersonalesResponse, ReferenciasPersonalesCandidato>()
+            CreateMap<ReferenciasPersonalesResponse, ReferenciaPersonalCandidato>()
              .ReverseMap();
 
-            CreateMap<ReferenciasLaboralesResponse, ReferenciasLaboralesCandidato>()
+            CreateMap<ReferenciasLaboralesResponse, ReferenciaLaboralCandidato>()
             .ReverseMap();
         }
     }

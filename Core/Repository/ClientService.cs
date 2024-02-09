@@ -64,16 +64,20 @@ namespace Core.Repository
             var cliente = await clientecionRepository.GetByParam(x => x.Nit.Equals(clientRequest.Nit));
             if (cliente is null)
             {
-                var client = new Cliente();
-                client.Name = clientRequest.Name;
-                client.Nit = clientRequest.Nit;
-                client.PathLogo = string.IsNullOrEmpty(clientRequest.Base64File) ? string.Empty : await GetPathLogo(clientRequest.Base64File, clientRequest.Name);
-                client.UrlEmpresa = clientRequest.UrlEmpresa;
-                client.IdUserCreated = clientRequest.IdUser;
-                client.DateCreated = DateTime.Now;
-                await clientecionRepository.Insert(client);
+                await clientecionRepository.Insert(new Cliente
+                {
+                    Name = clientRequest.Name,
+                    Nit = clientRequest.Nit,
+                    PathLogo = string.IsNullOrEmpty(clientRequest.Base64File) ? string.Empty : await GetPathLogo(clientRequest.Base64File, clientRequest.Name),
+                    UrlEmpresa = clientRequest.UrlEmpresa,
+                    IdUserCreated = clientRequest.IdUser,
+                    DateCreated = DateTime.Now,
+                    Estado = true
+                });
+
                 return true;
             }
+
             return false;
         }
 
@@ -270,15 +274,18 @@ namespace Core.Repository
         private async Task UpdateCliente(ClientRequest clientRequest)
         {
             var client = await clientecionRepository.GetById(clientRequest.IdCliente);
+
             if (client is not null)
             {
                 client.Name = clientRequest.Name;
                 client.Nit = clientRequest.Nit;
+                client.UrlEmpresa = clientRequest.UrlEmpresa;
                 client.UserIdModified = clientRequest.IdUser;
                 client.DateModified = DateTime.Now;
+                client.Estado = clientRequest.Estado;
 
-                //if (!string.IsNullOrEmpty(clientRequest.Base64File))
-                //    client.PathLogo = await GetPathLogo(clientRequest.Base64File, clientRequest.Name);
+                if (!string.IsNullOrEmpty(clientRequest.Base64File))
+                    client.PathLogo = await GetPathLogo(clientRequest.Base64File, clientRequest.Name);
 
                 await clientecionRepository.Update(client);
             }

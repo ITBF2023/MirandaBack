@@ -16,20 +16,20 @@ namespace Core.Repository
     {
         private readonly IRepository<Candidato> candidatoRepository;
         private readonly IRepository<EstudioCandidato> estudioCandidatoRepository;
-        private readonly IRepository<ReferenciasLaboralesCandidato> referenciasLaboralesCandidatoRepository;
-        private readonly IRepository<ReferenciasPersonalesCandidato> referenciasPersonalesCandidatoRepository;
+        private readonly IRepository<ReferenciaLaboralCandidato> referenciaLaboralCandidatoRepository;
+        private readonly IRepository<ReferenciaPersonalCandidato> referenciaPersonalCandidatoRepository;
         private readonly IRepository<Configuracion> configuiuracionRepository;
 
         private readonly IMapper mapper;
         private readonly ManejoRHContext manejoRHContext;
 
-        public CandidatoService(IRepository<Candidato> candidatoRepository, IRepository<EstudioCandidato> estudioCandidatoRepository, IRepository<ReferenciasLaboralesCandidato> referenciasLaboralesCandidatoRepository
-            , IRepository<ReferenciasPersonalesCandidato> referenciasPersonalesCandidatoRepository, IMapper mapper, ManejoRHContext manejoRHContext, IRepository<Configuracion> configuiuracionRepository)
+        public CandidatoService(IRepository<Candidato> candidatoRepository, IRepository<EstudioCandidato> estudioCandidatoRepository, IRepository<ReferenciaLaboralCandidato> referenciaLaboralCandidatoRepository
+            , IRepository<ReferenciaPersonalCandidato> referenciasPersonalesCandidatoRepository, IMapper mapper, ManejoRHContext manejoRHContext, IRepository<Configuracion> configuiuracionRepository)
         {
             this.candidatoRepository = candidatoRepository;
             this.estudioCandidatoRepository = estudioCandidatoRepository;
-            this.referenciasLaboralesCandidatoRepository = referenciasLaboralesCandidatoRepository;
-            this.referenciasPersonalesCandidatoRepository = referenciasPersonalesCandidatoRepository;
+            this.referenciaLaboralCandidatoRepository = referenciaLaboralCandidatoRepository;
+            this.referenciaPersonalCandidatoRepository = referenciasPersonalesCandidatoRepository;
             this.mapper = mapper;
             this.manejoRHContext = manejoRHContext;
             this.configuiuracionRepository = configuiuracionRepository;
@@ -49,9 +49,9 @@ namespace Core.Repository
                         if (validationResult)
                         {
                             var idCandidato = await InsertCandidato(candidatoRequest);
-                            await InsertEstudios(candidatoRequest.ListEstudioCandidatoRequest, idCandidato);
-                            await InserReferenciasLaborales(candidatoRequest.ListReferenciasLaboralesCandidatoRequest, idCandidato);
-                            await InsertReferenciasPersonales(candidatoRequest.ListReferenciasPersonalesCandidatoRequest, idCandidato);
+                            await InsertEstudios(candidatoRequest.ListEstudio, idCandidato);
+                            await InsertReferenciaLaboral(candidatoRequest.ListReferenciaLaboral, idCandidato);
+                            await InsertReferenciaPersonal(candidatoRequest.ListReferenciaPersonal, idCandidato);
                             await transaction.CommitAsync();
                             outPut = MapperResponse();
                         }
@@ -98,7 +98,18 @@ namespace Core.Repository
 
             var objectFileSave = new ObjectFileSave();
             objectFileSave.FilePath = pathLogos;
-            objectFileSave.Base64String = base64File;
+
+            if (base64File.Contains(","))
+            {
+                string[] data = base64File.Split(',');
+                objectFileSave.Base64String = data[1];
+            }
+            else
+            {
+                objectFileSave.Base64String = base64File;
+            }
+
+            //objectFileSave.Base64String = base64File;
             objectFileSave.FileName = $"{clientName}.pdf";
             var pathFile = saveFile.SaveFileBase64(objectFileSave);
             return objectFileSave.FileName;
@@ -118,30 +129,28 @@ namespace Core.Repository
             }
         }
 
-        private async Task InserReferenciasLaborales(List<ReferenciasLaboralesCandidatoRequest>? ListReferenciasLaboralesCandidatoRequest, int idCandidato)
+        private async Task InsertReferenciaLaboral(List<ReferenciaLaboralCandidatoRequest>? ListReferenciasLaboralesCandidatoRequest, int idCandidato)
         {
             if (ListReferenciasLaboralesCandidatoRequest is not null)
             {
                 foreach (var item in ListReferenciasLaboralesCandidatoRequest)
                 {
-                    var referenciaLaboral = mapper.Map<ReferenciasLaboralesCandidato>(item);
+                    var referenciaLaboral = mapper.Map<ReferenciaLaboralCandidato>(item);
                     referenciaLaboral.IdCandidato = idCandidato;
-                    referenciaLaboral.Activo = true;
-                    await referenciasLaboralesCandidatoRepository.Insert(referenciaLaboral);
+                    await referenciaLaboralCandidatoRepository.Insert(referenciaLaboral);
                 }
             }
         }
 
-        private async Task InsertReferenciasPersonales(List<ReferenciasPersonalesCandidatoRequest>? ListReferenciasLaboralesCandidatoRequest, int idCandidato)
+        private async Task InsertReferenciaPersonal(List<ReferenciaPersonalCandidatoRequest>? ListReferenciasLaboralesCandidatoRequest, int idCandidato)
         {
             if (ListReferenciasLaboralesCandidatoRequest is not null)
             {
                 foreach (var item in ListReferenciasLaboralesCandidatoRequest)
                 {
-                    var referenciaPersonal = mapper.Map<ReferenciasPersonalesCandidato>(item);
+                    var referenciaPersonal = mapper.Map<ReferenciaPersonalCandidato>(item);
                     referenciaPersonal.IdCandidato = idCandidato;
-                    referenciaPersonal.Activo = true;
-                    await referenciasPersonalesCandidatoRepository.Insert(referenciaPersonal);
+                    await referenciaPersonalCandidatoRepository.Insert(referenciaPersonal);
                 }
             }
         }
@@ -178,11 +187,11 @@ namespace Core.Repository
                         if (updateResult)
                         {
                             await DeleteEstudios(candidatoRequest.IdCandidato);
-                            await InsertEstudios(candidatoRequest.ListEstudioCandidatoRequest, candidatoRequest.IdCandidato);
-                            await DeleteReferenciaLaborales(candidatoRequest.IdCandidato);
-                            await InserReferenciasLaborales(candidatoRequest.ListReferenciasLaboralesCandidatoRequest, candidatoRequest.IdCandidato);
-                            await DeleteReferenciasPersonales(candidatoRequest.IdCandidato);
-                            await InsertReferenciasPersonales(candidatoRequest.ListReferenciasPersonalesCandidatoRequest, candidatoRequest.IdCandidato);
+                            await InsertEstudios(candidatoRequest.ListEstudio, candidatoRequest.IdCandidato);
+                            await DeleteReferenciaLaboral(candidatoRequest.IdCandidato);
+                            await InsertReferenciaLaboral(candidatoRequest.ListReferenciaLaboral, candidatoRequest.IdCandidato);
+                            await DeleteReferenciaPersonal(candidatoRequest.IdCandidato);
+                            await InsertReferenciaPersonal(candidatoRequest.ListReferenciaPersonal, candidatoRequest.IdCandidato);
                             await transaction.CommitAsync();
                             outPut = MapperResponseUpdate();
                         }
@@ -209,11 +218,14 @@ namespace Core.Repository
                 candidato.SegundoNombre = candidatoRequest.SegundoNombre;
                 candidato.PrimerApellido = candidatoRequest.PrimerApellido;
                 candidato.SegundoApellido = candidatoRequest.SegundoApellido;
-                candidato.SegundoApellido = candidatoRequest.SegundoApellido;
                 candidato.NumeroTelefonico = candidatoRequest.NumeroTelefonico;
                 candidato.Correo = candidatoRequest.Correo;
                 string nameFile = candidatoRequest.Documento + candidatoRequest.PrimerApellido;
                 candidato.UrlCV = string.IsNullOrEmpty(candidatoRequest.Base64CV) ? candidato.UrlCV : await GetPathDocsPdf(candidatoRequest.Base64CV, nameFile);
+                candidato.IdTipoSalario = candidatoRequest.IdTipoSalario;
+                candidato.IdVacante = candidato.IdVacante;
+                candidato.Comentarios = candidatoRequest.Comentarios;
+                candidato.FechaNacimiento = candidatoRequest.FechaNacimiento;
                 candidato.UserIdModified = candidatoRequest.IdUser;
                 candidato.DateModified = DateTime.Now;
                 await candidatoRepository.Update(candidato);
@@ -235,28 +247,26 @@ namespace Core.Repository
             }
         }
 
-        private async Task DeleteReferenciaLaborales(int idVacante)
+        private async Task DeleteReferenciaLaboral(int idVacante)
         {
-            var listReferencais = await referenciasLaboralesCandidatoRepository.GetListByParam(x => x.IdCandidato == idVacante);
-            if (listReferencais is not null || listReferencais?.Count > 0)
+            var listReferencias = await referenciaLaboralCandidatoRepository.GetListByParam(x => x.IdCandidato == idVacante);
+            if (listReferencias is not null || listReferencias?.Count > 0)
             {
-                foreach (var item in listReferencais)
+                foreach (var item in listReferencias)
                 {
-                    item.Activo = false;
-                    await referenciasLaboralesCandidatoRepository.Update(item);
+                    await referenciaLaboralCandidatoRepository.Delete(item);
                 }
             }
         }
 
-        private async Task DeleteReferenciasPersonales(int idVacante)
+        private async Task DeleteReferenciaPersonal(int idVacante)
         {
-            var listReferencais = await referenciasPersonalesCandidatoRepository.GetListByParam(x => x.IdCandidato == idVacante);
-            if (listReferencais is not null || listReferencais?.Count > 0)
+            var listReferencias = await referenciaPersonalCandidatoRepository.GetListByParam(x => x.IdCandidato == idVacante);
+            if (listReferencias is not null || listReferencias.Count > 0)
             {
-                foreach (var item in listReferencais)
+                foreach (var item in listReferencias)
                 {
-                    item.Activo = false;
-                    await referenciasPersonalesCandidatoRepository.Update(item);
+                    await referenciaPersonalCandidatoRepository.Delete(item);
                 }
             }
         }
@@ -357,11 +367,11 @@ namespace Core.Repository
         {
             foreach (var item in referenciasLaboralesVerifyRequests)
             {
-                var refLaboral = await referenciasLaboralesCandidatoRepository.GetById(item.IdReferenciasLaboralesCandidato);
+                var refLaboral = await referenciaLaboralCandidatoRepository.GetById(item.IdReferenciasLaboralesCandidato);
                 if (refLaboral is not null)
                 {
                     refLaboral.Verificado = item.Verificado;
-                    await referenciasLaboralesCandidatoRepository.Update(refLaboral);
+                    await referenciaLaboralCandidatoRepository.Update(refLaboral);
                 }
             }
         }
@@ -398,11 +408,11 @@ namespace Core.Repository
         {
             foreach (var item in referenciasPersonalesVerifyRequests)
             {
-                var refLaboral = await referenciasPersonalesCandidatoRepository.GetById(item.IdReferenciasPersonalesCandidato);
+                var refLaboral = await referenciaPersonalCandidatoRepository.GetById(item.IdReferenciasPersonalesCandidato);
                 if (refLaboral is not null)
                 {
                     refLaboral.Verificado = item.Verificado;
-                    await referenciasPersonalesCandidatoRepository.Update(refLaboral);
+                    await referenciaPersonalCandidatoRepository.Update(refLaboral);
                 }
             }
         }
@@ -470,7 +480,11 @@ namespace Core.Repository
         {
             try
             {
-                var candidate = await candidatoRepository.GetAllByParamIncluding(f => f.IdCandidato == id, (i => i.Vacante), (i => i.UserCreated), (i => i.Vacante.Cliente));
+                var candidate = await candidatoRepository.GetAllByParamIncluding(f => f.IdCandidato == id, 
+                    (i => i.Vacante), 
+                    (i => i.UserCreated), 
+                    (i => i.Vacante.Cliente),
+                    (i => i.TipoDocumento));
                 var candidateResponse = mapper.Map<CandidatoResponse>(candidate.First());
 
                 return candidateResponse;
@@ -518,7 +532,7 @@ namespace Core.Repository
             var listRefPersonalesResponse = new List<ReferenciasPersonalesResponse>();
             try
             {
-                var listRefPersonales = await referenciasPersonalesCandidatoRepository.GetListByParam(x => x.IdCandidato == idCandidato && x.Activo);
+                var listRefPersonales = await referenciaPersonalCandidatoRepository.GetListByParam(x => x.IdCandidato == idCandidato);
                 listRefPersonalesResponse = MappeListRefPersonalesCandidatos(listRefPersonales);
             }
             catch (Exception ex)
@@ -528,10 +542,10 @@ namespace Core.Repository
             return listRefPersonalesResponse;
         }
 
-        private List<ReferenciasPersonalesResponse> MappeListRefPersonalesCandidatos(List<ReferenciasPersonalesCandidato> listRefPersonales)
+        private List<ReferenciasPersonalesResponse> MappeListRefPersonalesCandidatos(List<ReferenciaPersonalCandidato> lista)
         {
             var listRefPersonalesResponse = new List<ReferenciasPersonalesResponse>();
-            foreach (var item in listRefPersonales)
+            foreach (var item in lista)
             {
                 var cantidato = mapper.Map<ReferenciasPersonalesResponse>(item);
                 listRefPersonalesResponse.Add(cantidato);
@@ -544,46 +558,20 @@ namespace Core.Repository
             var listRefLaboralesResponse = new List<ReferenciasLaboralesResponse>();
             try
             {
-                var listRefLaborales = await referenciasLaboralesCandidatoRepository.GetListByParam(x => x.IdCandidato == idCandidato && x.Activo);
-                listRefLaboralesResponse = MappeListRefLaboralesCandidatos(listRefLaborales);
+                var listRefLaborales = await referenciaLaboralCandidatoRepository.GetListByParam(x => x.IdCandidato == idCandidato);
+
+                foreach (var item in listRefLaborales)
+                {
+                    var cantidato = mapper.Map<ReferenciasLaboralesResponse>(item);
+                    listRefLaboralesResponse.Add(cantidato);
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+
             return listRefLaboralesResponse;
         }
-
-        private List<ReferenciasLaboralesResponse> MappeListRefLaboralesCandidatos(List<ReferenciasLaboralesCandidato> listRefLaborales)
-        {
-            var listRefLaboralesResponse = new List<ReferenciasLaboralesResponse>();
-            foreach (var item in listRefLaborales)
-            {
-                var cantidato = mapper.Map<ReferenciasLaboralesResponse>(item);
-                listRefLaboralesResponse.Add(cantidato);
-            }
-            return listRefLaboralesResponse;
-        }
-
-        //public async Task<object> GetAllCandidatosFilter(int cedula)
-        //{
-        //    var taskCandidate = await candidatoRepository.GetListByParam(x => x.Documento == cedula.ToString() && x.Activo);
-        //    dynamic response = new ExpandoObject();
-        //    try
-        //    {
-        //        response.candidato = taskCandidate != null ? taskCandidate : null;
-        //        response.itemsPersonal = await GetAllRefPersonalesCandidato(taskCandidate.First().IdCandidato);
-        //        response.itemsLaboral = await GetAllRefLaboralesCandidato(taskCandidate.First().IdCandidato);
-        //        response.itemsEstudios = await GetAllEstudiosCandidato(taskCandidate.First().IdCandidato);
-        //        return response;
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        response.messsage = $"Error: {ex}";
-        //        response.status = 400;
-        //        return response;
-        //    }
-
-        //}
     }
 }

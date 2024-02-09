@@ -1,21 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Entities
+namespace Domain.Dto
 {
-    [Table("ReferenciasLaboralesCandidato")]
-    public class ReferenciasLaboralesCandidato
+    public class ReferenciasLaboralesResponse
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         public long IdReferenciasLaboralesCandidato { get; set; }
 
         [Required]
-        [ForeignKey("Candidato")]
         public int IdCandidato { get; set; }
-
-        [ForeignKey("IdCandidato")]
-        public Candidato? Candidato { get; set; }
 
         [Required]
         public string Empresa { get; set; } = string.Empty;
@@ -35,7 +28,10 @@ namespace Domain.Entities
         public string Desempeno { get; set; } = string.Empty;
         public bool Verificado { get; set; }
         public bool Activo { get; set; }
+
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFinalizacion { get; set; }
+
+        public string FuncionCargo { get; set; } = string.Empty;
     }
 }

@@ -1,21 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Domain.Entities
+namespace Domain.Dto
 {
-    [Table("ReferenciasPersonalesCandidato")]
-    public class ReferenciasPersonalesCandidato
+    public class ReferenciasPersonalesResponse
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         public long IdReferenciasPersonalesCandidato { get; set; }
-
-        [Required]
-        [ForeignKey("Candidato")]
-        public int IdCandidato { get; set; }
-
-        [ForeignKey("IdCandidato")]
-        public Candidato? Candidato { get; set; }
 
         public string NombreContacto { get; set; } = string.Empty;
 

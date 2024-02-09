@@ -293,5 +293,22 @@ namespace ApiManejoRRHH.Controllers
                 return Problem();
             }
         }
+
+        [HttpGet, Route("[action]/{idCliente}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetByIdCliente(int idCliente)
+        {
+            try
+            {
+                var vacante = await vacantService.GetByIdCliente(idCliente);
+                return Ok(vacante);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
     }
 }

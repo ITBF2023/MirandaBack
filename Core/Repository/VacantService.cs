@@ -292,5 +292,39 @@ namespace Core.Repository
 
             return listSkillVacante;
         }
+
+        public async Task<List<VacanteResponse>> GetByIdCliente(int idCliente)
+        {
+            List<VacanteResponse> vacantesResponse = new List<VacanteResponse>();
+            try
+            {
+                var vacantes = await vacanteRepository.GetAllByParamIncluding(f => f.IdCliente == idCliente,
+                    (x => x.TiempoContrato),
+                    (x => x.Contrato),
+                    (x => x.ModalidadTrabajo),
+                    (x => x.RangoEdad),
+                    (x => x.Cliente));
+
+                foreach (var item in vacantes)
+                {
+                    VacanteResponse vacante;
+
+                    vacante = mapper.Map<VacanteResponse>(item);
+
+                    var idiomas = await idiomaVacanteRepository.GetAllByParamIncluding(x => x.IdVacante == item.IdVacante, (x => x.Idioma));
+
+                    if (idiomas is not null)
+                        vacante.ListaIdiomas = mapper.Map<List<IdiomaVacanteResponse>>(idiomas);
+                    
+                    vacantesResponse.Add(vacante);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return vacantesResponse;
+        }
     }
 }

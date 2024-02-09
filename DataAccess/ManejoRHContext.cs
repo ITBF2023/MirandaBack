@@ -26,8 +26,8 @@ namespace DataAccess
         public virtual DbSet<Candidato> Candidatos { get; set; }
         public virtual DbSet<TipoEstudio> TipoEstudios { get; set; }
         public virtual DbSet<EstudioCandidato> EstudioCandidatos { get; set; }
-        public virtual DbSet<ReferenciasLaboralesCandidato> ReferenciasLaboralesCandidatos { get; set; }
-        public virtual DbSet<ReferenciasPersonalesCandidato> ReferenciasPersonalesCandidato { get; set; }
+        public virtual DbSet<ReferenciaLaboralCandidato> ReferenciaLaboralCandidatos { get; set; }
+        public virtual DbSet<ReferenciaPersonalCandidato> ReferenciaPersonalCandidato { get; set; }
         public virtual DbSet<EstadoCandidato> EstadoCandidatos { get; set; }
         public virtual DbSet<EstadoProceso> EstadoProcesos { get; set; }
         public virtual DbSet<Proceso> Procesos { get; set; }
