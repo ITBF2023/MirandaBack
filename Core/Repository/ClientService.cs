@@ -19,22 +19,25 @@ namespace Core.Repository
     public class ClientService : IClientService
     {
         private readonly IRepository<Configuracion> configuiuracionRepository;
-        private readonly IRepository<Cliente> clientecionRepository;
+        private readonly IRepository<Cliente> clienteRepository;
         private readonly IRepository<Proceso> procesoRepository;
         private readonly IStoreProcedureRepository storeProcedureRepository;
         private readonly IRepository<Vacante> vacanteRepository;
+        private readonly IRepository<RolUsuario> RolUsuarioRepository;
 
         private readonly IMapper mapper;
 
-        public ClientService(IRepository<Configuracion> configuiuracionRepository, IRepository<Cliente> clientecionRepository, IMapper mapper,
-            IStoreProcedureRepository storeProcedureRepository, IRepository<Proceso> procesoRepository, IRepository<Vacante> vacanteRepository)
+        public ClientService(IRepository<Configuracion> configuiuracionRepository, IRepository<Cliente> clienteRepository, IMapper mapper,
+            IStoreProcedureRepository storeProcedureRepository, IRepository<Proceso> procesoRepository, IRepository<Vacante> vacanteRepository,
+            IRepository<RolUsuario> rolUsuarioRepository)
         {
             this.storeProcedureRepository = storeProcedureRepository;
             this.configuiuracionRepository = configuiuracionRepository;
-            this.clientecionRepository = clientecionRepository;
+            this.clienteRepository = clienteRepository;
             this.mapper = mapper;
             this.procesoRepository = procesoRepository;
             this.vacanteRepository = vacanteRepository;
+            this.RolUsuarioRepository = rolUsuarioRepository;
         }
 
         public async Task<BaseResponse> CreateClient(ClientRequest clientRequest)
@@ -61,10 +64,10 @@ namespace Core.Repository
 
         private async Task<bool> InsertClient(ClientRequest clientRequest)
         {
-            var cliente = await clientecionRepository.GetByParam(x => x.Nit.Equals(clientRequest.Nit));
+            var cliente = await clienteRepository.GetByParam(x => x.Nit.Equals(clientRequest.Nit));
             if (cliente is null)
             {
-                await clientecionRepository.Insert(new Cliente
+                await clienteRepository.Insert(new Cliente
                 {
                     Name = clientRequest.Name,
                     Nit = clientRequest.Nit,
@@ -127,7 +130,7 @@ namespace Core.Repository
             var clientResponse = new ClientResponse();
             try
             {
-                var cliente = await clientecionRepository.GetByParam(x => x.Nit.Equals(document));
+                var cliente = await clienteRepository.GetByParam(x => x.Nit.Equals(document));
 
                 if (cliente == null)
                 {
@@ -153,7 +156,7 @@ namespace Core.Repository
             var clientResponse = new ClientResponse();
             try
             {
-                var cliente = await clientecionRepository.GetById(id);
+                var cliente = await clienteRepository.GetById(id);
 
                 if (cliente == null)
                 {
@@ -162,6 +165,11 @@ namespace Core.Repository
                 else
                 {
                     clientResponse = mapper.Map<ClientResponse>(cliente);
+
+                    var roleslUsuario = await RolUsuarioRepository.GetAllByParamIncluding(p => p.IdUsuario == id, (p => p.Rol));
+
+                    clientResponse.ListaRoles = mapper.Map<List<RolResponse>>(roleslUsuario);
+
                 }
 
                 clientResponse.StatusCode = HttpStatusCode.OK;
@@ -180,7 +188,7 @@ namespace Core.Repository
             try
             {
                 List<ClientResponse> clientResponse;
-                var cliente = await clientecionRepository.GetAll();
+                var cliente = await clienteRepository.GetAll();
 
                 clientResponse = mapper.Map<List<ClientResponse>>(cliente);
 
@@ -273,7 +281,7 @@ namespace Core.Repository
 
         private async Task UpdateCliente(ClientRequest clientRequest)
         {
-            var client = await clientecionRepository.GetById(clientRequest.IdCliente);
+            var client = await clienteRepository.GetById(clientRequest.IdCliente);
 
             if (client is not null)
             {
@@ -287,7 +295,7 @@ namespace Core.Repository
                 if (!string.IsNullOrEmpty(clientRequest.Base64File))
                     client.PathLogo = await GetPathLogo(clientRequest.Base64File, clientRequest.Name);
 
-                await clientecionRepository.Update(client);
+                await clienteRepository.Update(client);
             }
         }
 
