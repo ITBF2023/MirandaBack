@@ -9,6 +9,5 @@ namespace Domain.Dto
         public string Nit { get; set; } = string.Empty;
         public string PathLogo { get; set; } = string.Empty;
         public bool Estado { get; set; }
-        public List<RolResponse> ListaRoles { get; set; }
     }
 }

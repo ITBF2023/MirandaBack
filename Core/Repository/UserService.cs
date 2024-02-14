@@ -10,6 +10,7 @@ using Domain.Entities;
 using Domain.Entities.StoreProcedure;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -265,7 +266,12 @@ namespace Core.Repository
 
         private async Task UpdateUser(Usuario usuario, UserRequest userRequest)
         {
+            usuario.Nombres = userRequest.Nombres;
+            usuario.Apellidos = userRequest.Apellidos;
+            usuario.Telefono = userRequest.Telefono;
+            usuario.Foto = string.IsNullOrEmpty(userRequest.FotoBase64) ? string.Empty : await GetPathFoto(userRequest.FotoBase64, userRequest.Correo);
             usuario.Correo = userRequest.Correo;
+
             if (!string.IsNullOrEmpty(userRequest.Contraseña))
             {
                 string pass = DecodeBase64Password(userRequest.Contraseña);
@@ -273,6 +279,32 @@ namespace Core.Repository
             }
             //usuario.IdRol = userRequest.IdRol;
             await usuarioRepository.Update(usuario);
+
+            var rolesNuevos = mapper.Map<List<RolUsuario>>(userRequest.Roles);
+            var rolesAsignados = rolUsuarioRepository.GetListByParam(p => p.IdUsuario == usuario.IdUser).Result;
+
+            var listaEliminar = rolesAsignados.Except(rolesNuevos);
+            
+
+            foreach (var item in listaEliminar)
+            {
+                await rolUsuarioRepository.Delete(item);              
+            }
+
+            var listaCrear = rolesNuevos.Except(rolesAsignados);
+
+            foreach (var item in listaCrear)
+            {
+                RolUsuario rolUsuario = new RolUsuario
+                {
+                    IdUsuario = usuario.IdUser,
+                    IdRol = item.IdRol,
+                    IdUsuarioCreacion = 1,
+                    FechaCreacion = DateTime.Now
+                };
+
+                await rolUsuarioRepository.Insert(rolUsuario);
+            }
         }
 
         private BaseResponse GetResponse(string mensaje, HttpStatusCode httpStatusCode)
@@ -310,7 +342,7 @@ namespace Core.Repository
                     userResponse = mapper.Map<UserResponse>(user);
                     userResponse.StatusCode = HttpStatusCode.OK;
 
-                    var roles = await rolUsuarioRepository.GetListByParam(w => w.IdUsuario == user.IdUser);
+                    var roles = await rolUsuarioRepository.GetAllByParamIncluding(w => w.IdUsuario == user.IdUser, (p => p.Rol));
                     rolResponse = mapper.Map<List<RolResponse>>(roles);
 
                     userResponse.Roles = rolResponse;

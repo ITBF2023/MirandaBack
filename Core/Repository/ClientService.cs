@@ -165,11 +165,6 @@ namespace Core.Repository
                 else
                 {
                     clientResponse = mapper.Map<ClientResponse>(cliente);
-
-                    var roleslUsuario = await RolUsuarioRepository.GetAllByParamIncluding(p => p.IdUsuario == id, (p => p.Rol));
-
-                    clientResponse.ListaRoles = mapper.Map<List<RolResponse>>(roleslUsuario);
-
                 }
 
                 clientResponse.StatusCode = HttpStatusCode.OK;
