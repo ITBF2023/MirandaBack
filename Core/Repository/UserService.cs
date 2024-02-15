@@ -283,7 +283,7 @@ namespace Core.Repository
             var rolesNuevos = mapper.Map<List<RolUsuario>>(userRequest.Roles);
             var rolesAsignados = rolUsuarioRepository.GetListByParam(p => p.IdUsuario == usuario.IdUser).Result;
 
-            var listaEliminar = rolesAsignados.Except(rolesNuevos);
+            var listaEliminar = rolesAsignados.ExceptBy(rolesNuevos.Select(s => s.IdRol), s => s.IdRol);
             
 
             foreach (var item in listaEliminar)
@@ -291,7 +291,7 @@ namespace Core.Repository
                 await rolUsuarioRepository.Delete(item);              
             }
 
-            var listaCrear = rolesNuevos.Except(rolesAsignados);
+            var listaCrear = rolesNuevos.ExceptBy(rolesAsignados.Select(s => s.IdRol), s => s.IdRol);
 
             foreach (var item in listaCrear)
             {
