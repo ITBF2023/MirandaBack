@@ -33,6 +33,9 @@ namespace Domain.Dto
         public DateTime FechaNacimiento { get; set; }
 
         public string Comentarios { get; set; }
+
+        public int IdEstado { get; set; }
+
         public List<EstudioCandidatoRequest>? ListEstudio { get; set; }
         public List<ReferenciaLaboralCandidatoRequest>? ListReferenciaLaboral { get; set; }
         public List<ReferenciaPersonalCandidatoRequest>? ListReferenciaPersonal { get; set; }

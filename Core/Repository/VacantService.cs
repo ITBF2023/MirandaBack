@@ -240,6 +240,35 @@ namespace Core.Repository
             return listVacantes;
         }
 
+        public async Task<List<VacanteDetailResponse>> GetAllVacantesCerradas()
+        {
+            List<VacanteDetailResponse> listVacantes;
+            try
+            {
+                var list = await vacanteRepository.GetAllByParamIncluding(p => p.EstadoVacante.Description == "Cerrado",
+                    (x => x.ModalidadTrabajo),
+                    (x => x.EstadoVacante),
+                    (x => x.Contrato),
+                    (x => x.TiempoContrato),
+                    (x => x.Cliente),
+                    (x => x.UserCreated));
+
+                listVacantes = mapper.Map<List<VacanteDetailResponse>>(list);
+
+                foreach (var item in listVacantes)
+                {
+                    var listSkill = await skillVacanteRepository.GetAllByParamIncluding(p => p.IdVacante == item.IdVacante, (i => i.Categoria));
+
+                    item.ListaSkill = mapper.Map<List<SkillVacanteResponse>>(listSkill);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return listVacantes;
+        }
+
         public async Task<VacanteResponse> GetById(int idVacante)
         {
             VacanteResponse vacanteResponse;

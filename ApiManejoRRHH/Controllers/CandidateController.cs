@@ -477,6 +477,23 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
+        [HttpGet, Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllContratados()
+        {
+            try
+            {
+                var candidatos = await candidatoService.GetAllContratados();
+                return Ok(candidatos);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
+
         /// <summary>
         /// Obtener estudios del candidatos
         /// </summary>

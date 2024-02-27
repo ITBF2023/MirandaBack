@@ -19,6 +19,8 @@ namespace Core.Interfaces
 
         Task<List<CandidatoResponse>> GetAllCandidatos();
 
+        Task<List<CandidatoResponse>> GetAllContratados();
+
         Task<List<EstudioCandidatoResponse>> GetAllEstudiosCandidato(int idCandidato);
 
         Task<List<CandidatoResponse>> GetByDocument(string document);

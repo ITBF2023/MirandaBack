@@ -13,6 +13,8 @@ namespace Core.Interfaces
 
         Task<List<VacanteDetailResponse>> GetAllVacantes();
 
+        Task<List<VacanteDetailResponse>> GetAllVacantesCerradas();
+
         Task<VacanteResponse> GetById(int idVacante);
 
         Task<List<SkillVacanteResponse>> GetSkillsByIdVacante(int idVacante);

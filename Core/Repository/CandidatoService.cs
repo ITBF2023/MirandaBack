@@ -228,9 +228,12 @@ namespace Core.Repository
                 candidato.FechaNacimiento = candidatoRequest.FechaNacimiento;
                 candidato.UserIdModified = candidatoRequest.IdUser;
                 candidato.DateModified = DateTime.Now;
+                candidato.IdEstadoCandidato = candidatoRequest.IdEstado;
+
                 await candidatoRepository.Update(candidato);
                 return true;
             }
+
             return false;
         }
 
@@ -433,6 +436,26 @@ namespace Core.Repository
             return listCantidatos;
         }
 
+        public async Task<List<CandidatoResponse>> GetAllContratados()
+        {
+            List<CandidatoResponse> listCantidatos;
+            try
+            {
+                var list = await candidatoRepository.GetAllByParamIncluding(p => p.EstadoCandidato.Description == "Contratado", 
+                    (i => i.Vacante), 
+                    (i => i.Vacante.Cliente),
+                    (i => i.EstadoCandidato)
+                );
+
+                listCantidatos = mapper.Map<List<CandidatoResponse>>(list);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return listCantidatos;
+        }
+
         public async Task<List<EstudioCandidatoResponse>> GetAllEstudiosCandidato(int idCandidato)
         {
             var listEstudiosResponse = new List<EstudioCandidatoResponse>();
@@ -459,7 +482,7 @@ namespace Core.Repository
 
             try
             {
-                var listCandidate = await candidatoRepository.GetAllByParamIncluding(x => x.Documento == document, 
+                var listCandidate = await candidatoRepository.GetAllByParamIncluding(x => x.Documento.Contains(document), 
                     (i => i.Vacante), 
                     (i => i.UserCreated), 
                     (i => i.Vacante.Cliente),

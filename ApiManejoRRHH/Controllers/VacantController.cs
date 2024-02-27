@@ -242,6 +242,23 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
+        [HttpGet, Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllVacantesCerradas()
+        {
+            try
+            {
+                var vacantes = await vacantService.GetAllVacantesCerradas();
+                return Ok(vacantes);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
+
         /// <summary>
         /// Obtener datos por Id de la vacante
         /// </summary>
