@@ -87,7 +87,9 @@ namespace Core.Repository
             string nameFile = string.Concat("CV", candidatoRequest.Documento, candidatoRequest.PrimerApellido);
             candidato.UrlCV = string.IsNullOrEmpty(candidatoRequest.Base64CV) ? null : await GetPathDocsPdf(candidatoRequest.Base64CV, nameFile);
             candidato.Activo = true;
+
             await candidatoRepository.Insert(candidato);
+
             return candidato.IdCandidato;
         }
 
@@ -229,6 +231,8 @@ namespace Core.Repository
                 candidato.UserIdModified = candidatoRequest.IdUser;
                 candidato.DateModified = DateTime.Now;
                 candidato.IdEstadoCandidato = candidatoRequest.IdEstado;
+                candidato.DescripcionEstado = candidatoRequest.DescripcionEstado;
+                candidato.ValorRecurso = candidatoRequest.ValorRecurso;
 
                 await candidatoRepository.Update(candidato);
                 return true;

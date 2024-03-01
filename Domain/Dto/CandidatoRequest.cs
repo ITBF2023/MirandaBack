@@ -36,6 +36,10 @@ namespace Domain.Dto
 
         public int IdEstado { get; set; }
 
+        public string DescripcionEstado { get; set; }
+
+        public decimal ValorRecurso { get; set; }
+
         public List<EstudioCandidatoRequest>? ListEstudio { get; set; }
         public List<ReferenciaLaboralCandidatoRequest>? ListReferenciaLaboral { get; set; }
         public List<ReferenciaPersonalCandidatoRequest>? ListReferenciaPersonal { get; set; }

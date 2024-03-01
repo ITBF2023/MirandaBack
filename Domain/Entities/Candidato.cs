@@ -40,6 +40,10 @@ namespace Domain.Entities
         [ForeignKey("IdEstadoCandidato")]
         public EstadoCandidato? EstadoCandidato { get; set; }
 
+        public string? DescripcionEstado { get; set; }
+
+        public decimal ValorRecurso { get; set; }
+
         public string? Comentarios { get; set; }
 
         public bool? Activo { get; set; } = true;
