@@ -42,7 +42,7 @@ namespace Domain.Entities
 
         public string? DescripcionEstado { get; set; }
 
-        public decimal ValorRecurso { get; set; }
+        public decimal? ValorRecurso { get; set; }
 
         public string? Comentarios { get; set; }
 
