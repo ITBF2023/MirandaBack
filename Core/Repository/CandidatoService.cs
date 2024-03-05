@@ -3,6 +3,7 @@ using Core.Common;
 using Core.Interfaces;
 using DataAccess;
 using DataAccess.Interface;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using Domain.Common;
 using Domain.Common.Enum;
 using Domain.Dto;
@@ -19,12 +20,15 @@ namespace Core.Repository
         private readonly IRepository<ReferenciaLaboralCandidato> referenciaLaboralCandidatoRepository;
         private readonly IRepository<ReferenciaPersonalCandidato> referenciaPersonalCandidatoRepository;
         private readonly IRepository<Configuracion> configuiuracionRepository;
+        private readonly IRepository<EstadoCandidato> estadoCandidatoRepository;
+        private readonly IRepository<Empleado> empleadoRepository;
 
         private readonly IMapper mapper;
         private readonly ManejoRHContext manejoRHContext;
 
         public CandidatoService(IRepository<Candidato> candidatoRepository, IRepository<EstudioCandidato> estudioCandidatoRepository, IRepository<ReferenciaLaboralCandidato> referenciaLaboralCandidatoRepository
-            , IRepository<ReferenciaPersonalCandidato> referenciasPersonalesCandidatoRepository, IMapper mapper, ManejoRHContext manejoRHContext, IRepository<Configuracion> configuiuracionRepository)
+            , IRepository<ReferenciaPersonalCandidato> referenciasPersonalesCandidatoRepository, IMapper mapper, ManejoRHContext manejoRHContext, IRepository<Configuracion> configuiuracionRepository,
+            IRepository<EstadoCandidato> estadoCandidatoRepository, IRepository<Empleado> empleadoRepository)
         {
             this.candidatoRepository = candidatoRepository;
             this.estudioCandidatoRepository = estudioCandidatoRepository;
@@ -33,6 +37,8 @@ namespace Core.Repository
             this.mapper = mapper;
             this.manejoRHContext = manejoRHContext;
             this.configuiuracionRepository = configuiuracionRepository;
+            this.estadoCandidatoRepository = estadoCandidatoRepository;
+            this.empleadoRepository = empleadoRepository;
         }
 
         public async Task<BaseResponse> Create(CandidatoRequest candidatoRequest)
@@ -81,7 +87,7 @@ namespace Core.Repository
         private async Task<int> InsertCandidato(CandidatoRequest candidatoRequest)
         {
             var candidato = mapper.Map<Candidato>(candidatoRequest);
-            candidato.IdEstadoCandidato = TipoEstadoCandidato.EnviadoComercial.GetIdEstadoCandidato();
+            candidato.IdEstado = TipoEstadoCandidato.EnviadoComercial.GetIdEstadoCandidato();
             candidato.IdUserCreated = candidatoRequest.IdUser;
             candidato.DateCreated = DateTime.Now;
             string nameFile = string.Concat("CV", candidatoRequest.Documento, candidatoRequest.PrimerApellido);
@@ -230,11 +236,25 @@ namespace Core.Repository
                 candidato.FechaNacimiento = candidatoRequest.FechaNacimiento;
                 candidato.UserIdModified = candidatoRequest.IdUser;
                 candidato.DateModified = DateTime.Now;
-                candidato.IdEstadoCandidato = candidatoRequest.IdEstado;
-                candidato.DescripcionEstado = candidatoRequest.DescripcionEstado;
+                candidato.IdEstado = candidatoRequest.IdEstado;
+                candidato.JustificacionEstado = candidatoRequest.JustificacionEstado;
                 candidato.ValorRecurso = candidatoRequest.ValorRecurso;
 
                 await candidatoRepository.Update(candidato);
+
+                bool estadoContratado = estadoCandidatoRepository.GetById(candidatoRequest.IdEstado).Result.Description == "Contratado";
+                bool empleadoExistente = empleadoRepository.GetByParam(p => p.IdCandidato == candidatoRequest.IdCandidato).Result != null;
+
+
+                if (estadoContratado && !empleadoExistente)
+                {
+                    empleadoRepository.Insert(new Empleado
+                    {
+                        IdCandidato = candidatoRequest.IdCandidato,
+                        Activo = true
+                    });
+                }
+
                 return true;
             }
 
@@ -331,7 +351,7 @@ namespace Core.Repository
                 var candidato = await candidatoRepository.GetById(candidatoStateRequest.IdCandidato);
                 if (candidato is not null)
                 {
-                    candidato.IdEstadoCandidato = candidatoStateRequest.IdEstadoCandidato;
+                    candidato.IdEstado = candidatoStateRequest.IdEstadoCandidato;
                     candidato.Comentarios = candidatoStateRequest.Comentarios;
                     candidato.UserIdModified = candidatoStateRequest.IdUser;
                     candidato.DateModified = DateTime.Now;
@@ -445,10 +465,10 @@ namespace Core.Repository
             List<CandidatoResponse> listCantidatos;
             try
             {
-                var list = await candidatoRepository.GetAllByParamIncluding(p => p.EstadoCandidato.Description == "Contratado", 
+                var list = await candidatoRepository.GetAllByParamIncluding(p => p.Estado.Description == "Contratado", 
                     (i => i.Vacante), 
                     (i => i.Vacante.Cliente),
-                    (i => i.EstadoCandidato)
+                    (i => i.Estado)
                 );
 
                 listCantidatos = mapper.Map<List<CandidatoResponse>>(list);
@@ -490,7 +510,9 @@ namespace Core.Repository
                     (i => i.Vacante), 
                     (i => i.UserCreated), 
                     (i => i.Vacante.Cliente),
-                    (i => i.TipoDocumento));
+                    (i => i.TipoDocumento),
+                    (i => i.Estado)
+                    );
 
                 listResponse = mapper.Map<List<CandidatoResponse>>(listCandidate);
             }

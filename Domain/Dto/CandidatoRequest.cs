@@ -36,7 +36,7 @@ namespace Domain.Dto
 
         public int IdEstado { get; set; }
 
-        public string? DescripcionEstado { get; set; }
+        public string? JustificacionEstado { get; set; }
 
         public decimal? ValorRecurso { get; set; }
 

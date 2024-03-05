@@ -97,7 +97,7 @@ namespace Core.Repository
         private async Task<bool> ValidateCandidato(int idCandidato)
         {
             var candidato = await candidatoRepository.GetById(idCandidato);           
-            return candidato is not null && candidato?.IdEstadoCandidato != TipoEstadoCandidato.Contratado.GetIdEstadoCandidato();
+            return candidato is not null && candidato?.IdEstado != TipoEstadoCandidato.Contratado.GetIdEstadoCandidato();
         }   
         private async Task InsertContrato(ContratoRequest contratoRequest)
         {
@@ -107,14 +107,15 @@ namespace Core.Repository
             contrato.DateCreated = DateTime.Now;
             await contratoRepository.Insert(contrato);
         }
+
         private async Task InsertEmpleado(ContratoRequest contratoRequest)
         {
             var empleado = new Empleado();
-            empleado.IdCliente = contratoRequest.IdCliente;
             empleado.IdCandidato = contratoRequest.IdCandidato;
             empleado.Activo = true;
             await empleadoRepository.Insert(empleado);
         }       
+
         private async Task<int> GetVacantByProceso(long idProceso)
         {
             var proceso = await procesoRepository.GetById(idProceso);
@@ -201,7 +202,7 @@ namespace Core.Repository
             var candidato = await candidatoRepository.GetById(idCandidato);
             if (candidato is not null)
             {
-                candidato.IdEstadoCandidato = TipoEstadoCandidato.Disponible.GetIdEstadoCandidato();
+                candidato.IdEstado = TipoEstadoCandidato.Disponible.GetIdEstadoCandidato();
                 candidato.UserIdModified = idUser;
                 candidato.DateModified = DateTime.Now;
                 await candidatoRepository.Update(candidato);
@@ -242,7 +243,7 @@ namespace Core.Repository
             var candidato = await candidatoRepository.GetById(contratoRequest.IdCandidato);
             if (candidato is not null)
             {
-                candidato.IdEstadoCandidato = TipoEstadoCandidato.Contratado.GetIdEstadoCandidato();
+                candidato.IdEstado = TipoEstadoCandidato.Contratado.GetIdEstadoCandidato();
                 candidato.UserIdModified = contratoRequest.IdUser;
                 candidato.DateModified = DateTime.Now;
                 await candidatoRepository.Update(candidato);

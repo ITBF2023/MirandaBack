@@ -34,13 +34,13 @@ namespace Domain.Entities
         public string? UrlCV { get; set; }
 
         [Required]
-        [ForeignKey("EstadoCandidato")]
-        public int? IdEstadoCandidato { get; set; }
+        [ForeignKey("Estado")]
+        public int? IdEstado { get; set; }
 
-        [ForeignKey("IdEstadoCandidato")]
-        public EstadoCandidato? EstadoCandidato { get; set; }
+        [ForeignKey("IdEstado")]
+        public EstadoCandidato? Estado { get; set; }
 
-        public string? DescripcionEstado { get; set; }
+        public string? JustificacionEstado { get; set; }
 
         public decimal? ValorRecurso { get; set; }
 

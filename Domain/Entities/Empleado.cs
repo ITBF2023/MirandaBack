@@ -10,13 +10,6 @@ namespace Domain.Entities
         public int IdEmpleado { get; set; }
 
         [Required]
-        [ForeignKey("Cliente")]
-        public int IdCliente { get; set; }
-
-        [ForeignKey("IdCliente")]
-        public Cliente? Cliente { get; set; }
-
-        [Required]
         [ForeignKey("Candidato")]
         public int IdCandidato { get; set; }
 

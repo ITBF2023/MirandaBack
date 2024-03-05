@@ -39,5 +39,13 @@ namespace Domain.Dto
         public int IdVacante { get; set; }
 
         public DateTime FechaNacimiento { get; set; }
+
+        public int IdEstado { get; set; }
+
+        public string DescripcionEstado { get; set; }
+
+        public string JustificacionEstado { get; set; }
+
+        public decimal ValorRecurso { get; set; }
     }
 }
