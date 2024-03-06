@@ -9,6 +9,8 @@ namespace Core.Profiles
     {
         public EmpleadoProfile()
         {
+            CreateMap<Empleado, EmpleadoResponse>();
+
             CreateMap<SPInfoEmployeeResponse, SPInfoEmployee>()
              .ReverseMap();
 

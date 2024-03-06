@@ -245,7 +245,6 @@ namespace Core.Repository
                 bool estadoContratado = estadoCandidatoRepository.GetById(candidatoRequest.IdEstado).Result.Description == "Contratado";
                 bool empleadoExistente = empleadoRepository.GetByParam(p => p.IdCandidato == candidatoRequest.IdCandidato).Result != null;
 
-
                 if (estadoContratado && !empleadoExistente)
                 {
                     empleadoRepository.Insert(new Empleado
@@ -465,8 +464,8 @@ namespace Core.Repository
             List<CandidatoResponse> listCantidatos;
             try
             {
-                var list = await candidatoRepository.GetAllByParamIncluding(p => p.Estado.Description == "Contratado", 
-                    (i => i.Vacante), 
+                var list = await candidatoRepository.GetAllByParamIncluding(p => p.Estado.Description == "Contratado",
+                    (i => i.Vacante),
                     (i => i.Vacante.Cliente),
                     (i => i.Estado)
                 );
@@ -506,9 +505,9 @@ namespace Core.Repository
 
             try
             {
-                var listCandidate = await candidatoRepository.GetAllByParamIncluding(x => x.Documento.Contains(document), 
-                    (i => i.Vacante), 
-                    (i => i.UserCreated), 
+                var listCandidate = await candidatoRepository.GetAllByParamIncluding(x => x.Documento.Contains(document),
+                    (i => i.Vacante),
+                    (i => i.UserCreated),
                     (i => i.Vacante.Cliente),
                     (i => i.TipoDocumento),
                     (i => i.Estado)
@@ -533,9 +532,9 @@ namespace Core.Repository
         {
             try
             {
-                var candidate = await candidatoRepository.GetAllByParamIncluding(f => f.IdCandidato == id, 
-                    (i => i.Vacante), 
-                    (i => i.UserCreated), 
+                var candidate = await candidatoRepository.GetAllByParamIncluding(f => f.IdCandidato == id,
+                    (i => i.Vacante),
+                    (i => i.UserCreated),
                     (i => i.Vacante.Cliente),
                     (i => i.TipoDocumento));
                 var candidateResponse = mapper.Map<CandidatoResponse>(candidate.First());

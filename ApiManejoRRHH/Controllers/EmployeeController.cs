@@ -109,6 +109,28 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Obtener todos los empleados
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var employee = await empleadoService.GetAll();
+                    return Ok(employee);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
+
         /// <summary>
         /// Obtener informacion del empleado por id
         /// </summary>

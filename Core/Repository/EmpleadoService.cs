@@ -248,6 +248,14 @@ namespace Core.Repository
             return string.Empty;
         }
 
+        public async Task<List<EmpleadoResponse>> GetAll() 
+        {
+            var empleados = await empleadoRepository.GetAll();
+            var listEmpleados = mapper.Map<List<EmpleadoResponse>>(empleados);
+
+            return listEmpleados;
+        }
+
         private async Task<string> GetPathDocsPdf(string base64File, string clientName)
         {
             var saveFile = new SaveFiles();
