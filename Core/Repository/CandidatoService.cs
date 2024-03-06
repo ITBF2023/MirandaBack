@@ -99,6 +99,15 @@ namespace Core.Repository
             return candidato.IdCandidato;
         }
 
+        private async Task InsertEmpleado(int idCantidato)
+        {
+            await empleadoRepository.Insert(new Empleado
+            {
+                IdCandidato = idCantidato,
+                Activo = true
+            });
+        }
+
         private async Task<string> GetPathDocsPdf(string base64File, string clientName)
         {
             var saveFile = new SaveFiles();
@@ -194,6 +203,14 @@ namespace Core.Repository
                         var updateResult = await UpdateCandidato(candidatoRequest);
                         if (updateResult)
                         {
+                            bool estadoContratado = estadoCandidatoRepository.GetById(candidatoRequest.IdEstado).Result?.Description == "Contratado";
+                            bool empleadoExistente = empleadoRepository.GetByParam(p => p.IdCandidato == candidatoRequest.IdCandidato).Result != null;
+
+                            if (estadoContratado && !empleadoExistente)
+                            {
+                                await InsertEmpleado(candidatoRequest.IdCandidato);
+                            }
+
                             await DeleteEstudios(candidatoRequest.IdCandidato);
                             await InsertEstudios(candidatoRequest.ListEstudio, candidatoRequest.IdCandidato);
                             await DeleteReferenciaLaboral(candidatoRequest.IdCandidato);
@@ -242,17 +259,7 @@ namespace Core.Repository
 
                 await candidatoRepository.Update(candidato);
 
-                bool estadoContratado = estadoCandidatoRepository.GetById(candidatoRequest.IdEstado).Result.Description == "Contratado";
-                bool empleadoExistente = empleadoRepository.GetByParam(p => p.IdCandidato == candidatoRequest.IdCandidato).Result != null;
-
-                if (estadoContratado && !empleadoExistente)
-                {
-                    empleadoRepository.Insert(new Empleado
-                    {
-                        IdCandidato = candidatoRequest.IdCandidato,
-                        Activo = true
-                    });
-                }
+                
 
                 return true;
             }
