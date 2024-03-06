@@ -6,6 +6,10 @@ namespace Domain.Dto
     {
         public int IdEmpleado { get; set; }
 
+        public string NombreEmpleado { get; set; }
+
+        public string Empresa { get; set; }
+
         public int IdCandidato { get; set; }
 
         public bool Activo { get; set; }

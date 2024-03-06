@@ -250,7 +250,8 @@ namespace Core.Repository
 
         public async Task<List<EmpleadoResponse>> GetAll() 
         {
-            var empleados = await empleadoRepository.GetAll();
+            var empleados = await empleadoRepository.GetAllByParamIncluding(null,
+                (i => i.Candidato.Vacante.Cliente));
             var listEmpleados = mapper.Map<List<EmpleadoResponse>>(empleados);
 
             return listEmpleados;

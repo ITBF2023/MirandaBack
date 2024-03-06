@@ -9,7 +9,9 @@ namespace Core.Profiles
     {
         public EmpleadoProfile()
         {
-            CreateMap<Empleado, EmpleadoResponse>();
+            CreateMap<Empleado, EmpleadoResponse>()
+                .ForMember(dest => dest.NombreEmpleado, act => act.MapFrom(src => string.Format("{0} {1} {2} {3}", src.Candidato.PrimerNombre, src.Candidato.SegundoNombre, src.Candidato.PrimerApellido, src.Candidato.SegundoApellido)))
+                .ForMember(dest => dest.Empresa, act => act.MapFrom(src => src.Candidato.Vacante.Cliente.Name));
 
             CreateMap<SPInfoEmployeeResponse, SPInfoEmployee>()
              .ReverseMap();
