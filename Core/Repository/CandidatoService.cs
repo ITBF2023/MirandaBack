@@ -455,7 +455,10 @@ namespace Core.Repository
             List<CandidatoResponse> listCantidatos;
             try
             {
-                var list = await candidatoRepository.GetAllByParamIncluding(null, (i => i.Vacante), (i => i.Vacante.Cliente));
+                var list = await candidatoRepository.GetAllByParamIncluding(null, 
+                    (i => i.Vacante), 
+                    (i => i.Vacante.Cliente),
+                    (i => i.Estado));
 
                 listCantidatos = mapper.Map<List<CandidatoResponse>>(list);
             }
