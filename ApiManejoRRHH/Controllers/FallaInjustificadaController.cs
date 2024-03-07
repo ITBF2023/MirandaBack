@@ -77,11 +77,11 @@ namespace ApiManejoRRHH.Controllers
         /// Obtener falla injustificada por empleado
         /// </summary>
         /// <returns></returns>
-        [HttpGet, Route("[action]/id")]
+        [HttpGet, Route("[action]/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll(int id)
+        public async Task<IActionResult> GetByIdEmpleado(int id)
         {
             try
             {
