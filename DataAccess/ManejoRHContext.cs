@@ -47,6 +47,7 @@ namespace DataAccess
         public virtual DbSet<CompetenciaLaboralEmpleado> CompetenciaLaboralEmpleado { get; set; }
         public virtual DbSet<CompetenciaPersonalEmpleado> CompetenciaPersonalEmpleado { get; set; }
         public virtual DbSet<FallaInjustificada> FallaInjustificada { get; set; }
+        public virtual DbSet<LlamadoAtencion> LlamadoAtencion { get; set; }
 
         public virtual DbSet<VWEmployeesByComision> VWEmployeesByComisiones { get; set; }
 

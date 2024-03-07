@@ -82,6 +82,7 @@ builder.Services.AddScoped<IComisionService, ComisionService>();
 builder.Services.AddScoped<ITiempoContratoService, TiempoContratoService>();
 builder.Services.AddScoped<IRolService, RolService>();
 builder.Services.AddScoped<IFallaInjustificadaService, FallaInjustificadaService>();
+builder.Services.AddScoped<ILlamadoAtencionService, LlamadoAtencionService>();
 
 var app = builder.Build();
 
