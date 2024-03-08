@@ -83,6 +83,7 @@ builder.Services.AddScoped<ITiempoContratoService, TiempoContratoService>();
 builder.Services.AddScoped<IRolService, RolService>();
 builder.Services.AddScoped<IFallaInjustificadaService, FallaInjustificadaService>();
 builder.Services.AddScoped<ILlamadoAtencionService, LlamadoAtencionService>();
+builder.Services.AddScoped<IProcesoDiciplinarioService, ProcesoDiciplinarioService>();
 
 var app = builder.Build();
 
