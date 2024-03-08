@@ -269,7 +269,12 @@ namespace Core.Repository
             usuario.Nombres = userRequest.Nombres;
             usuario.Apellidos = userRequest.Apellidos;
             usuario.Telefono = userRequest.Telefono;
-            usuario.Foto = string.IsNullOrEmpty(userRequest.FotoBase64) ? string.Empty : await GetPathFoto(userRequest.FotoBase64, userRequest.Correo);
+
+            if (!string.IsNullOrEmpty(userRequest.FotoBase64))
+            {
+                usuario.Foto = await GetPathFoto(userRequest.FotoBase64, userRequest.Correo);
+            }
+            
             usuario.Correo = userRequest.Correo;
 
             if (!string.IsNullOrEmpty(userRequest.Contraseña))
