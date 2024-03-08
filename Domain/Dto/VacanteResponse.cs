@@ -40,7 +40,9 @@ namespace Domain.Dto
         public string DescripcionFunciones { get; set; } = string.Empty;
 
         [Required]
-        public int IdEstadoVacante { get; set; }
+        public int IdEstado { get; set; }
+
+        public string DescripcionEstado { get; set; }
 
         public string Comentarios { get; set; } = string.Empty;
 

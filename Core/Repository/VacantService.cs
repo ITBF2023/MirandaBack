@@ -333,7 +333,8 @@ namespace Core.Repository
                     (x => x.ModalidadTrabajo),
                     (x => x.RangoEdad),
                     (x => x.Cliente),
-                    (x => x.UserCreated));
+                    (x => x.UserCreated),
+                    (x => x.EstadoVacante));
 
                 foreach (var item in vacantes)
                 {

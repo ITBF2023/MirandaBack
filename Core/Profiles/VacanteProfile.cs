@@ -27,8 +27,9 @@ namespace Core.Profiles
                 .ForMember(destino => destino.LogoCliente, actual => actual.MapFrom(src => src.Cliente.PathLogo))
                 .ForMember(destino => destino.NombreCliente, actual => actual.MapFrom(src => src.Cliente.Name))
                 .ForMember(destino => destino.IdComercial, actual => actual.MapFrom(src => src.IdUserCreated))
-                .ForMember(destino => destino.NombreComercial, actual => actual.MapFrom(src => string.Format("{0} {1}", src.UserCreated.Nombres, src.UserCreated.Apellidos))
-                );
+                .ForMember(destino => destino.NombreComercial, actual => actual.MapFrom(src => string.Format("{0} {1}", src.UserCreated.Nombres, src.UserCreated.Apellidos)))
+                .ForMember(destino => destino.IdEstado, actual => actual.MapFrom(src => src.IdEstadoVacante))
+                .ForMember(destino => destino.DescripcionEstado, actual => actual.MapFrom(src => src.EstadoVacante.Description));
 
             CreateMap<Vacante, VacanteDetailResponse>()
                 .ForMember(destino => destino.DescripcionContrato, actual => actual.MapFrom(src => src.Contrato.Description))
