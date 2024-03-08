@@ -15,7 +15,7 @@ namespace Domain.Dto
 
         public string? UrlEmpresa { get; set; }
 
-        public string Base64File { get; set; }
+        public string? Base64File { get; set; }
 
         public bool Estado { get; set; }
     }

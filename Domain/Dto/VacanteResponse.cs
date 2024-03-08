@@ -66,6 +66,12 @@ namespace Domain.Dto
         public string DescripcionRangoEdad { get; set; }
 
         public List<IdiomaVacanteResponse> ListaIdiomas { get; set; }
+
+        public List<SkillVacanteResponse> ListaSkills { get; set; }
+
+        public int IdComercial { get; set; }
+
+        public string NombreComercial { get; set; }
     }
 
     public class VacanteDetailResponse

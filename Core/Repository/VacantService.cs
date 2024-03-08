@@ -332,7 +332,8 @@ namespace Core.Repository
                     (x => x.Contrato),
                     (x => x.ModalidadTrabajo),
                     (x => x.RangoEdad),
-                    (x => x.Cliente));
+                    (x => x.Cliente),
+                    (x => x.UserCreated));
 
                 foreach (var item in vacantes)
                 {
@@ -344,7 +345,12 @@ namespace Core.Repository
 
                     if (idiomas is not null)
                         vacante.ListaIdiomas = mapper.Map<List<IdiomaVacanteResponse>>(idiomas);
+
+                    var skills = await skillVacanteRepository.GetAllByParamIncluding(x => x.IdVacante == item.IdVacante, (x => x.Categoria));
                     
+                    if (skills is not null)
+                        vacante.ListaSkills = mapper.Map<List<SkillVacanteResponse>>(skills);
+
                     vacantesResponse.Add(vacante);
                 }
             }
