@@ -47,5 +47,7 @@ namespace Domain.Dto
         public string JustificacionEstado { get; set; }
 
         public decimal ValorRecurso { get; set; }
+
+        public string DescripcionCargo { get; set; }
     }
 }
