@@ -22,12 +22,14 @@ namespace Core.Repository
         private readonly IRepository<Idioma> idiomaRepository;
         private readonly IRepository<RangoEdad> rangoEdadRepository;
         private readonly IRepository<EstadoCandidato> estadoCandidatoRepository;
+        private readonly IRepository<TipoDocumentoContrato> tipoDocumentoContratoRepository;
         private readonly IMapper mapper;
 
         public TipoTableService(IRepository<Categoria> categoriaRepository, IMapper mapper, IRepository<TipoContrato> tipoContratoRepository,
             IRepository<TipoSalario> tipoSalarioRepository, IRepository<EstadoVacante> estadoVacanteRepository, IRepository<ModalidadTrabajo> modalidadTrabajoRepository,
             IRepository<TipoDocumento> tipoDocumentoRepository, IRepository<TipoEstudio> tipoEstudioRepository, IRepository<Domain.Entities.EstadoCandidato> estadoCandidatoRepository,
-            IRepository<TipoNovedad> tipoNovedadoRepository, IRepository<Idioma> idiomaRepository, IRepository<RangoEdad> rangoEdadRepository)
+            IRepository<TipoNovedad> tipoNovedadoRepository, IRepository<Idioma> idiomaRepository, 
+            IRepository<RangoEdad> rangoEdadRepository, IRepository<TipoDocumentoContrato> tipoDocumentoContratoRepository)
         {
             this.categoriaRepository = categoriaRepository;
             this.mapper = mapper;
@@ -41,6 +43,7 @@ namespace Core.Repository
             this.tipoNovedadoRepository = tipoNovedadoRepository;
             this.idiomaRepository = idiomaRepository;
             this.rangoEdadRepository = rangoEdadRepository;
+            this.tipoDocumentoContratoRepository = tipoDocumentoContratoRepository;
         }
 
         public async Task<BaseResponse> Create(object objRequest)
@@ -160,6 +163,11 @@ namespace Core.Repository
                     case TipoTabla.RangoEdad:
                         var listaRangoEdad = await rangoEdadRepository.GetAll();
                         list = MapperListesponse(listaRangoEdad);
+                        break;
+
+                    case TipoTabla.TipoDocumentoContrato:
+                        var listaTipoDocumentoContrato = await tipoDocumentoContratoRepository.GetAll();
+                        list = mapper.Map<List<TipoTableResponse>>(listaTipoDocumentoContrato);
                         break;
                 }
             }

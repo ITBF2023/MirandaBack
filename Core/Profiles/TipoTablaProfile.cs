@@ -8,12 +8,14 @@ namespace Core.Profiles
     {
         public TipoTablaProfile()
         {
-            CreateMap<CategoriaRequest, Categoria>()
-                .ReverseMap();
-            CreateMap<TipoContratoRequest, TipoContrato>()
-               .ReverseMap();
-            CreateMap<TipoSalarioRequest, TipoSalario>()
-               .ReverseMap();
+            CreateMap<CategoriaRequest, Categoria>();
+
+            CreateMap<TipoContratoRequest, TipoContrato>();
+
+            CreateMap<TipoSalarioRequest, TipoSalario>();
+
+            CreateMap<TipoDocumentoContrato, TipoTableResponse>()
+                .ForMember(dest => dest.Description, act => act.MapFrom(src => src.Descripcion));
         }
     }
 }

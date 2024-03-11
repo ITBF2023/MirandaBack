@@ -12,6 +12,7 @@
         EstadoCandidato,
         TipoNovedad,
         Idioma,
-        RangoEdad
+        RangoEdad,
+        TipoDocumentoContrato
     }
 }

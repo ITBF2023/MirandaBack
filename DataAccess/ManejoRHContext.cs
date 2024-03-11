@@ -49,6 +49,7 @@ namespace DataAccess
         public virtual DbSet<FallaInjustificada> FallaInjustificada { get; set; }
         public virtual DbSet<LlamadoAtencion> LlamadoAtencion { get; set; }
         public virtual DbSet<ProcesoDiciplinario> ProcesoDiciplinario { get; set; }
+        public virtual DbSet<TipoDocumentoContrato> TipoDocumentoContrato { get; set; }
 
         public virtual DbSet<VWEmployeesByComision> VWEmployeesByComisiones { get; set; }
 
