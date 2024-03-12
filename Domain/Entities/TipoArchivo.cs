@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
-    [Table("TipoDocumentoContrato")]
-    public class TipoDocumentoContrato
+    [Table("TipoArchivo")]
+    public class TipoArchivo
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
@@ -12,5 +12,7 @@ namespace Domain.Entities
 
         [Required]
         public string Descripcion { get; set; } = string.Empty;
+
+        public string CodigoPath { get; set; }
     }
 }

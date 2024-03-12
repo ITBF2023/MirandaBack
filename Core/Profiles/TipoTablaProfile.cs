@@ -14,7 +14,7 @@ namespace Core.Profiles
 
             CreateMap<TipoSalarioRequest, TipoSalario>();
 
-            CreateMap<TipoDocumentoContrato, TipoTableResponse>()
+            CreateMap<TipoArchivo, TipoTableResponse>()
                 .ForMember(dest => dest.Description, act => act.MapFrom(src => src.Descripcion));
         }
     }

@@ -11,14 +11,14 @@ namespace ApiManejoRRHH.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class TipoDocumentoContratoController : ControllerBase
+    public class TipoArchivoAdjuntoController : ControllerBase
     {
         private readonly ITipoTableService<object> tipoTableService;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public TipoDocumentoContratoController(ITipoTableService<object> tipoTableService)
+        public TipoArchivoAdjuntoController(ITipoTableService<object> tipoTableService)
         {
             this.tipoTableService = tipoTableService;
         }
@@ -35,7 +35,7 @@ namespace ApiManejoRRHH.Controllers
         {
             try
             {
-                var rangoEdad = await tipoTableService.GetList(TipoTabla.TipoDocumentoContrato);
+                var rangoEdad = await tipoTableService.GetList(TipoTabla.TipoArchivo);
                 return Ok(rangoEdad);
             }
             catch (Exception)

@@ -13,6 +13,6 @@
         TipoNovedad,
         Idioma,
         RangoEdad,
-        TipoDocumentoContrato
+        TipoArchivo
     }
 }

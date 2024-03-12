@@ -84,6 +84,7 @@ builder.Services.AddScoped<IRolService, RolService>();
 builder.Services.AddScoped<IFallaInjustificadaService, FallaInjustificadaService>();
 builder.Services.AddScoped<ILlamadoAtencionService, LlamadoAtencionService>();
 builder.Services.AddScoped<IProcesoDiciplinarioService, ProcesoDiciplinarioService>();
+builder.Services.AddScoped<IDocumentoAdjuntoService, DocumentoAdjuntoService>();
 
 var app = builder.Build();
 
