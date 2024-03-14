@@ -257,6 +257,28 @@ namespace Core.Repository
             return listEmpleados;
         }
 
+        /// <summary>
+        /// Obtener empleado por el id
+        /// </summary>
+        /// <param name="id">Id del empleado</param>
+        /// <returns></returns>
+        public async Task<EmpleadoResponse> GetById(int id)
+        {
+            try
+            {
+                List<Empleado> empleado = await empleadoRepository.GetAllByParamIncluding(f => f.IdEmpleado == id,
+                    (i => i.Candidato.Vacante.Cliente));
+
+                EmpleadoResponse response = mapper.Map<EmpleadoResponse>(empleado.First());
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         private async Task<string> GetPathDocsPdf(string base64File, string clientName)
         {
             var saveFile = new SaveFiles();

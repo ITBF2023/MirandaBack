@@ -16,5 +16,7 @@ namespace Core.Interfaces
         Task<List<SPHistoricalNoverltyEmployeeResponse>> GetHistoricalNoverltyEmployees(long idEmpleado);
 
         Task<CertificadosResponse> GetCertificadosByEmployee(long idEmpleado);
+
+        Task<EmpleadoResponse> GetById(int id);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ApiManejoRRHH.Helpers;
 using Core.Interfaces;
+using Core.Repository;
 using Domain.Common;
 using Domain.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,6 @@ namespace ApiManejoRRHH.Controllers
     /// <summary>
     /// Controlador de Tipo documento
     /// </summary>
-
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -109,7 +109,6 @@ namespace ApiManejoRRHH.Controllers
             }
         }
 
-
         /// <summary>
         /// Obtener todos los empleados
         /// </summary>
@@ -123,7 +122,29 @@ namespace ApiManejoRRHH.Controllers
             try
             {
                 var employee = await empleadoService.GetAll();
-                    return Ok(employee);
+                return Ok(employee);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
+
+        /// <summary>
+        /// Obtener empleados por id
+        /// </summary>
+        /// <param name="id">Id de empleado</param>
+        /// <returns></returns>
+        [HttpGet, Route("[action]/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var candidate = await empleadoService.GetById(id);
+                return Ok(candidate);
             }
             catch (Exception)
             {
@@ -138,7 +159,6 @@ namespace ApiManejoRRHH.Controllers
         /// <strong> idEmpleado : </strong> numero Id delempleado <strong>* Obligatorio</strong>
         /// </param>
         /// <returns></returns>
-
         [HttpGet, Route("[action]/{idEmpleado}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -163,7 +183,6 @@ namespace ApiManejoRRHH.Controllers
         /// Obtener las novedades del empleado
         /// </summary>
         /// <returns></returns>
-
         [HttpGet, Route("[action]/{idEmpleado}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -185,7 +204,6 @@ namespace ApiManejoRRHH.Controllers
         /// Obtener los certificados del empleado
         /// </summary>
         /// <returns></returns>
-
         [HttpGet, Route("[action]/{idEmpleado}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
