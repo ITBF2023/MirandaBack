@@ -12,5 +12,7 @@ namespace Core.Interfaces
         Task<List<DocumentoAdjuntoResponse>> GetByCandidato(int idCandidato);
 
         Task<DocumentoAdjuntoResponse> GetById(int id);
+
+        Task<List<DocumentoEntregadoResponse>> GetDocumentosEntregados();
     }
 }

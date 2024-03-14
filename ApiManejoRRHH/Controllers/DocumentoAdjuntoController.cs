@@ -120,5 +120,26 @@ namespace ApiManejoRRHH.Controllers
                 return Problem();
             }
         }
+
+        /// <summary>
+        /// Obtiene 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetDocumentosEntregados()
+        {
+            try
+            {
+                var documentos = await documentoAdjuntoService.GetDocumentosEntregados();
+                return Ok(documentos);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
     }
 }

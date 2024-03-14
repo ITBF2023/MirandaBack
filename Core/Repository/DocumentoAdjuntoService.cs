@@ -134,6 +134,34 @@ namespace Core.Repository
             }
         }
 
+        public async Task<List<DocumentoEntregadoResponse>> GetDocumentosEntregados()
+        {
+            try
+            {
+                List<DocumentoAdjunto> documentoAdjunto = await documentoAdjuntoRepository.GetAllByParamIncluding(null,
+                    (i => i.Candidato));
+
+                List<DocumentoEntregadoResponse> response = (from item in documentoAdjunto
+                                 group item by item.IdCandidato into g
+                                 select new DocumentoEntregadoResponse { 
+                                     IdCandidato = g.First().Id,
+                                     NombreCandidato = string.Format("{0} {1} {2} {3}", 
+                                        g.First().Candidato.PrimerNombre,
+                                        g.First().Candidato.SegundoNombre,
+                                        g.First().Candidato.PrimerApellido,
+                                        g.First().Candidato.SegundoApellido
+                                     ),
+                                     DocumentosCargados = g.Count()
+                                 }).ToList();
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #region Privados
 
         private async Task<string> GetPathDocsPdf(string base64File, string path)
