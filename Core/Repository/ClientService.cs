@@ -151,6 +151,26 @@ namespace Core.Repository
             return clientResponse;
         }
 
+        public async Task<List<ClientResponse>> GetByDocumentOrName(string filtro)
+        {
+            var clientsResponse = new List<ClientResponse>();
+            try
+            {
+                var clientes = await clienteRepository.GetListByParam(x => x.Nit.Contains(filtro) || x.Name.Contains(filtro));
+
+                if (clientes != null && clientes.Count() > 0)
+                {
+                    clientsResponse = mapper.Map<List<ClientResponse>>(clientes);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return clientsResponse;
+        }
+
         public async Task<ClientResponse> GetClientByID(int id)
         {
             var clientResponse = new ClientResponse();

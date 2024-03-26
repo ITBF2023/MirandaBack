@@ -11,6 +11,8 @@ namespace Core.Interfaces
 
         Task<ClientResponse> GetClientByDocument(string nit);
 
+        Task<List<ClientResponse>> GetByDocumentOrName(string filtro);
+
         Task<ClientResponse> GetClientByID(int id);
 
         Task<List<ClientResponse>> GetListClients();

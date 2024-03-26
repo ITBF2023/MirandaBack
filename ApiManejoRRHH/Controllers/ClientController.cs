@@ -16,7 +16,7 @@ namespace ApiManejoRRHH.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ClientController : ControllerBase
     {
         private readonly IClientService clientService;
@@ -180,6 +180,28 @@ namespace ApiManejoRRHH.Controllers
                     return Ok(client);
                 else
                     return Problem(client.Message, statusCode: (int)client.StatusCode);
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
+        }
+
+        /// <summary>
+        /// Obtener cliente por documento o por nombre
+        /// </summary>
+        /// <param name="filtro">Documento o Cliente</param>
+        /// <returns></returns>
+        [HttpGet, Route("[action]/{filtro}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetByDocumentOrName(string filtro)
+        {
+            try
+            {
+                var response = await clientService.GetByDocumentOrName(filtro);
+                return Ok(response);
             }
             catch (Exception)
             {
